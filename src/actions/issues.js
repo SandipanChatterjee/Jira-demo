@@ -7,7 +7,7 @@ export const actionTypes = {
   done: "done",
 };
 
-const backlog = (data) => {
+export const backlog = (data) => {
   console.log("data#", data);
   return {
     type: actionTypes.backlog,
@@ -15,21 +15,21 @@ const backlog = (data) => {
   };
 };
 
-const selected = (data) => {
+export const selected = (data) => {
   return {
     type: actionTypes.selected,
     selectedIssue: data,
   };
 };
 
-const inprogress = (data) => {
+export const inprogress = (data) => {
   return {
     type: actionTypes.inprogress,
     inprogressIssue: data,
   };
 };
 
-const completed = (data) => {
+export const completed = (data) => {
   return {
     type: actionTypes.done,
     completedIssue: data,

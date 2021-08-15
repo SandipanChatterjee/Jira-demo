@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProjectData } from "../../actions/project";
 import { createGuestAccount } from "../../services/GuestAccount";
-import Issue from "../issue/Issue";
+import MasterIssue from "../issue/MasterIssue";
 import Navbar from "../navbar/Navbar";
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -11,8 +11,10 @@ const Dashboard = () => {
 
   console.log("loader#", loader, project);
   useEffect(async () => {
-    createGuestAccount();
-    dispatch(getProjectData());
+    if (Object.keys(project).length == 0) {
+      createGuestAccount();
+      dispatch(getProjectData());
+    }
   }, []);
 
   if (loader) {
@@ -20,7 +22,7 @@ const Dashboard = () => {
   }
   return (
     <div>
-      <Issue issues={project.issues} />
+      <MasterIssue issues={project.issues} />
     </div>
   );
 };
