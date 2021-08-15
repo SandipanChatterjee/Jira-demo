@@ -1,4 +1,4 @@
-import { issueTypes } from "../utils/utils";
+import { issueStatus } from "../utils/utils";
 
 export const actionTypes = {
   backlog: "backlog",
@@ -40,21 +40,21 @@ export const setIssueTypes = (issues) => {
   return (dispatch) => {
     console.log("setIssueTypes#issues", issues);
     const backlogIssue = issues.filter(
-      (issue) => issue.status === issueTypes.backlog
+      (issue) => issue.status === issueStatus.backlog
     );
     console.log("backlogIssue", backlogIssue);
     dispatch(backlog(backlogIssue));
     const selectedIssue = issues.filter(
-      (issue) => issue.status === issueTypes.selected
+      (issue) => issue.status === issueStatus.selected
     );
     dispatch(selected(selectedIssue));
     const inprogressIssue = issues.filter(
-      (issue) => issue.status === issueTypes.inprogress
+      (issue) => issue.status === issueStatus.inprogress
     );
     dispatch(inprogress(inprogressIssue));
 
     const completedIssue = issues.filter(
-      (issue) => issue.status === issueTypes.done
+      (issue) => issue.status === issueStatus.done
     );
     dispatch(completed(completedIssue));
   };

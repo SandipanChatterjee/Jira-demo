@@ -9,10 +9,11 @@ import {
   setIssueTypes,
 } from "../../actions/issues";
 import { useStyles } from "./style";
-import { move, reorder } from "../../utils/utils";
+import { move, reorder, issueStatus } from "../../utils/utils";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import Header from "../shared/Header";
+import { updateIssueList } from "../../services/updateIssueList";
 
 const MasterIssue = ({ issues }) => {
   const classes = useStyles();
@@ -39,10 +40,11 @@ const MasterIssue = ({ issues }) => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-    console.log(source, destination);
+    console.log(result, source, destination);
     if (!destination) {
       return;
     }
+
     const sInd = +source.droppableId;
     const dInd = +destination.droppableId;
 
@@ -78,6 +80,13 @@ const MasterIssue = ({ issues }) => {
       dispatchArrForStartIndex[sInd]();
       dispatchArrForEndIndex[dInd]();
     }
+
+    const payload = {
+      listPosition: destination.index,
+      status: Object.keys(issueStatus)[parseInt(destination.droppableId)],
+    };
+    console.log(payload);
+    updateIssueList(payload, parseInt(result.draggableId));
   };
 
   useEffect(() => {
@@ -94,108 +103,52 @@ const MasterIssue = ({ issues }) => {
         <Grid container className="root" spacing={2}>
           <Grid item xs={12}>
             <Grid className={classes.girdDisplay}>
-              <Droppable droppableId="0">
-                {(provided, snapshot) => {
-                  return (
-                    <Grid
-                      container
-                      key={0}
-                      alignItems="stretch"
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                    >
-                      <Paper className={classes.paper}>
-                        {backlogIssues.map((issue, index) => {
-                          // console.log("###", backlogIssues);
-                          const id = issue.id.toString();
-                          return (
-                            <Draggable key={id} draggableId={id} index={index}>
-                              {(provided, snapshot) => {
-                                return (
-                                  <Card
-                                    className={classes.cardDisplay}
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                  >
-                                    <p>
-                                      <b>{issue.title}</b>
-                                    </p>
-                                  </Card>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        })}
-                      </Paper>
-                      {provided.placeholder}
-                    </Grid>
-                  );
-                }}
-              </Droppable>
-              <Droppable droppableId="1">
-                {(provided, snapshot) => {
-                  return (
-                    <Grid
-                      container
-                      key={1}
-                      alignItems="stretch"
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                    >
-                      <Paper className={classes.paper}>
-                        {selectedIssues.map((issue, index) => {
-                          const id = issue.id.toString();
-                          return (
-                            <Draggable key={id} draggableId={id} index={index}>
-                              {(provided, snapshot) => {
-                                return (
-                                  <Card
-                                    className={classes.cardDisplay}
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                  >
-                                    <p>
-                                      <b>{issue.title}</b>
-                                    </p>
-                                  </Card>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        })}
-                      </Paper>
-                    </Grid>
-                  );
-                }}
-              </Droppable>
-              <Grid container key={2} alignItems="stretch">
-                <Paper className={classes.paper}>
-                  {inprogressIssues.map((issue, index) => {
-                    return (
-                      <Card className={classes.cardDisplay} key={index}>
-                        <p>
-                          <b>{issue.title}</b>
-                        </p>
-                      </Card>
-                    );
-                  })}
-                </Paper>
-              </Grid>
-              <Grid container key={3} alignItems="stretch">
-                <Paper className={classes.paper}>
-                  {completedIssues.map((issue, index) => {
-                    return (
-                      <Card className={classes.cardDisplay} key={index}>
-                        <p>
-                          <b>{issue.title}</b>
-                        </p>
-                      </Card>
-                    );
-                  })}
-                </Paper>
-              </Grid>
+              {issueTypes.map((issueType, index) => {
+                return (
+                  <Droppable droppableId={`${index}`}>
+                    {(provided, snapshot) => {
+                      return (
+                        <Grid
+                          container
+                          key={0}
+                          alignItems="stretch"
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                        >
+                          <Paper className={classes.paper}>
+                            {issueType.map((issue, index) => {
+                              const id = issue.id.toString();
+                              return (
+                                <Draggable
+                                  key={id}
+                                  draggableId={id}
+                                  index={index}
+                                >
+                                  {(provided, snapshot) => {
+                                    return (
+                                      <Card
+                                        className={classes.cardDisplay}
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                      >
+                                        <p>
+                                          <b>{issue.title}</b>
+                                        </p>
+                                      </Card>
+                                    );
+                                  }}
+                                </Draggable>
+                              );
+                            })}
+                          </Paper>
+                          {provided.placeholder}
+                        </Grid>
+                      );
+                    }}
+                  </Droppable>
+                );
+              })}
             </Grid>
           </Grid>
         </Grid>

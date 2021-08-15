@@ -1,4 +1,4 @@
-export const issueTypes = {
+export const issueStatus = {
   backlog: "backlog",
   inprogress: "inprogress",
   selected: "selected",
