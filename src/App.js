@@ -1,7 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { RootRoutes } from "./routes/Index";
 import Navbar from "./components/navbar/Navbar";
+import { RootRoutes } from "./routes/Index";
 
 function App() {
   return (
