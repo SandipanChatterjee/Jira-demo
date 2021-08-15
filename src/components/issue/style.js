@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: paperBackGroundColor,
     height: "auto",
     width: "90%",
-    padding: "10px",
+    padding: "5px",
   },
   control: {
     padding: theme.spacing(2),
@@ -25,7 +25,8 @@ export const useStyles = makeStyles((theme) => ({
   cardDisplay: {
     width: "auto",
     backgroundColor: cardBackGroundColor,
-    margin: "1rem",
+    // margin: "1rem",
+    margin: ".2rem 0",
     padding: "1rem",
   },
   paperBackGroundColor: {

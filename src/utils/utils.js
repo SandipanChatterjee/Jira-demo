@@ -1,7 +1,7 @@
 export const issueStatus = {
   backlog: "backlog",
-  inprogress: "inprogress",
   selected: "selected",
+  inprogress: "inprogress",
   done: "done",
 };
 

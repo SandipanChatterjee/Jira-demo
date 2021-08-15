@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Paper, Card } from "@material-ui/core";
+import { Card, Grid, Paper } from "@material-ui/core";
+import React from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  backlog,
-  selected,
-  inprogress,
-  completed,
-  setIssueTypes,
-} from "../../actions/issues";
-import { useStyles } from "./style";
-import { move, reorder, issueStatus } from "../../utils/utils";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-import Header from "../shared/Header";
+import { backlog, completed, inprogress, selected } from "../../actions/issues";
 import { updateIssueList } from "../../services/updateIssueList";
+import { issueStatus, move, reorder } from "../../utils/utils";
+import Header from "../shared/Header";
+import { useStyles } from "./style";
 
-const MasterIssue = ({ issues }) => {
+const MasterIssue = ({}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const backlogIssues = useSelector(
@@ -89,10 +82,6 @@ const MasterIssue = ({ issues }) => {
     updateIssueList(payload, parseInt(result.draggableId));
   };
 
-  useEffect(() => {
-    dispatch(setIssueTypes(issues));
-  }, []);
-
   return (
     <div>
       <Header
@@ -116,6 +105,9 @@ const MasterIssue = ({ issues }) => {
                           {...provided.droppableProps}
                         >
                           <Paper className={classes.paper}>
+                            <span>
+                              {Object.keys(issueStatus)[index].toUpperCase()}
+                            </span>
                             {issueType.map((issue, index) => {
                               const id = issue.id.toString();
                               return (
@@ -132,9 +124,7 @@ const MasterIssue = ({ issues }) => {
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
                                       >
-                                        <p>
-                                          <b>{issue.title}</b>
-                                        </p>
+                                        <p>{issue.title}</p>
                                       </Card>
                                     );
                                   }}
