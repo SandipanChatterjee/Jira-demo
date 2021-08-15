@@ -37,7 +37,7 @@ const MasterIssue = ({ issues }) => {
     completedIssues,
   ];
 
-  function onDragEnd(result) {
+  const onDragEnd = (result) => {
     const { source, destination } = result;
     console.log(source, destination);
     if (!destination) {
@@ -78,7 +78,7 @@ const MasterIssue = ({ issues }) => {
       dispatchArrForStartIndex[sInd]();
       dispatchArrForEndIndex[dInd]();
     }
-  }
+  };
 
   useEffect(() => {
     dispatch(setIssueTypes(issues));
