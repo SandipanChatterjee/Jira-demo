@@ -12,6 +12,9 @@ export const useStyles = makeStyles((theme) => ({
     height: "auto",
     width: "90%",
     padding: "5px",
+    minHeight: "300px",
+    minWidth: "300px",
+    // margin: Math.min("150px", "50%"),
   },
   control: {
     padding: theme.spacing(2),

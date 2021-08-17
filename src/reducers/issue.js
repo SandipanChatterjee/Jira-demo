@@ -1,4 +1,5 @@
 import { actionTypes } from "../actions/issues";
+import { issueStatus } from "../utils/utils";
 const initState = {
   backlogIssues: [],
   inprogressIssues: [],

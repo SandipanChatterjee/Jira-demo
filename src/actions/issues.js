@@ -8,31 +8,46 @@ export const actionTypes = {
 };
 
 export const backlog = (data) => {
-  console.log("data#", data);
+  const arr = JSON.parse(JSON.stringify(data));
+  arr.forEach((el) => {
+    el.status = issueStatus.backlog;
+  });
   return {
     type: actionTypes.backlog,
-    backlogIssue: data,
+    backlogIssue: arr,
   };
 };
 
 export const selected = (data) => {
+  const arr = JSON.parse(JSON.stringify(data));
+  arr.forEach((el) => {
+    el.status = issueStatus.selected;
+  });
   return {
     type: actionTypes.selected,
-    selectedIssue: data,
+    selectedIssue: arr,
   };
 };
 
 export const inprogress = (data) => {
+  const arr = JSON.parse(JSON.stringify(data));
+  arr.forEach((el) => {
+    el.status = issueStatus.inprogress;
+  });
   return {
     type: actionTypes.inprogress,
-    inprogressIssue: data,
+    inprogressIssue: arr,
   };
 };
 
 export const completed = (data) => {
+  const arr = JSON.parse(JSON.stringify(data));
+  arr.forEach((el) => {
+    el.status = issueStatus.done;
+  });
   return {
     type: actionTypes.done,
-    completedIssue: data,
+    completedIssue: arr,
   };
 };
 
