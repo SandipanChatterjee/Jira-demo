@@ -43,7 +43,7 @@ const Dashboard = () => {
         title={"Projects / singularity 1.0 vv2 / Kanban Board"}
       />
       <Search handleSearch={handleSearch} />
-      <MasterIssue searchedData={searchData} />
+      <MasterIssue searchedData={searchData} handleSearch={handleSearch} />
     </div>
   );
 };

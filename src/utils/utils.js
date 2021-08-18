@@ -10,16 +10,24 @@ export const move = (
   source,
   destination,
   droppableSource,
-  droppableDestination
+  droppableDestination,
+  itemId
 ) => {
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
+  const itemToBeRemovedIndex = sourceClone.findIndex((el) => el.id === itemId);
+  console.log("itemToBeRemoved#", itemToBeRemovedIndex);
+  console.log("droppableSource#", droppableSource);
+  const [removed] = sourceClone.splice(itemToBeRemovedIndex, 1);
   console.log(
     "id#",
     droppableDestination.droppableId,
-    Object.keys(issueStatus)
+    Object.keys(issueStatus),
+    sourceClone,
+    destClone,
+    itemId
   );
+
   destClone.splice(droppableDestination.index, 0, removed);
   const result = {};
   result[droppableSource.droppableId] = sourceClone;

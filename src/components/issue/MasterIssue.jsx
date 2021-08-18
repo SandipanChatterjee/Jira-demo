@@ -2,20 +2,35 @@ import { Card, Grid, Paper } from "@material-ui/core";
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  backlog,
-  changeIssueStatus,
-  completed,
-  inprogress,
-  selected,
-} from "../../actions/issues";
+import { backlog, completed, inprogress, selected } from "../../actions/issues";
 import { updateIssueList } from "../../services/updateIssueList";
 import { issueStatus, move, reorder } from "../../utils/utils";
 import Header from "../shared/Header";
 import { useStyles } from "./style";
 
-const MasterIssue = ({ searchedData }) => {
-  console.log("searchedData##", searchedData);
+function convertToArrayOfObjects(data) {
+  let backlog = [],
+    selected = [],
+    inProgress = [],
+    completed = [];
+  const output = data.map((el) => {
+    if (el.status == issueStatus.backlog) {
+      backlog.push(el);
+    } else if (el.status == issueStatus.selected) {
+      selected.push(el);
+    } else if (el.status == issueStatus.inprogress) {
+      inProgress.push(el);
+    } else {
+      completed.push(el);
+    }
+    return [backlog, selected, inProgress, completed];
+  });
+
+  return output[0];
+}
+
+const MasterIssue = (props) => {
+  console.log("searchedData##", props.searchedData);
   const classes = useStyles();
   const dispatch = useDispatch();
   const backlogIssues = useSelector(
@@ -33,6 +48,8 @@ const MasterIssue = ({ searchedData }) => {
 
   const searchText = useSelector((state) => state.searchReducer.searchValue);
 
+  const list = [];
+
   const issueTypes = [
     backlogIssues,
     selectedIssues,
@@ -42,11 +59,11 @@ const MasterIssue = ({ searchedData }) => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-    console.log(result, source, destination);
+    console.log("onDragEnd##", result, source, destination);
     if (!destination) {
       return;
     }
-
+    const itemId = parseInt(result.draggableId);
     const sInd = +source.droppableId;
     const dInd = +destination.droppableId;
 
@@ -65,7 +82,8 @@ const MasterIssue = ({ searchedData }) => {
         issueTypes[sInd],
         issueTypes[dInd],
         source,
-        destination
+        destination,
+        itemId
       );
       console.log("dInd#", result[dInd]);
 
@@ -83,6 +101,34 @@ const MasterIssue = ({ searchedData }) => {
       ];
       dispatchArrForStartIndex[sInd]();
       dispatchArrForEndIndex[dInd]();
+
+      if (props.searchedData && props.searchedData.length > 0) {
+        console.log("searchedData##", props.searchedData, list);
+        const arr = [
+          backlogIssues,
+          selectedIssues,
+          inprogressIssues,
+          completedIssues,
+        ].flat(Infinity);
+
+        let issues = arr.filter((el) => {
+          return result[dInd].find((innerEl) => {
+            return innerEl.id === el.id;
+          });
+        });
+        issues.forEach((el) => {
+          el.status =
+            Object.keys(issueStatus)[parseInt(destination.droppableId)];
+        });
+        issues = issues.filter((el) => el.id === itemId);
+        issues = [
+          ...issues,
+          ...props.searchedData.flat(Infinity).filter((el) => el.id !== itemId),
+        ];
+        let searchedData = convertToArrayOfObjects(issues);
+        console.log("searchedData##", searchedData);
+        props.handleSearch(searchedData);
+      }
     }
 
     const payload = {
@@ -92,11 +138,10 @@ const MasterIssue = ({ searchedData }) => {
     console.log(payload);
     updateIssueList(payload, parseInt(result.draggableId));
   };
-  const list = [];
 
   searchText.length > 0
-    ? searchedData && searchedData.length > 0
-      ? list.push(...searchedData)
+    ? props.searchedData && props.searchedData.length > 0
+      ? list.push(...props.searchedData)
       : list.push(...issueTypes)
     : list.push(...issueTypes);
 
