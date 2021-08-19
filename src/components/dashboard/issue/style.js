@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   cardBackGroundColor,
   paperBackGroundColor,
-} from "../../utils/globalStyles";
+} from "../../../utils/globalStyles";
 export const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

@@ -1,6 +1,7 @@
 import { actionTypes } from "../actions/search";
 const initState = {
   searchValue: "",
+  searchedData: [],
 };
 const reducer = (state = initState, action) => {
   switch (action.type) {
@@ -8,6 +9,11 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         searchValue: action.searchValue,
+      };
+    case actionTypes.SEARCH_DATA:
+      return {
+        ...state,
+        searchedData: action.searchedData,
       };
     default:
       return state;

@@ -45,3 +45,24 @@ export const reorder = (list, startIndex, endIndex) => {
 
   return result;
 };
+
+export const convertToArrayOfObjects = (data) => {
+  let backlog = [],
+    selected = [],
+    inProgress = [],
+    completed = [];
+  const output = data.map((el) => {
+    if (el.status == issueStatus.backlog) {
+      backlog.push(el);
+    } else if (el.status == issueStatus.selected) {
+      selected.push(el);
+    } else if (el.status == issueStatus.inprogress) {
+      inProgress.push(el);
+    } else {
+      completed.push(el);
+    }
+    return [backlog, selected, inProgress, completed];
+  });
+
+  return output[0];
+};

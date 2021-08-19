@@ -1,61 +1,41 @@
-import { Card, Grid, Paper } from "@material-ui/core";
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { useDispatch, useSelector } from "react-redux";
-import { backlog, completed, inprogress, selected } from "../../actions/issues";
-import { updateIssueList } from "../../services/updateIssueList";
-import { issueStatus, move, reorder } from "../../utils/utils";
-import Header from "../shared/Header";
+import {
+  backlog,
+  completed,
+  inprogress,
+  selected,
+} from "../../../actions/issues";
+import { updateIssueList } from "../../../services/updateIssueList";
+import { Card, Grid, Paper } from "@material-ui/core";
+import {
+  issueStatus,
+  move,
+  reorder,
+  convertToArrayOfObjects,
+} from "../../../utils/utils";
 import { useStyles } from "./style";
+import { searchedDataHandler } from "../../../actions/search";
+import { useSelectorIssues } from "../../../utils/useSelectorIssues";
+import { useDispatch, useSelector } from "react-redux";
 
-function convertToArrayOfObjects(data) {
-  let backlog = [],
-    selected = [],
-    inProgress = [],
-    completed = [];
-  const output = data.map((el) => {
-    if (el.status == issueStatus.backlog) {
-      backlog.push(el);
-    } else if (el.status == issueStatus.selected) {
-      selected.push(el);
-    } else if (el.status == issueStatus.inprogress) {
-      inProgress.push(el);
-    } else {
-      completed.push(el);
-    }
-    return [backlog, selected, inProgress, completed];
-  });
-
-  return output[0];
-}
-
-const MasterIssue = (props) => {
-  console.log("searchedData##", props.searchedData);
+const MasterIssue = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const backlogIssues = useSelector(
-    (state) => state.issueReducer.backlogIssues
-  );
-  const selectedIssues = useSelector(
-    (state) => state.issueReducer.selectedIssue
-  );
-  const inprogressIssues = useSelector(
-    (state) => state.issueReducer.inprogressIssues
-  );
-  const completedIssues = useSelector(
-    (state) => state.issueReducer.completedIssues
-  );
-
-  const searchText = useSelector((state) => state.searchReducer.searchValue);
-
-  const list = [];
+  const selector = useSelectorIssues();
 
   const issueTypes = [
-    backlogIssues,
-    selectedIssues,
-    inprogressIssues,
-    completedIssues,
+    selector.backlogIssues,
+    selector.selectedIssues,
+    selector.inprogressIssues,
+    selector.completedIssues,
   ];
+
+  const searchedData =
+    useSelector((state) => state.searchReducer.searchedData) || issueTypes;
+  const searchValue = useSelector((state) => state.searchReducer.searchValue);
+
+  const list = [];
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
@@ -102,13 +82,13 @@ const MasterIssue = (props) => {
       dispatchArrForStartIndex[sInd]();
       dispatchArrForEndIndex[dInd]();
 
-      if (props.searchedData && props.searchedData.length > 0) {
-        console.log("searchedData##", props.searchedData, list);
+      if (searchedData.length > 0) {
+        console.log("searchedData##", searchedData, list);
         const arr = [
-          backlogIssues,
-          selectedIssues,
-          inprogressIssues,
-          completedIssues,
+          selector.backlogIssues,
+          selector.selectedIssues,
+          selector.inprogressIssues,
+          selector.completedIssues,
         ].flat(Infinity);
 
         let issues = arr.filter((el) => {
@@ -123,11 +103,11 @@ const MasterIssue = (props) => {
         issues = issues.filter((el) => el.id === itemId);
         issues = [
           ...issues,
-          ...props.searchedData.flat(Infinity).filter((el) => el.id !== itemId),
+          ...searchedData.flat(Infinity).filter((el) => el.id !== itemId),
         ];
-        let searchedData = convertToArrayOfObjects(issues);
-        console.log("searchedData##", searchedData);
-        props.handleSearch(searchedData);
+        let searchedDataArr = convertToArrayOfObjects(issues);
+        console.log("searchedData##", searchedDataArr);
+        dispatch(searchedDataHandler(searchedDataArr));
       }
     }
 
@@ -139,9 +119,9 @@ const MasterIssue = (props) => {
     updateIssueList(payload, parseInt(result.draggableId));
   };
 
-  searchText.length > 0
-    ? props.searchedData && props.searchedData.length > 0
-      ? list.push(...props.searchedData)
+  searchedData.length > 0
+    ? searchedData.length > 0
+      ? list.push(...searchedData)
       : list.push(...issueTypes)
     : list.push(...issueTypes);
 
