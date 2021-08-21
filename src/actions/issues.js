@@ -1,3 +1,4 @@
+import { getIssue } from "../services/getCurrentIssue";
 import { issueStatus } from "../utils/utils";
 
 export const actionTypes = {
@@ -5,9 +6,11 @@ export const actionTypes = {
   selected: "selected",
   inprogress: "inprogress",
   done: "done",
+  current_issue: "current_issue",
 };
 
 export const backlog = (data) => {
+  console.log("data##", data);
   const arr = JSON.parse(JSON.stringify(data));
   arr.forEach((el) => {
     el.status = issueStatus.backlog;
@@ -72,5 +75,24 @@ export const setIssueTypes = (issues) => {
       (issue) => issue.status === issueStatus.done
     );
     dispatch(completed(completedIssue));
+  };
+};
+
+export const currentIssueFunction = (data) => {
+  return {
+    type: actionTypes.current_issue,
+    currentIssue: data,
+  };
+};
+
+export const getCurrentIssue = (id) => {
+  return async (dispatch) => {
+    try {
+      let response = await getIssue(id);
+      const data = await response;
+      dispatch(currentIssueFunction(data.issue));
+    } catch (e) {
+      // dispatch(fail(e));
+    }
   };
 };

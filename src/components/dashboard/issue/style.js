@@ -35,4 +35,12 @@ export const useStyles = makeStyles((theme) => ({
   paperBackGroundColor: {
     backgroundColor: paperBackGroundColor,
   },
+  modalStyle: {
+    position: "absolute",
+    top: "10%",
+    left: "10%",
+    overflow: "scroll",
+    height: "100%",
+    display: "block",
+  },
 }));

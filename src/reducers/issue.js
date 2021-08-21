@@ -1,10 +1,10 @@
 import { actionTypes } from "../actions/issues";
-import { issueStatus } from "../utils/utils";
 const initState = {
   backlogIssues: [],
   inprogressIssues: [],
   completedIssues: [],
   selectedIssue: [],
+  currentIssue: {},
 };
 
 const reducer = (state = initState, action) => {
@@ -28,6 +28,11 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         selectedIssue: action.selectedIssue,
+      };
+    case actionTypes.current_issue:
+      return {
+        ...state,
+        currentIssue: { ...action.currentIssue },
       };
     default:
       return state;

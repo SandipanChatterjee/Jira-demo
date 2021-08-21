@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import {
   backlog,
   completed,
+  getCurrentIssue,
   inprogress,
   selected,
+  currentIssueFunction,
 } from "../../../actions/issues";
 import { updateIssueList } from "../../../services/updateIssueList";
-import { Card, Grid, Paper } from "@material-ui/core";
+import { Card, Grid, Paper, Modal } from "@material-ui/core";
 import {
   issueStatus,
   move,
@@ -18,11 +20,19 @@ import { useStyles } from "./style";
 import { searchedDataHandler } from "../../../actions/search";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import { useDispatch, useSelector } from "react-redux";
+import IssueModalContent from "../../shared/IssueModalContent";
 
 const MasterIssue = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const selector = useSelectorIssues();
+  const searchedData =
+    useSelector((state) => state.searchReducer.searchedData) || issueTypes;
+  const searchValue = useSelector((state) => state.searchReducer.searchValue);
+  const currentIssue = useSelector((state) => state.issueReducer.currentIssue);
+
+  const [modalActive, setModalActive] = useState(false);
 
   const issueTypes = [
     selector.backlogIssues,
@@ -30,10 +40,6 @@ const MasterIssue = () => {
     selector.inprogressIssues,
     selector.completedIssues,
   ];
-
-  const searchedData =
-    useSelector((state) => state.searchReducer.searchedData) || issueTypes;
-  const searchValue = useSelector((state) => state.searchReducer.searchValue);
 
   const list = [];
 
@@ -119,6 +125,17 @@ const MasterIssue = () => {
     updateIssueList(payload, parseInt(result.draggableId));
   };
 
+  const modalOpenHanlder = (issueId) => {
+    console.log(issueId);
+    dispatch(getCurrentIssue(issueId));
+    setModalActive(true);
+  };
+
+  const modalCloseHandler = () => {
+    dispatch(currentIssueFunction({}));
+    setModalActive(false);
+  };
+
   searchedData.length > 0
     ? searchedData.length > 0
       ? list.push(...searchedData)
@@ -165,6 +182,9 @@ const MasterIssue = () => {
                                           <Card
                                             className={classes.cardDisplay}
                                             ref={provided.innerRef}
+                                            onClick={() =>
+                                              modalOpenHanlder(issue.id)
+                                            }
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
                                           >
@@ -188,6 +208,17 @@ const MasterIssue = () => {
           </Grid>
         </Grid>
       </DragDropContext>
+      {
+        <Modal
+          open={modalActive}
+          onClose={modalCloseHandler}
+          className={classes.modalStyle}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <IssueModalContent issue={currentIssue} />
+        </Modal>
+      }
     </div>
   );
 };

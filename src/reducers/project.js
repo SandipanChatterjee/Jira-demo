@@ -12,7 +12,7 @@ const reducer = (state = initState, action) => {
     case actionTypes.SUCCESS:
       return {
         ...state,
-        project: action.project,
+        project: { ...action.project },
         loading: false,
       };
 
