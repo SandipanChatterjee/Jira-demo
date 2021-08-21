@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { TextField, InputAdornment } from "@material-ui/core";
 import { SearchRounded } from "@material-ui/icons";
 import { search, searchedDataHandler } from "../../../actions/search";
