@@ -1,16 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Avatar } from "@material-ui/core";
+import React, { useEffect, useRef } from "react";
+import { Avatar, Button } from "@material-ui/core";
 import { useStyles } from "./style";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import { convertToArrayOfObjects } from "../../../utils/utils";
 import { searchedDataHandler } from "../../../actions/search";
-import { setUsers } from "../../../actions/users";
+import { setUsers, setCurrentUserActive } from "../../../actions/users";
 import { useSelector, useDispatch } from "react-redux";
 
 const Users = () => {
   const project = useSelector((state) => state.projectReducer.project);
   const selector = useSelectorIssues();
   const currentUsers = useSelector((state) => state.usersReducer.users);
+  const currentUser = useSelector((state) => state.usersReducer.currentUser);
+  const currentUserActive = useSelector(
+    (state) => state.usersReducer.currentUserActive
+  );
   const dispatch = useDispatch();
 
   const ref = useRef(true);
@@ -25,6 +29,32 @@ const Users = () => {
 
   console.log("arr##", issueList);
 
+  const handleRemoveForCurrentUser = (userId) => {
+    let users = [currentUser, ...currentUsers].filter(
+      (user) => user.id !== userId
+    );
+    console.log("users##", users);
+    const filterData = issueList.filter((issue) =>
+      users.find((user) => issue.userIds.includes(user.id))
+    );
+    const data = filterData.length > 0 ? filterData : issueList;
+    const convertedData = convertToArrayOfObjects(data);
+    dispatch(setCurrentUserActive(false));
+    dispatch(searchedDataHandler(convertedData));
+  };
+
+  const handleAddForCurrentUser = (userId) => {
+    let users = [currentUser, ...currentUsers];
+    console.log("users##", users);
+    const filterData = issueList.filter((issue) =>
+      users.find((user) => issue.userIds.includes(user.id))
+    );
+    const data = filterData.length > 0 ? filterData : issueList;
+    const convertedData = convertToArrayOfObjects(data);
+    dispatch(setCurrentUserActive(true));
+    dispatch(searchedDataHandler(convertedData));
+  };
+
   const handleRemove = (userId) => {
     console.log("handleRemove");
     const users = currentUsers.filter((user) => user.id !== userId);
@@ -38,14 +68,23 @@ const Users = () => {
     dispatch(setUsers(users));
   };
 
+  const clearAllHandler = () => {
+    dispatch(setUsers([]));
+    dispatch(setCurrentUserActive(false));
+  };
+
   useEffect(() => {
     if (ref.current) {
       ref.current = false;
       return;
     }
     console.log(currentUsers, issueList);
+    let users = currentUserActive
+      ? [currentUser, ...currentUsers]
+      : [...currentUsers];
+    console.log("users##", users, currentUser, currentUserActive);
     const filterData = issueList.filter((issue) =>
-      currentUsers.find((user) => issue.userIds.includes(user.id))
+      users.find((user) => issue.userIds.includes(user.id))
     );
     const data = filterData.length > 0 ? filterData : issueList;
     const convertedData = convertToArrayOfObjects(data);
@@ -55,6 +94,7 @@ const Users = () => {
   useEffect(() => {
     return () => {
       dispatch(setUsers([]));
+      dispatch(setCurrentUserActive(false));
     };
   }, []);
 
@@ -79,6 +119,22 @@ const Users = () => {
           />
         );
       })}
+      <Button
+        variant={currentUserActive ? "contained" : null}
+        onClick={
+          currentUserActive
+            ? () => handleRemoveForCurrentUser(currentUser.id)
+            : () => handleAddForCurrentUser(currentUser.id)
+        }
+      >
+        <span className={classes.text}>Only My Issues</span>
+      </Button>
+
+      {currentUsers.length > 0 || currentUserActive ? (
+        <Button onClick={clearAllHandler}>
+          <span className={classes.text}>Clear All</span>
+        </Button>
+      ) : null}
     </div>
   );
 };

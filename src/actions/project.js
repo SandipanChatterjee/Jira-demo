@@ -33,6 +33,8 @@ export const getProjectData = () => {
       let response = await getProject();
       const data = await response;
       dispatch(success(data.project));
-    } catch (e) {}
+    } catch (e) {
+      dispatch(fail(e));
+    }
   };
 };

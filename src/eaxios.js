@@ -14,7 +14,8 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
-    Promise.reject(error);
+    console.log("error####", error);
+    return Promise.reject(error);
   }
 );
 
@@ -24,8 +25,15 @@ instance.interceptors.response.use(
     return config.data;
   },
   (error) => {
-    console.log(error);
-    Promise.reject(error);
+    let errorMessage;
+    if (error.message === "Network Error") {
+      errorMessage = "Please check your internet connection";
+    } else if (error.response.status >= 400 && error.response.status <= 499) {
+      errorMessage = "Data Not Found";
+    } else if (error.response.status >= 500) {
+      errorMessage = "Internal Server Error";
+    }
+    return Promise.reject(errorMessage);
   }
 );
 

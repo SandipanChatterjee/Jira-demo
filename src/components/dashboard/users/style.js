@@ -14,4 +14,8 @@ export const useStyles = makeStyles((theme) => ({
   inactive: {
     border: "none",
   },
+  text: {
+    textTransform: "capitalize",
+  },
+  button: {},
 }));

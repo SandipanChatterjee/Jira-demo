@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProjectData } from "../../actions/project";
 import { createGuestAccount } from "../../services/GuestAccount";
 import { setIssueTypes } from "../../actions/issues";
+import { getCurrentUserData } from "../../actions/users";
 import MasterIssue from "./issue/MasterIssue";
 import Header from "../shared/Header";
 import Search from "./search/Search";
@@ -12,13 +13,16 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.projectReducer.project);
   const loader = useSelector((state) => state.projectReducer.loading);
+  const error = useSelector((state) => state.projectReducer.error);
   const ref = useRef(true);
   const classes = useStyles();
   console.log("loader#", loader, project);
+
   useEffect(async () => {
     if (Object.keys(project).length == 0) {
       createGuestAccount();
       dispatch(getProjectData());
+      dispatch(getCurrentUserData());
     }
   }, []);
 
@@ -27,12 +31,19 @@ const Dashboard = () => {
       ref.current = false;
       return;
     }
-    dispatch(setIssueTypes(project.issues));
+    if (Object.keys(project).length > 0) {
+      dispatch(setIssueTypes(project.issues));
+    }
   }, [project]);
 
   if (loader) {
     return "loader";
   }
+
+  if (error) {
+    return <span>{error}</span>;
+  }
+
   return (
     <div>
       <Header
