@@ -25,7 +25,14 @@ export const useStyles = makeStyles((theme) => ({
   commentsContainer: {
     display: "flex",
   },
+  newComment: {
+    display: "flex",
+    // alignItems: "baseline",
+  },
   avatar: {
     marginRight: "20px",
+  },
+  input: {
+    width: "300%",
   },
 }));
