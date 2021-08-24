@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import {
   backlog,
@@ -20,7 +20,7 @@ import { useStyles } from "./style";
 import { searchedDataHandler } from "../../../actions/search";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import { useDispatch, useSelector } from "react-redux";
-import IssueModalContent from "../../shared/IssueModalContent";
+import IssueModalContent from "../issueModal/IssueModalContent";
 
 const MasterIssue = () => {
   const classes = useStyles();
@@ -31,6 +31,12 @@ const MasterIssue = () => {
     useSelector((state) => state.searchReducer.searchedData) || issueTypes;
   const searchValue = useSelector((state) => state.searchReducer.searchValue);
   const currentIssue = useSelector((state) => state.issueReducer.currentIssue);
+  const newCommentData = useSelector(
+    (state) => state.commentsReducer.newCommentData
+  );
+  const editCommentData = useSelector(
+    (state) => state.commentsReducer.editCommentData
+  );
 
   const [modalActive, setModalActive] = useState(false);
 
@@ -135,6 +141,15 @@ const MasterIssue = () => {
     dispatch(currentIssueFunction({}));
     setModalActive(false);
   };
+
+  useEffect(() => {
+    if (
+      Object.keys(newCommentData).length > 0 ||
+      Object.keys(editCommentData).length > 0
+    ) {
+      dispatch(getCurrentIssue(currentIssue.id));
+    }
+  }, [newCommentData, editCommentData]);
 
   searchedData.length > 0
     ? searchedData.length > 0

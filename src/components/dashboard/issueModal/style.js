@@ -33,6 +33,6 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: "20px",
   },
   input: {
-    width: "300%",
+    width: "1000px",
   },
 }));

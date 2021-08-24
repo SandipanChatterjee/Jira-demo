@@ -1,3 +1,5 @@
+import React from "react";
+
 export const issueStatus = {
   backlog: "backlog",
   selected: "selected",
@@ -65,4 +67,25 @@ export const convertToArrayOfObjects = (data) => {
   });
 
   return output[0];
+};
+
+export const useOutsideAlerter = (ref, setActive) => {
+  React.useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      console.log(event);
+      if (ref.current && !ref.current.contains(event.target)) {
+        setActive(false);
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
 };
