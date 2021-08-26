@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: paperBackGroundColor,
     height: "auto",
-    width: "90%",
+    width: "50%",
     padding: "5px",
     minHeight: "300px",
     minWidth: "300px",
@@ -28,7 +28,6 @@ export const useStyles = makeStyles((theme) => ({
   cardDisplay: {
     width: "auto",
     backgroundColor: cardBackGroundColor,
-    // margin: "1rem",
     margin: ".2rem 0",
     padding: "1rem",
   },
@@ -40,6 +39,7 @@ export const useStyles = makeStyles((theme) => ({
     top: "10%",
     left: "10%",
     overflow: "scroll",
+    width: "100%",
     height: "100%",
     display: "block",
   },

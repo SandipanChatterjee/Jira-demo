@@ -1,15 +1,20 @@
 import { saveComment, saveEditedComment } from "../services/saveComment";
-
+import { deleteCommentApi } from "../services/deleteComment";
 export const actionTypes = {
   active_new_comment: "active_new_comment",
   new_comment_text: "new_comment",
+  save_new_comment_loading: "save_new_comment_loading",
   save_new_comment: "save_new_comment",
   save_fail_new_comment: "save_fail_new_comment",
   active_edit_comment: "active_edit_comment",
   edit_comment_text: "edit_comment_text",
-  edit_comment_index: "edit_comment_index",
+  save_edit_comment_loading: "save_edit_comment_loading",
   save_edit_comment: "save_edit_comment",
   save_fail_edit_comment: "save_fail_edit_comment",
+  show_delete_modal: "show_delete_modal",
+  delete_comment_loading: "delete_comment_loading",
+  delete_comment_fail: "delete_comment_fail",
+  delete_comment_success: "delete_comment_success",
 };
 
 export const setActive = (flag) => {
@@ -40,13 +45,24 @@ export const saveNewCommentFail = (data) => {
   };
 };
 
+export const saveNewCommentLoading = (flag) => {
+  console.log("flag##", flag);
+  return {
+    type: actionTypes.save_new_comment_loading,
+    newCommentLoading: flag,
+  };
+};
+
 export const saveNewCommentHandler = (payload) => {
   return async (dispatch) => {
+    dispatch(saveNewCommentLoading(true));
     try {
       let response = await saveComment(payload);
       const data = await response;
+      dispatch(saveNewCommentLoading(false));
       dispatch(saveNewCommentSuccess(data.comment));
     } catch (e) {
+      dispatch(saveNewCommentLoading(false));
       dispatch(saveNewCommentFail(e));
     }
   };
@@ -56,13 +72,6 @@ export const setEditActive = (flag) => {
   return {
     type: actionTypes.active_edit_comment,
     activeEditComment: flag,
-  };
-};
-
-export const setCurrentCommentIndex = (index) => {
-  return {
-    type: actionTypes.edit_comment_index,
-    currentCommentIndex: index,
   };
 };
 
@@ -87,14 +96,67 @@ export const saveEditCommentFail = (data) => {
   };
 };
 
+export const saveEditCommentLoading = (flag) => {
+  return {
+    type: actionTypes.save_edit_comment_loading,
+    editCommentLoading: flag,
+  };
+};
+
 export const saveEditCommentHandler = (id, payload) => {
   return async (dispatch) => {
+    dispatch(saveEditCommentLoading(true));
     try {
       let response = await saveEditedComment(id, payload);
       const data = await response;
       dispatch(saveEditCommentSuccess(data.comment));
+      dispatch(saveEditCommentLoading(false));
     } catch (e) {
       dispatch(saveEditCommentFail(e));
+      dispatch(saveEditCommentLoading(false));
+    }
+  };
+};
+
+export const deleteModal = (flag) => {
+  return {
+    type: actionTypes.show_delete_modal,
+    showDeleteModal: flag,
+  };
+};
+
+export const deleteCommentSuccess = (data) => {
+  return {
+    type: actionTypes.delete_comment_success,
+    deleteCommentData: data,
+  };
+};
+
+export const deleteCommentFail = (data) => {
+  return {
+    type: actionTypes.delete_comment_fail,
+    deleteCommentFailedData: data,
+  };
+};
+
+export const deleteCommentLoading = (flag) => {
+  return {
+    type: actionTypes.delete_comment_loading,
+    deleteCommentLoading: flag,
+  };
+};
+
+export const deleteCommentHandler = (id) => {
+  return async (dispatch) => {
+    dispatch(deleteCommentLoading(true));
+    try {
+      let response = await deleteCommentApi(id);
+      const data = await response;
+      dispatch(deleteCommentSuccess(data.comment));
+      dispatch(deleteCommentLoading(false));
+    } catch (e) {
+      dispatch(deleteCommentFail(e));
+      dispatch(deleteCommentLoading(false));
     }
   };
 };

@@ -1,9 +1,10 @@
-import React, { useRef, Fragment } from "react";
-import { Avatar, Button, TextField } from "@material-ui/core";
+import React, { useRef, Fragment, useEffect } from "react";
+import { Avatar, Button, TextField, CircularProgress } from "@material-ui/core";
 import {
   setActive,
   newCommentTextHandler,
   saveNewCommentHandler,
+  saveNewCommentLoading,
 } from "../../../actions/comments";
 import { useStyles, getModalStyle } from "./style";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,6 +19,12 @@ const NewComment = ({ issue }) => {
   );
   const activeNewComment = useSelector(
     (state) => state.commentsReducer.activeNewComment
+  );
+  const newCommentLoading = useSelector(
+    (state) => state.commentsReducer.newCommentLoading
+  );
+  const newCommentData = useSelector(
+    (state) => state.commentsReducer.newCommentData
   );
 
   const inputRef = useRef(null);
@@ -40,16 +47,21 @@ const NewComment = ({ issue }) => {
     const val = e.target.value;
     dispatch(newCommentTextHandler(val));
   };
-  const saveHandler = (e) => {
-    e.preventDefault();
+  const saveHandler = () => {
     const payload = {
       body: newCommentText,
       issueId: issue.id,
       userId: currentUser.id,
     };
     dispatch(saveNewCommentHandler(payload));
-    inActiveHandler();
   };
+
+  useEffect(() => {
+    if (Object.keys(newCommentData).length > 0 && !newCommentLoading) {
+      inActiveHandler();
+    }
+  }, [newCommentData]);
+
   return (
     <div>
       <div className={classes.newComment}>
@@ -57,19 +69,21 @@ const NewComment = ({ issue }) => {
           <Avatar src={currentUser.avatarUrl} />
         </div>
         <div>
-          <TextField
-            ref={inputRef}
-            className={classes.input}
-            id="standard-search"
-            label="Search field"
-            type="search"
-            variant="outlined"
-            multiline
-            rows={activeNewComment ? 4 : 1}
-            onClick={activeHandler}
-            onChange={changeCommentHandler}
-            value={newCommentText}
-          />
+          <div className={classes.inputContainer}>
+            <TextField
+              ref={inputRef}
+              className={classes.input}
+              id="standard-search"
+              label="Search field"
+              type="search"
+              variant="outlined"
+              multiline
+              rows={activeNewComment ? 4 : 1}
+              onClick={activeHandler}
+              onChange={changeCommentHandler}
+              value={newCommentText}
+            />
+          </div>
           <br />
           {activeNewComment ? null : (
             <div>
@@ -88,7 +102,16 @@ const NewComment = ({ issue }) => {
                   color="primary"
                   onClick={saveHandler}
                 >
-                  Save
+                  <span>
+                    {newCommentLoading ? (
+                      <CircularProgress
+                        size={20}
+                        thickness={4}
+                        color="secondary"
+                      />
+                    ) : null}{" "}
+                    Save
+                  </span>
                 </Button>{" "}
                 <Button onClick={inActiveHandler}>Cancel</Button>
               </div>

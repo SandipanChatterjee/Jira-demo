@@ -37,6 +37,9 @@ const MasterIssue = () => {
   const editCommentData = useSelector(
     (state) => state.commentsReducer.editCommentData
   );
+  const deleteCommentData = useSelector(
+    (state) => state.commentsReducer.deleteCommentData
+  );
 
   const [modalActive, setModalActive] = useState(false);
 
@@ -133,6 +136,7 @@ const MasterIssue = () => {
 
   const modalOpenHanlder = (issueId) => {
     console.log(issueId);
+    console.log("139");
     dispatch(getCurrentIssue(issueId));
     setModalActive(true);
   };
@@ -145,11 +149,15 @@ const MasterIssue = () => {
   useEffect(() => {
     if (
       Object.keys(newCommentData).length > 0 ||
-      Object.keys(editCommentData).length > 0
+      Object.keys(editCommentData).length > 0 ||
+      Object.keys(deleteCommentData).length > 0
     ) {
-      dispatch(getCurrentIssue(currentIssue.id));
+      if (Object.keys(currentIssue).length > 0) {
+        console.log("currentIssue", currentIssue);
+        dispatch(getCurrentIssue(currentIssue.id));
+      }
     }
-  }, [newCommentData, editCommentData]);
+  }, [newCommentData, editCommentData, deleteCommentData]);
 
   searchedData.length > 0
     ? searchedData.length > 0
