@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 export const issueStatus = {
   backlog: "backlog",
@@ -70,6 +71,7 @@ export const convertToArrayOfObjects = (data) => {
 };
 
 export const useOutsideAlerter = (ref, setActive) => {
+  const dispatch = useDispatch();
   React.useEffect(() => {
     /**
      * Alert if clicked on outside of element
@@ -77,7 +79,7 @@ export const useOutsideAlerter = (ref, setActive) => {
     function handleClickOutside(event) {
       console.log(event);
       if (ref.current && !ref.current.contains(event.target)) {
-        setActive(false);
+        dispatch(setActive(false));
       }
     }
 
