@@ -18,7 +18,7 @@ export const getModalStyle = () => {
 export const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: "auto",
+    width: "1000px",
     backgroundColor: "#fff",
     minHeight: "100%",
     maxHeight: "calc(100vh - 210px)",
@@ -52,6 +52,18 @@ export const useStyles = makeStyles((theme) => ({
   },
   commentBody: {
     width: "200px",
+    wordWrap: "break-word",
+  },
+  modalStyle: {
+    position: "absolute",
+    top: "10%",
+    left: "10%",
+    overflow: "scroll",
+    width: "100%",
+    height: "100%",
+    display: "block",
+  },
+  titleText: {
     wordWrap: "break-word",
   },
 }));

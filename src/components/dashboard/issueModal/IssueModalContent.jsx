@@ -7,16 +7,23 @@ import "react-quill/dist/quill.snow.css";
 import NewCommentSection from "./NewComment";
 import CommentListSection from "./CommentList";
 import { updateIssueList } from "../../../services/updateIssueList";
-import { useOutsideAlerter } from "../../../utils/utils";
+import { issueStatus, useOutsideAlerter } from "../../../utils/utils";
 import {
   setTitleEditor,
   setTitleText,
   setDescriptionText,
   setDescriptionEditor,
 } from "../../../actions/editor";
+import {
+  backlog,
+  selected,
+  inprogress,
+  completed,
+} from "../../../actions/issues";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Button } from "@material-ui/core";
+import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 
 const modules = {
   toolbar: [
@@ -47,14 +54,17 @@ const formats = [
   "image",
 ];
 
+let modifiedIssues = [];
+let prevDescriptionValue = "";
+
 const IssueModalContent = ({ issue }) => {
   console.log("issue####", issue);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const selectorIssue = useSelectorIssues();
   const showTitleEditor = useSelector(
     (state) => state.editorReducer.showTitleEditor
   );
-
   const titleText = useSelector((state) => state.editorReducer.titleText);
 
   const showDescriptionEditor = useSelector(
@@ -69,9 +79,32 @@ const IssueModalContent = ({ issue }) => {
 
   const safeIssueDescritpion = DOMPurify.sanitize(descriptionText);
 
+  const modifyIssueHandler = (issueEl, titleText) => {
+    const issuesCopy = JSON.parse(JSON.stringify(issueEl));
+    const currentFilteredIssue = issuesCopy.find(
+      (issuesEls) => issue.id === issuesEls.id
+    );
+    const index = issuesCopy.indexOf(currentFilteredIssue);
+    issuesCopy.splice(index, 1);
+    currentFilteredIssue.title = titleText;
+    issuesCopy.splice(index, 0, { ...currentFilteredIssue });
+    modifiedIssues = [...issuesCopy];
+  };
+
   const handleTitleChange = (value) => {
     console.log("handleTitleChange####", value);
     const titleText = value.replace(/(<([^>]+)>)/gi, "");
+
+    if (issue.status === issueStatus.backlog) {
+      modifyIssueHandler(selectorIssue.backlogIssues, titleText);
+    } else if (issue.status === issueStatus.done) {
+      modifyIssueHandler(selectorIssue.completedIssues, titleText);
+    } else if (issue.status === issueStatus.inprogress) {
+      modifyIssueHandler(selectorIssue.inprogressIssues, titleText);
+    } else {
+      modifyIssueHandler(selectorIssue.selectedIssues, titleText);
+    }
+
     dispatch(setTitleText(titleText));
     updateIssueList({ title: titleText }, issue.id);
   };
@@ -82,7 +115,13 @@ const IssueModalContent = ({ issue }) => {
   };
 
   const updateDescriptionHandler = () => {
+    prevDescriptionValue = descriptionText;
     updateIssueList({ description: descriptionText }, issue.id);
+    dispatch(setDescriptionEditor(false));
+  };
+
+  const cancelDescriptionHandler = () => {
+    dispatch(setDescriptionText(prevDescriptionValue));
     dispatch(setDescriptionEditor(false));
   };
 
@@ -105,14 +144,27 @@ const IssueModalContent = ({ issue }) => {
     console.log("issuee##", issue);
     dispatch(setTitleText(issue.title));
     dispatch(setDescriptionText(issue.description));
+    prevDescriptionValue = issue.description;
   }, [issue]);
 
   useEffect(() => {
     return () => {
+      prevDescriptionValue = "";
       dispatch(setTitleText(""));
       dispatch(setDescriptionText(""));
       dispatch(setDescriptionEditor(false));
       dispatch(setTitleEditor(false));
+      if (modifiedIssues.length > 0) {
+        if (issue.status === issueStatus.backlog) {
+          dispatch(backlog(modifiedIssues));
+        } else if (issue.status === issueStatus.done) {
+          dispatch(completed(modifiedIssues));
+        } else if (issue.status === issueStatus.inprogress) {
+          dispatch(inprogress(modifiedIssues));
+        } else {
+          dispatch(selected(modifiedIssues));
+        }
+      }
     };
   }, []);
 
@@ -131,7 +183,12 @@ const IssueModalContent = ({ issue }) => {
           />
         </div>
       ) : (
-        <h2 onClick={() => dispatch(setTitleEditor(true))}>{titleText}</h2>
+        <h2
+          className={classes.titleText}
+          onClick={() => dispatch(setTitleEditor(true))}
+        >
+          {titleText}
+        </h2>
       )}
 
       <p>Description</p>
@@ -153,10 +210,7 @@ const IssueModalContent = ({ issue }) => {
           >
             Save
           </Button>{" "}
-          <Button
-            size="small"
-            onClick={() => dispatch(setDescriptionEditor(false))}
-          >
+          <Button size="small" onClick={cancelDescriptionHandler}>
             Cancel
           </Button>
           <br />
@@ -175,6 +229,10 @@ const IssueModalContent = ({ issue }) => {
       <CommentListSection issue={issue} />
     </div>
   );
+};
+
+IssueModalContent.defaultProps = {
+  issue: {},
 };
 
 export default IssueModalContent;

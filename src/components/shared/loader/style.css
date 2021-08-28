@@ -1,0 +1,13 @@
+/* style={{
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
+    top: "50%",
+  }} */
+
+
+  .container {
+      display:  block;
+      margin-left: auto;
+      margin-right: auto;
+  }

@@ -4,6 +4,7 @@ const initState = {
   inprogressIssues: [],
   completedIssues: [],
   selectedIssue: [],
+  currentIssueLoading: false,
   currentIssue: {},
 };
 
@@ -28,6 +29,11 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         selectedIssue: action.selectedIssue,
+      };
+    case actionTypes.current_issue_loading:
+      return {
+        ...state,
+        currentIssueLoading: action.currentIssueLoading,
       };
     case actionTypes.current_issue:
       return {

@@ -9,6 +9,8 @@ import Header from "../shared/Header";
 import Search from "./search/Search";
 import Users from "./users/Users";
 import { useStyles } from "./style";
+import { CircularProgress } from "@material-ui/core";
+import { Loader } from "../shared/loader/Loader";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.projectReducer.project);
@@ -37,7 +39,7 @@ const Dashboard = () => {
   }, [project]);
 
   if (loader) {
-    return "loader";
+    return <Loader />;
   }
 
   if (error) {

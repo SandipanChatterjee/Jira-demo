@@ -1,29 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { Card, Grid, Paper } from "@material-ui/core";
+import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   backlog,
   completed,
+  currentIssueFunction,
   getCurrentIssue,
   inprogress,
   selected,
-  currentIssueFunction,
 } from "../../../actions/issues";
+import { searchedDataHandler } from "../../../actions/search";
 import { updateIssueList } from "../../../services/updateIssueList";
-import { Card, Grid, Paper, Modal } from "@material-ui/core";
+import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import {
+  convertToArrayOfObjects,
   issueStatus,
   move,
   reorder,
-  convertToArrayOfObjects,
 } from "../../../utils/utils";
 import { useStyles } from "./style";
-import { searchedDataHandler } from "../../../actions/search";
-import { useSelectorIssues } from "../../../utils/useSelectorIssues";
-import { useDispatch, useSelector } from "react-redux";
-import IssueModalContent from "../issueModal/IssueModalContent";
 
 const MasterIssue = () => {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const selector = useSelectorIssues();
@@ -31,17 +32,6 @@ const MasterIssue = () => {
     useSelector((state) => state.searchReducer.searchedData) || issueTypes;
   const searchValue = useSelector((state) => state.searchReducer.searchValue);
   const currentIssue = useSelector((state) => state.issueReducer.currentIssue);
-  const newCommentData = useSelector(
-    (state) => state.commentsReducer.newCommentData
-  );
-  const editCommentData = useSelector(
-    (state) => state.commentsReducer.editCommentData
-  );
-  const deleteCommentData = useSelector(
-    (state) => state.commentsReducer.deleteCommentData
-  );
-
-  const [modalActive, setModalActive] = useState(false);
 
   const issueTypes = [
     selector.backlogIssues,
@@ -138,26 +128,14 @@ const MasterIssue = () => {
     console.log(issueId);
     console.log("139");
     dispatch(getCurrentIssue(issueId));
-    setModalActive(true);
+    history.push(`/project/board/${issueId}`);
+    // setModalActive(true);
   };
 
   const modalCloseHandler = () => {
     dispatch(currentIssueFunction({}));
-    setModalActive(false);
+    // setModalActive(false);
   };
-
-  useEffect(() => {
-    if (
-      Object.keys(newCommentData).length > 0 ||
-      Object.keys(editCommentData).length > 0 ||
-      Object.keys(deleteCommentData).length > 0
-    ) {
-      if (Object.keys(currentIssue).length > 0) {
-        console.log("currentIssue", currentIssue);
-        dispatch(getCurrentIssue(currentIssue.id));
-      }
-    }
-  }, [newCommentData, editCommentData, deleteCommentData]);
 
   searchedData.length > 0
     ? searchedData.length > 0
@@ -211,7 +189,9 @@ const MasterIssue = () => {
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
                                           >
-                                            <p>{issue.title}</p>
+                                            <p className={classes.titleText}>
+                                              {issue.title}
+                                            </p>
                                           </Card>
                                         );
                                       }}
@@ -231,17 +211,6 @@ const MasterIssue = () => {
           </Grid>
         </Grid>
       </DragDropContext>
-      {
-        <Modal
-          open={modalActive}
-          onClose={modalCloseHandler}
-          className={classes.modalStyle}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <IssueModalContent issue={currentIssue} />
-        </Modal>
-      }
     </div>
   );
 };

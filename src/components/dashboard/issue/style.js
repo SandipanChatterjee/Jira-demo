@@ -10,11 +10,11 @@ export const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: paperBackGroundColor,
     height: "auto",
-    width: "50%",
+    width: "200px",
     padding: "5px",
     minHeight: "300px",
     minWidth: "300px",
-    // margin: Math.min("150px", "50%"),
+    marginRight: "1rem",
   },
   control: {
     padding: theme.spacing(2),
@@ -34,13 +34,7 @@ export const useStyles = makeStyles((theme) => ({
   paperBackGroundColor: {
     backgroundColor: paperBackGroundColor,
   },
-  modalStyle: {
-    position: "absolute",
-    top: "10%",
-    left: "10%",
-    overflow: "scroll",
-    width: "100%",
-    height: "100%",
-    display: "block",
+  titleText: {
+    wordWrap: "break-word",
   },
 }));

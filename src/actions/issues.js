@@ -7,6 +7,7 @@ export const actionTypes = {
   inprogress: "inprogress",
   done: "done",
   current_issue: "current_issue",
+  current_issue_loading: "current_issue_loading",
 };
 
 export const backlog = (data) => {
@@ -44,6 +45,7 @@ export const inprogress = (data) => {
 };
 
 export const completed = (data) => {
+  console.log("completed#data#", data);
   const arr = JSON.parse(JSON.stringify(data));
   arr.forEach((el) => {
     el.status = issueStatus.done;
@@ -85,14 +87,24 @@ export const currentIssueFunction = (data) => {
   };
 };
 
+export const currentIssueLoading = (flag) => {
+  return {
+    type: actionTypes.current_issue_loading,
+    currentIssueLoading: flag,
+  };
+};
+
 export const getCurrentIssue = (id) => {
   return async (dispatch) => {
+    dispatch(currentIssueLoading(true));
     try {
       let response = await getIssue(id);
       const data = await response;
       dispatch(currentIssueFunction(data.issue));
+      dispatch(currentIssueLoading(false));
     } catch (e) {
       // dispatch(fail(e));
+      dispatch(currentIssueLoading(false));
     }
   };
 };
