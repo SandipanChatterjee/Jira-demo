@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Button } from "@material-ui/core";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
+import Status from "./Status";
 
 const modules = {
   toolbar: [
@@ -174,59 +175,65 @@ const IssueModalContent = ({ issue }) => {
 
   return (
     <div style={modalStyle} className={classes.paper}>
-      {showTitleEditor ? (
-        <div ref={wrapperRef}>
-          <ReactQuill
-            theme="snow"
-            onChange={handleTitleChangeDebounce}
-            value={titleText || ""}
-          />
-        </div>
-      ) : (
-        <h2
-          className={classes.titleText}
-          onClick={() => dispatch(setTitleEditor(true))}
-        >
-          {titleText}
-        </h2>
-      )}
-
-      <p>Description</p>
-      {showDescriptionEditor ? (
-        <Fragment>
-          <ReactQuill
-            formats={formats}
-            modules={modules}
-            theme="snow"
-            onChange={handleDescriptionChangeDebounce}
-            value={safeIssueDescritpion || ""}
-          />
-          <br />
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            onClick={updateDescriptionHandler}
+      <div style={{ flex: 2 }}>
+        {showTitleEditor ? (
+          <div ref={wrapperRef}>
+            <ReactQuill
+              theme="snow"
+              onChange={handleTitleChangeDebounce}
+              value={titleText || ""}
+            />
+          </div>
+        ) : (
+          <h2
+            className={classes.titleText}
+            onClick={() => dispatch(setTitleEditor(true))}
           >
-            Save
-          </Button>{" "}
-          <Button size="small" onClick={cancelDescriptionHandler}>
-            Cancel
-          </Button>
-          <br />
-        </Fragment>
-      ) : (
-        <div
-          onClick={() => dispatch(setDescriptionEditor(true))}
-          dangerouslySetInnerHTML={{ __html: safeIssueDescritpion }}
-        />
-      )}
+            {titleText}
+          </h2>
+        )}
 
-      <br />
-      <p>Comments</p>
-      <br />
-      <NewCommentSection issue={issue} />
-      <CommentListSection issue={issue} />
+        <p>Description</p>
+        {showDescriptionEditor ? (
+          <Fragment>
+            <ReactQuill
+              formats={formats}
+              modules={modules}
+              theme="snow"
+              onChange={handleDescriptionChangeDebounce}
+              value={safeIssueDescritpion || ""}
+            />
+            <br />
+            <Button
+              size="small"
+              variant="contained"
+              color="primary"
+              onClick={updateDescriptionHandler}
+            >
+              Save
+            </Button>{" "}
+            <Button size="small" onClick={cancelDescriptionHandler}>
+              Cancel
+            </Button>
+            <br />
+          </Fragment>
+        ) : (
+          <div
+            onClick={() => dispatch(setDescriptionEditor(true))}
+            dangerouslySetInnerHTML={{ __html: safeIssueDescritpion }}
+          />
+        )}
+
+        <br />
+        <p>Comments</p>
+        <br />
+        <NewCommentSection issue={issue} />
+        <CommentListSection issue={issue} />
+      </div>
+      <div style={{ flex: 1 }}>
+        {" "}
+        <Status issue={issue} />
+      </div>
     </div>
   );
 };

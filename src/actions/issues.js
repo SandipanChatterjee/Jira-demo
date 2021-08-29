@@ -23,6 +23,7 @@ export const backlog = (data) => {
 };
 
 export const selected = (data) => {
+  console.log("selected#data#", data);
   const arr = JSON.parse(JSON.stringify(data));
   arr.forEach((el) => {
     el.status = issueStatus.selected;

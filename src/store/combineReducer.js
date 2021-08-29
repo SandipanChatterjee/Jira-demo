@@ -5,6 +5,7 @@ import searchReducer from "../reducers/search";
 import usersReducer from "../reducers/users";
 import commentsReducer from "../reducers/comments";
 import editorReducer from "../reducers/editor";
+import issueStatusReducer from "../reducers/issueStatus";
 export const rootReducer = combineReducers({
   projectReducer,
   issueReducer,
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers({
   usersReducer,
   commentsReducer,
   editorReducer,
+  issueStatusReducer,
 });

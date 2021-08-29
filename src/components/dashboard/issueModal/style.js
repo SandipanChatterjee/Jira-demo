@@ -17,6 +17,8 @@ export const getModalStyle = () => {
 
 export const useStyles = makeStyles((theme) => ({
   paper: {
+    display: "flex",
+    justifyContent: "space-between",
     position: "absolute",
     width: "1000px",
     backgroundColor: "#fff",
