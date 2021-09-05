@@ -6,6 +6,7 @@ import usersReducer from "../reducers/users";
 import commentsReducer from "../reducers/comments";
 import editorReducer from "../reducers/editor";
 import issueStatusReducer from "../reducers/issueStatus";
+import assigneesReducer from "../reducers/assignees";
 export const rootReducer = combineReducers({
   projectReducer,
   issueReducer,
@@ -14,4 +15,5 @@ export const rootReducer = combineReducers({
   commentsReducer,
   editorReducer,
   issueStatusReducer,
+  assigneesReducer,
 });

@@ -26,6 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     maxHeight: "calc(100vh - 210px)",
     overflowY: "auto",
     padding: theme.spacing(2, 4, 3),
+    // margin: theme.spacing(20, 4, 3),
   },
   commentsContainer: {
     display: "flex",

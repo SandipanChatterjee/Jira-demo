@@ -24,7 +24,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Button } from "@material-ui/core";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
-import Status from "./Status";
+import Status from "./status/Status";
+import Assignees from "./assigness/Assignees";
 
 const modules = {
   toolbar: [
@@ -220,6 +221,7 @@ const IssueModalContent = ({ issue }) => {
         ) : (
           <div
             onClick={() => dispatch(setDescriptionEditor(true))}
+            style={{ width: "500px" }}
             dangerouslySetInnerHTML={{ __html: safeIssueDescritpion }}
           />
         )}
@@ -233,6 +235,7 @@ const IssueModalContent = ({ issue }) => {
       <div style={{ flex: 1 }}>
         {" "}
         <Status issue={issue} />
+        <Assignees issue={issue} />
       </div>
     </div>
   );
