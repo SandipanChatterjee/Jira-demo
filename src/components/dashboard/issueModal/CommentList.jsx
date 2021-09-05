@@ -125,6 +125,14 @@ const CommentList = ({ issue }) => {
     );
   };
   useEffect(() => {
+    issue.comments.map((comment, index) => {
+      if (currentCommentIndex == index) {
+        dispatch(editCommentTextHandler(comment.body));
+      }
+    });
+  }, [acitveEditComment]);
+
+  useEffect(() => {
     return () => {
       currentDeleteElementId = 0;
     };
@@ -155,9 +163,7 @@ const CommentList = ({ issue }) => {
                       multiline
                       rows={4}
                       onChange={changeCommentHandler}
-                      value={
-                        editCommentText !== "" ? editCommentText : comment.body
-                      }
+                      value={editCommentText}
                     />
                     <br />
                     <br />

@@ -76,8 +76,6 @@ const IssueModalContent = ({ issue }) => {
     (state) => state.editorReducer.descriptionText
   );
   const [modalStyle] = React.useState(getModalStyle);
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, setTitleEditor);
 
   const safeIssueDescritpion = DOMPurify.sanitize(descriptionText);
 
@@ -142,6 +140,10 @@ const IssueModalContent = ({ issue }) => {
     handleDescriptionChange
   );
 
+  const closeTitleEditorHandler = () => {
+    dispatch(setTitleEditor(false));
+  };
+
   useEffect(() => {
     console.log("issuee##", issue);
     dispatch(setTitleText(issue.title));
@@ -178,7 +180,7 @@ const IssueModalContent = ({ issue }) => {
     <div style={modalStyle} className={classes.paper}>
       <div style={{ flex: 2 }}>
         {showTitleEditor ? (
-          <div ref={wrapperRef}>
+          <div onBlur={closeTitleEditorHandler}>
             <ReactQuill
               theme="snow"
               onChange={handleTitleChangeDebounce}

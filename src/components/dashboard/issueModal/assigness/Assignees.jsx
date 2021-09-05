@@ -11,7 +11,6 @@ import {
 import { useStyles } from "./assigneesStyle";
 import { useSelector, useDispatch } from "react-redux";
 import { updateIssueList } from "../../../../services/updateIssueList";
-import { useOutsideAlerter } from "../../../../utils/utils";
 
 const Assignees = ({ issue }) => {
   const classes = useStyles();
@@ -28,8 +27,6 @@ const Assignees = ({ issue }) => {
   );
 
   const usersRef = useRef(true);
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, setShowUsersList);
 
   const showUsersListHandler = () => {
     dispatch(setShowUsersList(true));
@@ -39,6 +36,7 @@ const Assignees = ({ issue }) => {
       dispatch(setShowUsersList(false));
       return;
     }
+    console.log("changeUsersHandler##");
     dispatch(setAssignedUsers(val));
     dispatch(setShowUsersList(false));
   };
@@ -46,6 +44,10 @@ const Assignees = ({ issue }) => {
     console.log("userId", userId);
     dispatch(setDeleteUsers(userId));
     dispatch(setShowUsersList(true));
+  };
+
+  const closeUsersListHandler = () => {
+    dispatch(setShowUsersList(false));
   };
 
   useEffect(() => {
@@ -64,6 +66,7 @@ const Assignees = ({ issue }) => {
     if (issue.userIds.length > 0) {
       issue.users.map((user) => dispatch(setAssignedUsers(user)));
     }
+
     return () => {
       dispatch(resetUsers());
     };
@@ -105,23 +108,24 @@ const Assignees = ({ issue }) => {
         </div>
       )}
       {showUsersList ? (
-        <Autocomplete
-          // ref={wrapperRef}
-          id="free-solo-demo"
-          freeSolo
-          onChange={(event, newValue) => changeUsersHandler(event, newValue)}
-          options={usersOption}
-          getOptionLabel={(option) => option.name}
-          clearOnBlur={true}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search"
-              margin="normal"
-              variant="outlined"
-            />
-          )}
-        />
+        <div onBlur={closeUsersListHandler}>
+          <Autocomplete
+            freeSolo
+            onChange={(event, newValue) => changeUsersHandler(event, newValue)}
+            options={usersOption}
+            getOptionLabel={(option) => option.name}
+            clearOnBlur={true}
+            clearOnEscape={true}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Search"
+                margin="normal"
+                variant="outlined"
+              />
+            )}
+          />
+        </div>
       ) : null}
     </div>
   );
