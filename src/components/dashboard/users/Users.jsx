@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Avatar, Button } from "@material-ui/core";
+import { AvatarGroup } from "@material-ui/lab";
 import { useStyles } from "./style";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import { convertToArrayOfObjects } from "../../../utils/utils";
@@ -100,25 +101,27 @@ const Users = () => {
 
   return (
     <div className={classes.root}>
-      {project.users.map((user, index) => {
-        let userFound = currentUsers.find((currentUser) => {
-          if (currentUser.id === user.id) {
-            return currentUser;
-          }
-        });
-        console.log(userFound, currentUsers);
-        return (
-          <Avatar
-            key={index}
-            alt={user.name}
-            src={user.avatarUrl}
-            className={userFound ? classes.active : classes.inactive}
-            onClick={() =>
-              userFound ? handleRemove(user.id) : handleAdd(user.id)
+      <AvatarGroup>
+        {project.users.map((user, index) => {
+          let userFound = currentUsers.find((currentUser) => {
+            if (currentUser.id === user.id) {
+              return currentUser;
             }
-          />
-        );
-      })}
+          });
+          console.log(userFound, currentUsers);
+          return (
+            <Avatar
+              key={index}
+              alt={user.name}
+              src={user.avatarUrl}
+              className={userFound ? classes.active : classes.inactive}
+              onClick={() =>
+                userFound ? handleRemove(user.id) : handleAdd(user.id)
+              }
+            />
+          );
+        })}
+      </AvatarGroup>
       <Button
         variant={currentUserActive ? "contained" : null}
         onClick={

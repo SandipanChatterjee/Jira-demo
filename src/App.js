@@ -5,8 +5,12 @@ import { RootRoutes } from "./routes/Index";
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <RootRoutes />
+      <div>
+        <Navbar />
+      </div>
+      <div>
+        <RootRoutes />
+      </div>
     </div>
   );
 }

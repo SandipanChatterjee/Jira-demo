@@ -11,6 +11,7 @@ import Users from "./users/Users";
 import { useStyles } from "./style";
 import { CircularProgress } from "@material-ui/core";
 import { Loader } from "../shared/loader/Loader";
+import { dashboardBackGroundColor } from "../../utils/globalStyles";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.projectReducer.project);
@@ -50,18 +51,22 @@ const Dashboard = () => {
     <div
       style={{
         display: "block",
-        width: "1200px",
+        width: "auto",
+        backgroundColor: dashboardBackGroundColor,
+        height: "100vh",
+        padding: "1rem",
       }}
     >
       <Header
         name={"Kanban board"}
         title={"Projects / singularity 1.0 vv2 / Kanban Board"}
       />
+      <br />
       <div className={classes.container}>
         <Search />
         <Users />
       </div>
-
+      <br />
       <MasterIssue />
     </div>
   );

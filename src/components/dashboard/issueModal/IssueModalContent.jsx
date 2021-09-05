@@ -221,7 +221,7 @@ const IssueModalContent = ({ issue }) => {
         ) : (
           <div
             onClick={() => dispatch(setDescriptionEditor(true))}
-            style={{ width: "500px" }}
+            style={{ width: "500px", overflow: "auto" }}
             dangerouslySetInnerHTML={{ __html: safeIssueDescritpion }}
           />
         )}

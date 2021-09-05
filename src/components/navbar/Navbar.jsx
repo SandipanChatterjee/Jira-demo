@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core";
+import { paperBackGroundColor } from "../../utils/globalStyles";
 
 const drawerWidth = 240;
 
@@ -25,13 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-  },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
+    backgroundColor: paperBackGroundColor,
   },
 }));
 
@@ -47,10 +42,10 @@ const Navbar = (props) => {
       <CssBaseline />
       <Drawer
         className={classes.drawer}
-        variant="permanent"
         classes={{
           paper: classes.drawerPaper,
         }}
+        variant="permanent"
         anchor="left"
       >
         <List>

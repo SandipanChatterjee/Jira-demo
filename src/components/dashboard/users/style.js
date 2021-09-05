@@ -7,9 +7,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   active: {
-    border: "1px solid blue",
-    padding: ".2rem",
-    borderRadius: "50%",
+    border: "2px solid blue",
   },
   inactive: {
     border: "none",
