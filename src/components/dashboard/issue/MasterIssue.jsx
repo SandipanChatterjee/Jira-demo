@@ -102,8 +102,9 @@ const MasterIssue = () => {
           });
         });
         issues.forEach((el) => {
-          el.status =
-            Object.keys(issueStatus)[parseInt(destination.droppableId)];
+          el.status = Object.keys(issueStatus)[
+            parseInt(destination.droppableId)
+          ];
         });
         issues = issues.filter((el) => el.id === itemId);
         issues = [
@@ -151,7 +152,7 @@ const MasterIssue = () => {
             <Grid className={classes.girdDisplay}>
               {list.length > 0
                 ? list.map((issueType, index) => {
-                    // console.log("issueType#", issueType);
+                    console.log("issueType#", issueType);
                     return (
                       <Droppable droppableId={`${index}`} key={index}>
                         {(provided, snapshot) => {

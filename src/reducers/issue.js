@@ -8,6 +8,16 @@ const initState = {
   currentIssue: {},
 };
 
+const key = "id";
+
+const updateInprogressIssue = (state, action) => {
+  const combinedIssue = [...state.inprogressIssues, ...action.inprogressIssue];
+  const inprogressIssueSet = [
+    ...new Map(combinedIssue.map((item) => [item[key], item])).values(),
+  ];
+  return inprogressIssueSet;
+};
+
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case actionTypes.backlog:

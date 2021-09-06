@@ -26,6 +26,7 @@ import { Button } from "@material-ui/core";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import Status from "./status/Status";
 import Assignees from "./assigness/Assignees";
+import Reporter from "./reporter/Reporter";
 
 const modules = {
   toolbar: [
@@ -76,6 +77,8 @@ const IssueModalContent = ({ issue }) => {
     (state) => state.editorReducer.descriptionText
   );
   const [modalStyle] = React.useState(getModalStyle);
+
+  const titleRef = useRef();
 
   const safeIssueDescritpion = DOMPurify.sanitize(descriptionText);
 
@@ -180,9 +183,13 @@ const IssueModalContent = ({ issue }) => {
     <div style={modalStyle} className={classes.paper}>
       <div style={{ flex: 2 }}>
         {showTitleEditor ? (
-          <div onBlur={closeTitleEditorHandler}>
+          <div
+            onBlur={closeTitleEditorHandler}
+            onLoad={() => titleRef.current.focus()}
+          >
             <ReactQuill
               theme="snow"
+              ref={titleRef}
               onChange={handleTitleChangeDebounce}
               value={titleText || ""}
             />
@@ -238,6 +245,8 @@ const IssueModalContent = ({ issue }) => {
         {" "}
         <Status issue={issue} />
         <Assignees issue={issue} />
+        <br />
+        <Reporter issue={issue} />
       </div>
     </div>
   );

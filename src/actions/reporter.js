@@ -1,0 +1,32 @@
+import { updateIssueList } from "../services/updateIssueList";
+
+export const actionTypes = {
+  show_reporter_list: "show_reporter_list",
+  reporter_id: "reporter_id",
+};
+
+export const setShowReporterList = (flag) => {
+  return {
+    type: actionTypes.show_reporter_list,
+    showReporterList: flag,
+  };
+};
+
+export const setSelectedReporter = (id, reporterData) => {
+  return {
+    type: actionTypes.reporter_id,
+    reporterId: id,
+    reporterData: reporterData,
+  };
+};
+
+export const updateIssueListHandler = (payload, id) => {
+  return async (dispatch) => {
+    try {
+      const response = await updateIssueList(payload, id);
+      await response;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
