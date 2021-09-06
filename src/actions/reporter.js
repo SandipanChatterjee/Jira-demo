@@ -12,7 +12,8 @@ export const setShowReporterList = (flag) => {
   };
 };
 
-export const setSelectedReporter = (id, reporterData) => {
+export const setSelectedReporter = (id, users) => {
+  const reporterData = users.find((el) => el.id == id);
   return {
     type: actionTypes.reporter_id,
     reporterId: id,

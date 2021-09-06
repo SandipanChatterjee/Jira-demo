@@ -30,14 +30,15 @@ const Reporter = ({ issue }) => {
   };
 
   const changeReporterHandler = (event, newValue) => {
-    dispatch(setSelectedReporter(newValue.id, newValue));
+    dispatch(setSelectedReporter(newValue.id, users));
     dispatch(updateIssueListHandler({ reporterId: newValue.id }, issue.id));
     dispatch(setShowReporterList(false));
   };
 
   useEffect(() => {
-    const reporter = users.find((el) => el.id == issue.reporterId);
-    dispatch(setSelectedReporter(issue.reporterId, reporter));
+    if (users.length > 0) {
+      dispatch(setSelectedReporter(issue.reporterId, users));
+    }
   }, []);
 
   const usersOption = users.filter((el) => el.id !== reportedId);
