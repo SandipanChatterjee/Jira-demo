@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, Fragment } from "react";
 import { TextField, Avatar, Button } from "@material-ui/core";
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { Add, Clear } from "@material-ui/icons";
@@ -89,7 +89,7 @@ const Assignees = ({ issue }) => {
                 variant="contained"
                 onClick={() => deleteUserHandler(user.id)}
               >
-                <Avatar src={user.avatarUrl} sizes="10px" />
+                <Avatar src={user.avatarUrl} className={classes.avatarSize} />
                 <span className={classes.text}>{user.name}</span>
                 <Clear fontSize="small" />
               </Button>
@@ -114,6 +114,17 @@ const Assignees = ({ issue }) => {
             onChange={(event, newValue) => changeUsersHandler(event, newValue)}
             options={usersOption}
             getOptionLabel={(option) => option.name}
+            renderOption={(option) => {
+              return (
+                <Fragment>
+                  <Avatar
+                    src={option.avatarUrl}
+                    className={classes.avatarSize}
+                  />
+                  <span className={classes.text}>{option.name}</span>
+                </Fragment>
+              );
+            }}
             clearOnBlur={true}
             clearOnEscape={true}
             renderInput={(params) => (

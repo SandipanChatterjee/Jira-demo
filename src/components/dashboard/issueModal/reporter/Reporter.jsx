@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import {
   setSelectedReporter,
   setShowReporterList,
@@ -46,8 +46,12 @@ const Reporter = ({ issue }) => {
   return (
     <div>
       <p>REPORTER</p>
-      <Button variant="contained" onClick={showReporterListHandler}>
-        <Avatar src={reporterData.avatarUrl} sizes="10px" />
+      <Button
+        variant="contained"
+        onClick={showReporterListHandler}
+        className={classes.parentContainer}
+      >
+        <Avatar src={reporterData.avatarUrl} className={classes.avatarSize} />
         <span className={classes.text}>{reporterData.name}</span>
       </Button>
       {showReporterList ? (
@@ -59,6 +63,17 @@ const Reporter = ({ issue }) => {
             }
             options={usersOption}
             getOptionLabel={(option) => option.name}
+            renderOption={(option) => {
+              return (
+                <Fragment>
+                  <Avatar
+                    src={option.avatarUrl}
+                    className={classes.avatarSize}
+                  />
+                  <span className={classes.text}>{option.name}</span>
+                </Fragment>
+              );
+            }}
             clearOnBlur={true}
             clearOnEscape={true}
             renderInput={(params) => (

@@ -2,12 +2,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   primaryButtonColor,
   primaryButtonWidth,
+  avatarSize,
 } from "../../../../utils/globalStyles";
 export const useStyles = makeStyles((theme) => ({
   parentContainer: {
-    padding: ".1rem",
+    padding: ".2rem .5rem",
     marginBottom: ".5rem",
-    width: primaryButtonWidth,
+    width: "auto",
+    justifyContent: "flex-start",
   },
   container: {
     display: "flex",
@@ -18,6 +20,10 @@ export const useStyles = makeStyles((theme) => ({
   text: {
     marginTop: "auto",
     marginBottom: "auto",
+  },
+  avatarSize: {
+    width: avatarSize.width,
+    height: avatarSize.height,
   },
 
   addMoreButton: {

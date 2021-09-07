@@ -53,7 +53,16 @@ const Priority = ({ issue }) => {
   return (
     <div>
       <p>PRIORITY</p>
-      <Button variant="contained" onClick={showPriorityListHandler}>
+      <Button
+        variant="contained"
+        onClick={showPriorityListHandler}
+        style={{
+          padding: ".2rem .5rem",
+          marginBottom: ".5rem",
+          width: "auto",
+          justifyContent: "flex-start",
+        }}
+      >
         <span>{proirtyIcon[priority]}</span>
         <span>{priorityObj[priority]}</span>
       </Button>

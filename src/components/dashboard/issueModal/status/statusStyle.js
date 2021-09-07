@@ -5,8 +5,9 @@ import {
 } from "../../../../utils/globalStyles";
 export const useStyles = makeStyles((theme) => ({
   button: {
-    padding: ".1rem",
+    padding: ".2rem .5rem",
     marginBottom: ".5rem",
-    width: primaryButtonWidth,
+    width: "auto",
+    justifyContent: "flex-start",
   },
 }));
