@@ -8,6 +8,8 @@ import editorReducer from "../reducers/editor";
 import issueStatusReducer from "../reducers/issueStatus";
 import assigneesReducer from "../reducers/assignees";
 import reporterReducer from "../reducers/reporter";
+import priortyReducer from "../reducers/priority";
+
 export const rootReducer = combineReducers({
   projectReducer,
   issueReducer,
@@ -18,4 +20,5 @@ export const rootReducer = combineReducers({
   issueStatusReducer,
   assigneesReducer,
   reporterReducer,
+  priortyReducer,
 });

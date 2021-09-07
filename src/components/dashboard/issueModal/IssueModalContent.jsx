@@ -27,6 +27,7 @@ import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import Status from "./status/Status";
 import Assignees from "./assigness/Assignees";
 import Reporter from "./reporter/Reporter";
+import Priority from "./priorty/Priority";
 
 const modules = {
   toolbar: [
@@ -247,6 +248,8 @@ const IssueModalContent = ({ issue }) => {
         <Assignees issue={issue} />
         <br />
         <Reporter issue={issue} />
+        <br />
+        <Priority issue={issue} />
       </div>
     </div>
   );
