@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     position: "absolute",
-    width: "1000px",
+    width: "1200px",
     backgroundColor: "#fff",
     minHeight: "100%",
     maxHeight: "calc(100vh - 210px)",
@@ -68,5 +68,19 @@ export const useStyles = makeStyles((theme) => ({
   },
   titleText: {
     wordWrap: "break-word",
+  },
+  titleContainer: {
+    "&:hover ": {
+      cursor: "pointer",
+      backgroundColor: paperBackGroundColor,
+    },
+  },
+  descriptionContainer: {
+    width: "700px",
+    overflow: "auto",
+    "&:hover ": {
+      cursor: "pointer",
+      backgroundColor: paperBackGroundColor,
+    },
   },
 }));

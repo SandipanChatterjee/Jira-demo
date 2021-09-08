@@ -20,11 +20,36 @@ const priorityObj = {
 };
 
 const proirtyIcon = {
-  1: <ArrowUpward className="priority" style={{ color: "#8B0000" }} />,
-  2: <ArrowUpward className="priority" style={{ color: "#FF7F7F" }} />,
-  3: <ArrowUpward className="priority" style={{ color: "#FFA500" }} />,
-  4: <ArrowDownward className="priority" style={{ color: "#90EE90" }} />,
-  5: <ArrowDownward className="priority" style={{ color: "#006400" }} />,
+  1: (
+    <ArrowUpward
+      className="priority"
+      style={{ color: "#8B0000", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+  2: (
+    <ArrowUpward
+      className="priority"
+      style={{ color: "#FF7F7F", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+  3: (
+    <ArrowUpward
+      className="priority"
+      style={{ color: "#FFA500", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+  4: (
+    <ArrowDownward
+      className="priority"
+      style={{ color: "#90EE90", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+  5: (
+    <ArrowDownward
+      className="priority"
+      style={{ color: "#006400", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
 };
 const Priority = ({ issue }) => {
   const dispatch = useDispatch();
@@ -54,7 +79,7 @@ const Priority = ({ issue }) => {
     <div>
       <p>PRIORITY</p>
       <Button
-        variant="contained"
+        variant="text"
         onClick={showPriorityListHandler}
         style={{
           padding: ".2rem .5rem",

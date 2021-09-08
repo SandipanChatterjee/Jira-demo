@@ -197,13 +197,14 @@ const IssueModalContent = ({ issue }) => {
           </div>
         ) : (
           <h2
-            className={classes.titleText}
+            className={(classes.titleText, classes.titleContainer)}
             onClick={() => dispatch(setTitleEditor(true))}
           >
             {titleText}
           </h2>
         )}
 
+        <br />
         <p>Description</p>
         {showDescriptionEditor ? (
           <Fragment>
@@ -231,7 +232,7 @@ const IssueModalContent = ({ issue }) => {
         ) : (
           <div
             onClick={() => dispatch(setDescriptionEditor(true))}
-            style={{ width: "500px", overflow: "auto" }}
+            className={classes.descriptionContainer}
             dangerouslySetInnerHTML={{ __html: safeIssueDescritpion }}
           />
         )}
@@ -243,8 +244,8 @@ const IssueModalContent = ({ issue }) => {
         <CommentListSection issue={issue} />
       </div>
       <div style={{ flex: 1 }}>
-        {" "}
         <Status issue={issue} />
+        <br />
         <Assignees issue={issue} />
         <br />
         <Reporter issue={issue} />

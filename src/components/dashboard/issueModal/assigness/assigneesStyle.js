@@ -8,6 +8,7 @@ export const useStyles = makeStyles((theme) => ({
   parentContainer: {
     padding: ".2rem .5rem",
     marginBottom: ".5rem",
+    marginRight: ".5rem",
     width: "auto",
     justifyContent: "flex-start",
   },

@@ -201,9 +201,6 @@ const Status = ({ issue }) => {
             return filtered;
           }}
           onClose={closeIssueStatusHandler}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
           id="issue-status"
           options={issueStatusFilteredList}
           getOptionLabel={(option) => {
