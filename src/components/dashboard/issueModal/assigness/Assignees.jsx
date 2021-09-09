@@ -130,9 +130,9 @@ const Assignees = ({ issue }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search"
                 margin="normal"
                 variant="outlined"
+                autoFocus
               />
             )}
           />

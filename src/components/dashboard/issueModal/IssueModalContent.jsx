@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 
 import NewCommentSection from "./NewComment";
 import CommentListSection from "./CommentList";
+
 import { updateIssueList } from "../../../services/updateIssueList";
 import {
   issueStatus as issueStatusObj,
@@ -31,7 +32,7 @@ import Status from "./status/Status";
 import Assignees from "./assigness/Assignees";
 import Reporter from "./reporter/Reporter";
 import Priority from "./priorty/Priority";
-
+import Estimate from "./estimate/Estimate";
 const modules = {
   toolbar: [
     [{ header: [1, 2, false] }],
@@ -107,12 +108,14 @@ const IssueModalContent = ({ issue }) => {
     const currentFilteredIssue = issuesCopy.find(
       (issuesEls) => issue.id === issuesEls.id
     );
-    const index = issuesCopy.indexOf(currentFilteredIssue);
-    issuesCopy.splice(index, 1);
-    currentFilteredIssue.title = titleText;
-    issuesCopy.splice(index, 0, { ...currentFilteredIssue });
-    modifiedIssues = [...issuesCopy];
-    console.log("modifiedIssues#", modifiedIssues);
+    if (Object.keys(currentFilteredIssue).length > 0) {
+      const index = issuesCopy.indexOf(currentFilteredIssue);
+      issuesCopy.splice(index, 1);
+      currentFilteredIssue.title = titleText;
+      issuesCopy.splice(index, 0, { ...currentFilteredIssue });
+      modifiedIssues = [...issuesCopy];
+      console.log("modifiedIssues#", modifiedIssues);
+    }
   };
 
   const handleTitleChange = (value) => {
@@ -272,6 +275,8 @@ const IssueModalContent = ({ issue }) => {
         <Reporter issue={issue} />
         <br />
         <Priority issue={issue} />
+        <br />
+        <Estimate issue={issue} />
       </div>
     </div>
   );

@@ -74,9 +74,9 @@ const NewComment = ({ issue }) => {
               ref={inputRef}
               className={classes.input}
               id="standard-search"
-              label="Search field"
               type="search"
               variant="outlined"
+              placeholder="Add a comment.."
               multiline
               rows={activeNewComment ? 4 : 1}
               onClick={activeHandler}

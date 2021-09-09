@@ -79,9 +79,9 @@ const Reporter = ({ issue }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search"
                 margin="normal"
                 variant="outlined"
+                autoFocus
               />
             )}
           />

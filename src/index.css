@@ -1,3 +1,7 @@
+:root {
+  --paper-background-color: #f4f5f7;
+}
+
 body {
   -webkit-tap-highlight-color: transparent;
   line-height: 1.2;

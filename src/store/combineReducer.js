@@ -9,6 +9,7 @@ import issueStatusReducer from "../reducers/issueModal/issueStatus";
 import assigneesReducer from "../reducers/issueModal/assignees";
 import reporterReducer from "../reducers/issueModal/reporter";
 import priortyReducer from "../reducers/issueModal/priority";
+import estimateReducer from "../reducers/issueModal/estimate";
 
 export const rootReducer = combineReducers({
   projectReducer,
@@ -21,4 +22,5 @@ export const rootReducer = combineReducers({
   assigneesReducer,
   reporterReducer,
   priortyReducer,
+  estimateReducer,
 });

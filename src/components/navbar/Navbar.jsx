@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
     backgroundColor: paperBackGroundColor,
+    padding: "1rem",
+  },
+  listItem: {
+    marginBottom: "1rem",
   },
 }));
 
@@ -37,6 +41,12 @@ const routes = [
 
 const Navbar = (props) => {
   const classes = useStyles();
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const routeHandler = (el, index) => {
+    setSelectedIndex(index);
+    props.history.push(el.route);
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -53,7 +63,9 @@ const Navbar = (props) => {
             <ListItem
               button
               key={index}
-              onClick={() => props.history.push(el.route)}
+              selected={selectedIndex === index}
+              onClick={() => routeHandler(el, index)}
+              className={classes.listItem}
             >
               <ListItemText primary={el.title} />
             </ListItem>

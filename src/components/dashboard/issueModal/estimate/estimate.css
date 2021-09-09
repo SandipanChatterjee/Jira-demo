@@ -1,0 +1,7 @@
+#input-container {
+  background-color: var(--paper-background-color);
+  width: 350px;
+}
+#input-container:focus {
+  background-color: #ffffff;
+}

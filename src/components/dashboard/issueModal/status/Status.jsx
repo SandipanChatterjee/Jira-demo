@@ -224,7 +224,14 @@ const Status = ({ issue }) => {
           freeSolo
           renderInput={(params) => {
             console.log("params##", params);
-            return <TextField {...params} label="Search" variant="outlined" />;
+            return (
+              <TextField
+                {...params}
+                margin="normal"
+                variant="outlined"
+                autoFocus
+              />
+            );
           }}
         />
       ) : null}

@@ -26,22 +26,23 @@ export const useStyles = makeStyles((theme) => ({
     maxHeight: "calc(100vh - 210px)",
     overflowY: "auto",
     padding: theme.spacing(2, 4, 3),
-    // margin: theme.spacing(20, 4, 3),
   },
   commentsContainer: {
     display: "flex",
+    width: "600px",
   },
   newComment: {
     display: "flex",
+    width: "600px",
   },
   avatar: {
     marginRight: "20px",
   },
   inputContainer: {
-    maxWidth: "1200px",
+    maxWidth: "600px",
   },
   input: {
-    width: "200%",
+    width: "600px",
   },
   buttonContainer: {
     display: "flex",
@@ -54,7 +55,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
   commentBody: {
-    width: "200px",
+    width: "600px",
     wordWrap: "break-word",
   },
   modalStyle: {
@@ -66,10 +67,10 @@ export const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "block",
   },
-  titleText: {
-    wordWrap: "break-word",
-  },
+  titleText: {},
   titleContainer: {
+    width: "600px",
+    wordWrap: "break-word",
     "&:hover ": {
       cursor: "pointer",
       backgroundColor: paperBackGroundColor,
