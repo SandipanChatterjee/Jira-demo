@@ -82,13 +82,15 @@ const Priority = ({ issue }) => {
         variant="text"
         onClick={showPriorityListHandler}
         style={{
-          padding: ".2rem .5rem",
+          paddingTop: ".2rem",
+          paddingBottom: ".2rem",
+          paddingLeft: ".2rem",
           marginBottom: ".5rem",
           width: "auto",
           justifyContent: "flex-start",
         }}
       >
-        <span>{proirtyIcon[priority]}</span>
+        <span style={{ textAlign: "left" }}>{proirtyIcon[priority]}</span>
         <span>{priorityObj[priority]}</span>
       </Button>
       {showPriorityList ? (
