@@ -1,4 +1,4 @@
-import { updateIssueList } from "../services/updateIssueList";
+import { updateIssueList } from "../../services/updateIssueList";
 export const actionTypes = {
   show_issue_status_dropdown: "show_issue_status_dropdown",
   set_issue_status: "set_issue_status",

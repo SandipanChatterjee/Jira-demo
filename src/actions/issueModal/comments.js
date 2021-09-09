@@ -1,5 +1,5 @@
-import { saveComment, saveEditedComment } from "../services/saveComment";
-import { deleteCommentApi } from "../services/deleteComment";
+import { saveComment, saveEditedComment } from "../../services/saveComment";
+import { deleteCommentApi } from "../../services/deleteComment";
 export const actionTypes = {
   active_new_comment: "active_new_comment",
   new_comment_text: "new_comment",

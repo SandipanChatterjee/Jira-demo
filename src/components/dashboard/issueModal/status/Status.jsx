@@ -7,7 +7,7 @@ import {
   setIssueStatusDropDown,
   setIssueStatus,
   updateIssueStatus,
-} from "../../../../actions/issueStatus";
+} from "../../../../actions/issueModal/issueStatus";
 import {
   backlog,
   completed,

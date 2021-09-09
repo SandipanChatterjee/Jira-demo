@@ -1,4 +1,4 @@
-import { actionTypes } from "../actions/comments";
+import { actionTypes } from "../../actions/issueModal/comments";
 const initState = {
   activeNewComment: false,
   newCommentText: "",

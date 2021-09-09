@@ -1,4 +1,4 @@
-import { actionTypes } from "../actions/editor";
+import { actionTypes } from "../../actions/issueModal/editor";
 
 const initState = {
   showTitleEditor: false,

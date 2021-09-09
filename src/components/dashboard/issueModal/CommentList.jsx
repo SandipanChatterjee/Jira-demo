@@ -15,7 +15,7 @@ import {
   saveEditCommentHandler,
   deleteModal,
   deleteCommentHandler,
-} from "../../../actions/comments";
+} from "../../../actions/issueModal/comments";
 import { useSelector, useDispatch } from "react-redux";
 
 let currentDeleteElementId = 0;

@@ -7,13 +7,16 @@ import "react-quill/dist/quill.snow.css";
 import NewCommentSection from "./NewComment";
 import CommentListSection from "./CommentList";
 import { updateIssueList } from "../../../services/updateIssueList";
-import { issueStatus, useOutsideAlerter } from "../../../utils/utils";
+import {
+  issueStatus as issueStatusObj,
+  useOutsideAlerter,
+} from "../../../utils/utils";
 import {
   setTitleEditor,
   setTitleText,
   setDescriptionText,
   setDescriptionEditor,
-} from "../../../actions/editor";
+} from "../../../actions/issueModal/editor";
 import {
   backlog,
   selected,
@@ -77,13 +80,29 @@ const IssueModalContent = ({ issue }) => {
   const descriptionText = useSelector(
     (state) => state.editorReducer.descriptionText
   );
+
+  const updatedIssue = useSelector(
+    (state) => state.issueStatusReducer.updatedIssue
+  );
+
   const [modalStyle] = React.useState(getModalStyle);
 
   const titleRef = useRef();
 
   const safeIssueDescritpion = DOMPurify.sanitize(descriptionText);
 
+  const issueStatus =
+    Object.keys(updatedIssue).length == 0 ? issue.status : updatedIssue.status;
+
   const modifyIssueHandler = (issueEl, titleText) => {
+    console.log(
+      "modifyIssueHandler#",
+      issueEl,
+      titleText,
+      issue.id,
+      issueStatus
+    );
+
     const issuesCopy = JSON.parse(JSON.stringify(issueEl));
     const currentFilteredIssue = issuesCopy.find(
       (issuesEls) => issue.id === issuesEls.id
@@ -93,17 +112,18 @@ const IssueModalContent = ({ issue }) => {
     currentFilteredIssue.title = titleText;
     issuesCopy.splice(index, 0, { ...currentFilteredIssue });
     modifiedIssues = [...issuesCopy];
+    console.log("modifiedIssues#", modifiedIssues);
   };
 
   const handleTitleChange = (value) => {
     console.log("handleTitleChange####", value);
     const titleText = value.replace(/(<([^>]+)>)/gi, "");
 
-    if (issue.status === issueStatus.backlog) {
+    if (issueStatus === issueStatusObj.backlog) {
       modifyIssueHandler(selectorIssue.backlogIssues, titleText);
-    } else if (issue.status === issueStatus.done) {
+    } else if (issueStatus === issueStatusObj.done) {
       modifyIssueHandler(selectorIssue.completedIssues, titleText);
-    } else if (issue.status === issueStatus.inprogress) {
+    } else if (issueStatus === issueStatusObj.inprogress) {
       modifyIssueHandler(selectorIssue.inprogressIssues, titleText);
     } else {
       modifyIssueHandler(selectorIssue.selectedIssues, titleText);
@@ -111,6 +131,17 @@ const IssueModalContent = ({ issue }) => {
 
     dispatch(setTitleText(titleText));
     updateIssueList({ title: titleText }, issue.id);
+    if (modifiedIssues.length > 0) {
+      if (issueStatus === issueStatusObj.backlog) {
+        dispatch(backlog(modifiedIssues));
+      } else if (issueStatus === issueStatusObj.done) {
+        dispatch(completed(modifiedIssues));
+      } else if (issueStatus === issueStatusObj.inprogress) {
+        dispatch(inprogress(modifiedIssues));
+      } else {
+        dispatch(selected(modifiedIssues));
+      }
+    }
   };
 
   const handleDescriptionChange = (value) => {
@@ -162,17 +193,7 @@ const IssueModalContent = ({ issue }) => {
       dispatch(setDescriptionText(""));
       dispatch(setDescriptionEditor(false));
       dispatch(setTitleEditor(false));
-      if (modifiedIssues.length > 0) {
-        if (issue.status === issueStatus.backlog) {
-          dispatch(backlog(modifiedIssues));
-        } else if (issue.status === issueStatus.done) {
-          dispatch(completed(modifiedIssues));
-        } else if (issue.status === issueStatus.inprogress) {
-          dispatch(inprogress(modifiedIssues));
-        } else {
-          dispatch(selected(modifiedIssues));
-        }
-      }
+      console.log("modifiedIssues#", modifiedIssues, issueStatus);
     };
   }, []);
 

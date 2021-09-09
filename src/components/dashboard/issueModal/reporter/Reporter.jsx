@@ -3,7 +3,7 @@ import {
   setSelectedReporter,
   setShowReporterList,
   updateIssueListHandler,
-} from "../../../../actions/reporter";
+} from "../../../../actions/issueModal/reporter";
 import { TextField, Avatar, Button } from "@material-ui/core";
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { useStyles } from "./reporterStyle";

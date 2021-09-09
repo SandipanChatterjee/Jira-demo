@@ -1,4 +1,4 @@
-import { actionTypes } from "../actions/priority";
+import { actionTypes } from "../../actions/issueModal/priority";
 const initState = {
   showPriorityList: false,
   priority: "",

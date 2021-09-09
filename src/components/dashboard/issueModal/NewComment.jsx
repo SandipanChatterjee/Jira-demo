@@ -5,7 +5,7 @@ import {
   newCommentTextHandler,
   saveNewCommentHandler,
   saveNewCommentLoading,
-} from "../../../actions/comments";
+} from "../../../actions/issueModal/comments";
 import { useStyles, getModalStyle } from "./style";
 import { useSelector, useDispatch } from "react-redux";
 

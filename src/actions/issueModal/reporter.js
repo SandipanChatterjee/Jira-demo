@@ -1,4 +1,4 @@
-import { updateIssueList } from "../services/updateIssueList";
+import { updateIssueList } from "../../services/updateIssueList";
 
 export const actionTypes = {
   show_reporter_list: "show_reporter_list",

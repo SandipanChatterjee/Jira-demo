@@ -6,7 +6,7 @@ import {
   setPriority,
   setShowPriorityList,
   updateIssueListHandler,
-} from "../../../../actions/priority";
+} from "../../../../actions/issueModal/priority";
 
 import { useDispatch, useSelector } from "react-redux";
 import "./priority.css";

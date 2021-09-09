@@ -7,7 +7,7 @@ import {
   setAssignedUsers,
   setDeleteUsers,
   resetUsers,
-} from "../../../../actions/assignees";
+} from "../../../../actions/issueModal/assignees";
 import { useStyles } from "./assigneesStyle";
 import { useSelector, useDispatch } from "react-redux";
 import { updateIssueList } from "../../../../services/updateIssueList";

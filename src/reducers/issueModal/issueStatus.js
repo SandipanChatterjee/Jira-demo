@@ -1,4 +1,4 @@
-import { actionTypes } from "../actions/issueStatus";
+import { actionTypes } from "../../actions/issueModal/issueStatus";
 
 const initState = {
   showIssueStatusDropdown: false,

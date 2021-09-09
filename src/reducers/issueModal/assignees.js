@@ -1,4 +1,4 @@
-import { actionTypes } from "../actions/assignees";
+import { actionTypes } from "../../actions/issueModal/assignees";
 const initState = {
   showUsersList: false,
   assignedUsersId: [],

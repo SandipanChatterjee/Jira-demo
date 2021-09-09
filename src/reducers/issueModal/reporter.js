@@ -1,4 +1,4 @@
-import { actionTypes } from "../actions/reporter";
+import { actionTypes } from "../../actions/issueModal/reporter";
 const initState = {
   showReporterList: false,
   reporterId: null,
