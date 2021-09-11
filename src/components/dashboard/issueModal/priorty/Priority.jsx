@@ -117,6 +117,7 @@ const Priority = ({ issue }) => {
                 margin="normal"
                 variant="outlined"
                 autoFocus
+                size="small"
               />
             )}
           />

@@ -82,6 +82,7 @@ const Reporter = ({ issue }) => {
                 margin="normal"
                 variant="outlined"
                 autoFocus
+                size="small"
               />
             )}
           />

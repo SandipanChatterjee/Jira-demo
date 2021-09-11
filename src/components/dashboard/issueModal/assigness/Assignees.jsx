@@ -130,6 +130,7 @@ const Assignees = ({ issue }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
+                size="small"
                 margin="normal"
                 variant="outlined"
                 autoFocus

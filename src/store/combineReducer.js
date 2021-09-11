@@ -1,4 +1,3 @@
-import { combineReducers } from "redux";
 import projectReducer from "../reducers/project";
 import issueReducer from "../reducers/issue";
 import searchReducer from "../reducers/search";
@@ -10,6 +9,9 @@ import assigneesReducer from "../reducers/issueModal/assignees";
 import reporterReducer from "../reducers/issueModal/reporter";
 import priortyReducer from "../reducers/issueModal/priority";
 import estimateReducer from "../reducers/issueModal/estimate";
+import timeTrackerReducer from "../reducers/issueModal/timeTracker";
+import updateIssueListReducer from "../reducers/updateIssueList";
+import { combineReducers } from "redux";
 
 export const rootReducer = combineReducers({
   projectReducer,
@@ -23,4 +25,6 @@ export const rootReducer = combineReducers({
   reporterReducer,
   priortyReducer,
   estimateReducer,
+  timeTrackerReducer,
+  updateIssueListReducer,
 });

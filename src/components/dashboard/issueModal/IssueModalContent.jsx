@@ -33,6 +33,7 @@ import Assignees from "./assigness/Assignees";
 import Reporter from "./reporter/Reporter";
 import Priority from "./priorty/Priority";
 import Estimate from "./estimate/Estimate";
+import TimeTracker from "./timeTracker/TimeTracker";
 const modules = {
   toolbar: [
     [{ header: [1, 2, false] }],
@@ -277,6 +278,8 @@ const IssueModalContent = ({ issue }) => {
         <Priority issue={issue} />
         <br />
         <Estimate issue={issue} />
+        <br />
+        <TimeTracker issue={issue} />
       </div>
     </div>
   );

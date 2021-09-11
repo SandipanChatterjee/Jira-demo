@@ -65,6 +65,7 @@ const Search = () => {
     <div className={classes.root}>
       <TextField
         id="search"
+        size="small"
         className={classes.textField}
         InputProps={{
           className: classes.input,
