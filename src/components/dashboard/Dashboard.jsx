@@ -23,7 +23,6 @@ const Dashboard = () => {
 
   useEffect(async () => {
     if (Object.keys(project).length == 0) {
-      createGuestAccount();
       dispatch(getProjectData());
       dispatch(getCurrentUserData());
     }

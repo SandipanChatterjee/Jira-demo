@@ -1,3 +1,4 @@
+import authenticateReducer from "../reducers/guestAccount";
 import projectReducer from "../reducers/project";
 import issueReducer from "../reducers/issue";
 import searchReducer from "../reducers/search";
@@ -14,6 +15,7 @@ import updateIssueListReducer from "../reducers/updateIssueList";
 import { combineReducers } from "redux";
 
 export const rootReducer = combineReducers({
+  authenticateReducer,
   projectReducer,
   issueReducer,
   searchReducer,
