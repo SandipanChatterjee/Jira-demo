@@ -3,6 +3,7 @@ import projectReducer from "../reducers/project";
 import issueReducer from "../reducers/issue";
 import searchReducer from "../reducers/search";
 import usersReducer from "../reducers/users";
+import masterIssueReducer from "../reducers/masterIssue";
 import commentsReducer from "../reducers/issueModal/comments";
 import editorReducer from "../reducers/issueModal/editor";
 import issueStatusReducer from "../reducers/issueModal/issueStatus";
@@ -12,11 +13,14 @@ import priortyReducer from "../reducers/issueModal/priority";
 import estimateReducer from "../reducers/issueModal/estimate";
 import timeTrackerReducer from "../reducers/issueModal/timeTracker";
 import updateIssueListReducer from "../reducers/updateIssueList";
+import feedbackReducer from "../reducers/issueModal/feedback";
+import deleteModalReducer from "../reducers/issueModal/delete";
 import { combineReducers } from "redux";
 
 export const rootReducer = combineReducers({
   authenticateReducer,
   projectReducer,
+  masterIssueReducer,
   issueReducer,
   searchReducer,
   usersReducer,
@@ -29,4 +33,6 @@ export const rootReducer = combineReducers({
   estimateReducer,
   timeTrackerReducer,
   updateIssueListReducer,
+  feedbackReducer,
+  deleteModalReducer,
 });

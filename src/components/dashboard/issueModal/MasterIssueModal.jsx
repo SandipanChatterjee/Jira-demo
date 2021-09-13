@@ -4,13 +4,17 @@ import { getCurrentIssue } from "../../../actions/issues";
 import { Loader } from "../../shared/loader/Loader";
 import IssueModalContent from "../issueModal/IssueModalContent";
 import { getModalStyle, useStyles } from "./style";
+import { setShowMasterIssue } from "../../../actions/masterIssue";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const MasterIssueModal = () => {
-  const [modalActive, setModalActive] = useState(false);
+  // const [modalActive, setModalActive] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const showMasterIssueModal = useSelector(
+    (state) => state.masterIssueReducer.showMasterIssueModal
+  );
   const currentIssueLoading = useSelector(
     (state) => state.issueReducer.currentIssueLoading
   );
@@ -30,7 +34,7 @@ const MasterIssueModal = () => {
   const [modalStyle] = React.useState(getModalStyle);
 
   const modalCloseHandler = () => {
-    setModalActive(false);
+    dispatch(setShowMasterIssue(false));
     history.goBack();
   };
 
@@ -48,7 +52,7 @@ const MasterIssueModal = () => {
   }, [newCommentData, editCommentData, deleteCommentData]);
 
   useEffect(() => {
-    setModalActive(true);
+    dispatch(setShowMasterIssue(true));
   }, []);
 
   if (!currentIssueLoading) {
@@ -60,7 +64,7 @@ const MasterIssueModal = () => {
   return (
     <div>
       <Modal
-        open={modalActive}
+        open={showMasterIssueModal}
         onClose={modalCloseHandler}
         className={classes.modalStyle}
         aria-labelledby="simple-modal-title"

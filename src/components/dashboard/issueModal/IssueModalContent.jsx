@@ -34,6 +34,9 @@ import Reporter from "./reporter/Reporter";
 import Priority from "./priorty/Priority";
 import Estimate from "./estimate/Estimate";
 import TimeTracker from "./timeTracker/TimeTracker";
+import Feedback from "./feedback/Feedback";
+import CopyLink from "./copyLink/CopyLink";
+import DeleteIssue from "./delete/DeleteIssue";
 const modules = {
   toolbar: [
     [{ header: [1, 2, false] }],
@@ -269,6 +272,12 @@ const IssueModalContent = ({ issue }) => {
         <CommentListSection issue={issue} />
       </div>
       <div style={{ flex: 1 }}>
+        <div style={{ display: "flex" }}>
+          <Feedback />
+          <CopyLink />
+          <DeleteIssue issue={issue} />
+        </div>
+        <br />
         <Status issue={issue} />
         <br />
         <Assignees issue={issue} />
