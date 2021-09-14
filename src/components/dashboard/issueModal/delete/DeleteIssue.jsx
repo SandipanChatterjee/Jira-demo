@@ -69,7 +69,7 @@ const DeleteIssue = ({ issue }) => {
 
   if (loader) {
     return (
-      <div style={{ position: "absolute", top: "50", right: "60" }}>
+      <div className={classes.loaderContainer}>
         <Loader />
       </div>
     );

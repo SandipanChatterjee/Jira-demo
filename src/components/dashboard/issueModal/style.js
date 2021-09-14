@@ -27,6 +27,13 @@ export const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
     padding: theme.spacing(2, 4, 3),
   },
+
+  loaderContainer: {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
   commentsContainer: {
     display: "flex",
     width: "600px",

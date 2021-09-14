@@ -39,7 +39,11 @@ const Dashboard = () => {
   }, [project]);
 
   if (loader) {
-    return <Loader />;
+    return (
+      <div className={classes.loaderContainer}>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {

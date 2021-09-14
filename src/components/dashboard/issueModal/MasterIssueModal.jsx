@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Modal } from "@material-ui/core";
 import { getCurrentIssue } from "../../../actions/issues";
 import { Loader } from "../../shared/loader/Loader";
@@ -29,9 +29,13 @@ const MasterIssueModal = () => {
     (state) => state.commentsReducer.deleteCommentData
   );
 
+  const loaderProject = useSelector((state) => state.projectReducer.loading);
+
   const history = useHistory();
 
   const [modalStyle] = React.useState(getModalStyle);
+
+  const modalRef = useRef();
 
   const modalCloseHandler = () => {
     dispatch(setShowMasterIssue(false));
@@ -52,6 +56,8 @@ const MasterIssueModal = () => {
   }, [newCommentData, editCommentData, deleteCommentData]);
 
   useEffect(() => {
+    console.log("ref##", modalRef.current);
+
     dispatch(setShowMasterIssue(true));
   }, []);
 
@@ -62,7 +68,7 @@ const MasterIssueModal = () => {
   }
 
   return (
-    <div>
+    <div ref={modalRef}>
       <Modal
         open={showMasterIssueModal}
         onClose={modalCloseHandler}
@@ -71,11 +77,16 @@ const MasterIssueModal = () => {
         aria-describedby="simple-modal-description"
       >
         {currentIssueLoading ? (
-          <div style={modalStyle} className={classes.paper}>
+          <div
+            style={modalStyle}
+            className={`${classes.paper} ${classes.loaderContainer}`}
+          >
             <Loader />
           </div>
         ) : (
-          <IssueModalContent issue={currentIssue} />
+          <div style={loaderProject ? { pointerEvents: "none" } : null}>
+            <IssueModalContent issue={currentIssue} />
+          </div>
         )}
       </Modal>
     </div>

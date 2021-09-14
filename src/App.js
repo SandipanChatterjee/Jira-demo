@@ -16,23 +16,15 @@ function App() {
     }
   }, []);
 
-  /*const renderAuth = () => {
-    if (!previouslyStoredToken) {
-      if (!token) {
-        return <span>Authenticating...</span>;
-      }
-    }
-  };*/
-
   const renderRootRoutes = () => {
     return (
       <div>
         {!previouslyStoredToken ? (
           !token ? (
             // <span>Authenticating...</span>
-            <span>
-              <Loader />{" "}
-            </span>
+            <div className="loaderContainer">
+              <Loader />
+            </div>
           ) : (
             <RootRoutes />
           )
