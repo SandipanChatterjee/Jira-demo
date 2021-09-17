@@ -39,6 +39,7 @@ import Feedback from "./feedback/Feedback";
 import CopyLink from "./copyLink/CopyLink";
 import DeleteIssue from "./delete/DeleteIssue";
 import PropTypes from "prop-types";
+import Issuetype from "./type/Issuetype";
 const modules = {
   toolbar: [
     [{ header: [1, 2, false] }],
@@ -213,6 +214,9 @@ const IssueModalContent = ({ issue, modalCloseHandler }) => {
   return (
     <div style={modalStyle} className={classes.paper}>
       <div style={{ flex: 2 }}>
+        <div>
+          <Issuetype issue={issue} />
+        </div>
         {showTitleEditor ? (
           <div
             onBlur={closeTitleEditorHandler}

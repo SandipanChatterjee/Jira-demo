@@ -15,6 +15,7 @@ import timeTrackerReducer from "../reducers/issueModal/timeTracker";
 import updateIssueListReducer from "../reducers/updateIssueList";
 import feedbackReducer from "../reducers/issueModal/feedback";
 import deleteModalReducer from "../reducers/issueModal/delete";
+import typeReducer from "../reducers/issueModal/type";
 import { combineReducers } from "redux";
 
 export const rootReducer = combineReducers({
@@ -35,4 +36,5 @@ export const rootReducer = combineReducers({
   updateIssueListReducer,
   feedbackReducer,
   deleteModalReducer,
+  typeReducer,
 });
