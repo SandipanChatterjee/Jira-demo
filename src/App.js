@@ -18,10 +18,9 @@ function App() {
 
   const renderRootRoutes = () => {
     return (
-      <div>
+      <div className="container">
         {!previouslyStoredToken ? (
           !token ? (
-            // <span>Authenticating...</span>
             <div className="loaderContainer">
               <Loader />
             </div>
@@ -37,7 +36,7 @@ function App() {
 
   return (
     <div className="App">
-      <div>
+      <div className="navbar-container">
         <Navbar />
       </div>
       {renderRootRoutes()}

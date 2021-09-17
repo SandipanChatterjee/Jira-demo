@@ -7,6 +7,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Tooltip,
 } from "@material-ui/core";
 import { paperBackGroundColor } from "../../utils/globalStyles";
 
@@ -31,6 +32,15 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     marginBottom: "1rem",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
+  listItemProjectSettings: {
+    marginBottom: "1rem",
+    "&:hover": {
+      cursor: "not-allowed",
+    },
   },
 }));
 
@@ -60,15 +70,21 @@ const Navbar = (props) => {
       >
         <List>
           {routes.map((el, index) => (
-            <ListItem
-              button
-              key={index}
-              selected={selectedIndex === index}
-              onClick={() => routeHandler(el, index)}
-              className={classes.listItem}
-            >
-              <ListItemText primary={el.title} />
-            </ListItem>
+            <Tooltip title={index === 1 ? "NOT IMPLEMENTED" : ""} arrow>
+              <ListItem
+                button
+                key={index}
+                selected={selectedIndex === index}
+                onClick={index === 1 ? null : () => routeHandler(el, index)}
+                className={
+                  index === 1
+                    ? classes.listItemProjectSettings
+                    : classes.listItem
+                }
+              >
+                <ListItemText primary={el.title} />
+              </ListItem>
+            </Tooltip>
           ))}
         </List>
       </Drawer>

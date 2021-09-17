@@ -1,6 +1,6 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { Card, Grid, Paper } from "@material-ui/core";
+import { Card, Grid, Paper, Avatar } from "@material-ui/core";
 import {
   backlog,
   completed,
@@ -23,6 +23,7 @@ import {
   priorityIcon,
 } from "../../../utils/utils";
 import { useStyles } from "./style";
+import { AvatarGroup } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -36,6 +37,7 @@ const MasterIssue = () => {
     useSelector((state) => state.searchReducer.searchedData) || issueTypes;
   const searchValue = useSelector((state) => state.searchReducer.searchValue);
   const currentIssue = useSelector((state) => state.issueReducer.currentIssue);
+  const users = useSelector((state) => state.projectReducer.project.users);
 
   const issueTypes = [
     selector.backlogIssues,
@@ -178,6 +180,16 @@ const MasterIssue = () => {
                                 </span>
                                 {issueType.map((issue, index) => {
                                   const id = issue.id.toString();
+                                  const issueTypeIcon =
+                                    typeIconObj[typeValues.indexOf(issue.type)];
+                                  const issuePriorityIcon =
+                                    priorityIcon[
+                                      priorityKeys.indexOf(issue.priority) + 1
+                                    ];
+                                  const filteredUsers = users.filter((user) =>
+                                    issue.userIds.includes(user.id)
+                                  );
+
                                   return (
                                     <Draggable
                                       key={id}
@@ -198,23 +210,35 @@ const MasterIssue = () => {
                                             <p className={classes.titleText}>
                                               {issue.title}
                                             </p>
-
-                                            <span>
-                                              {
-                                                typeIconObj[
-                                                  typeValues.indexOf(issue.type)
-                                                ]
+                                            <div
+                                              className={
+                                                classes.cardIconContainer
                                               }
-                                            </span>
-                                            <span>
-                                              {
-                                                priorityIcon[
-                                                  priorityKeys.indexOf(
-                                                    issue.priority
-                                                  ) + 1
-                                                ]
-                                              }
-                                            </span>
+                                            >
+                                              <div className={classes.cardIcon}>
+                                                <span>{issueTypeIcon}</span>
+                                                <span>{issuePriorityIcon}</span>
+                                              </div>
+                                              <div
+                                                className={
+                                                  classes.cardIconAvatar
+                                                }
+                                              >
+                                                <AvatarGroup>
+                                                  {filteredUsers.map((el) => {
+                                                    return (
+                                                      <Avatar
+                                                        src={el.avatarUrl}
+                                                        style={{
+                                                          height: "25px",
+                                                          width: "25px",
+                                                        }}
+                                                      />
+                                                    );
+                                                  })}
+                                                </AvatarGroup>
+                                              </div>
+                                            </div>
                                           </Card>
                                         );
                                       }}

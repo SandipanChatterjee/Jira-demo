@@ -51,15 +51,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div
-      style={{
-        display: "block",
-        width: "auto",
-        backgroundColor: dashboardBackGroundColor,
-        height: "100vh",
-        padding: "1rem",
-      }}
-    >
+    <div>
       <Header
         name={"Kanban board"}
         title={"Projects / singularity 1.0 vv2 / Kanban Board"}

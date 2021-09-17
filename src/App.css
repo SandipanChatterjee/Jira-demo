@@ -9,3 +9,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.container {
+  height: 100vh;
+  background-color: #ffffff;
+  width: 100vw;
+  max-width: 100%;
+  padding: 2rem;
+  max-height: 100%;
+}

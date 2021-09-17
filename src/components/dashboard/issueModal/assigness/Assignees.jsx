@@ -8,9 +8,18 @@ import {
   setDeleteUsers,
   resetUsers,
 } from "../../../../actions/issueModal/assignees";
+import {
+  backlog,
+  selected,
+  inprogress,
+  completed,
+} from "../../../../actions/issues";
 import { useStyles } from "./assigneesStyle";
+
 import { useSelector, useDispatch } from "react-redux";
 import { updateIssueList } from "../../../../services/updateIssueList";
+import { useSelectorIssues } from "../../../../utils/useSelectorIssues";
+import { issueStatus } from "../../../../utils/utils";
 
 const Assignees = ({ issue }) => {
   const classes = useStyles();
@@ -25,8 +34,15 @@ const Assignees = ({ issue }) => {
   const assignedUsers = useSelector(
     (state) => state.assigneesReducer.assignedUsers
   );
-
+  const selector = useSelectorIssues();
   const usersRef = useRef(true);
+
+  const issueTypes = {
+    backlog: selector.backlogIssues,
+    selected: selector.selectedIssues,
+    inprogress: selector.inprogressIssues,
+    done: selector.completedIssues,
+  };
 
   const showUsersListHandler = () => {
     dispatch(setShowUsersList(true));
@@ -55,6 +71,27 @@ const Assignees = ({ issue }) => {
       usersRef.current = false;
       return;
     }
+
+    const filteredIssueArr = JSON.parse(
+      JSON.stringify(issueTypes[issue.status])
+    );
+    const filteredIssue = filteredIssueArr.find((el) => el.id === issue.id);
+    filteredIssue.userIds = [...assignedUsersId];
+    filteredIssueArr.splice(
+      filteredIssueArr.indexOf(filteredIssue),
+      1,
+      filteredIssue
+    );
+    if (issue.status === issueStatus.backlog) {
+      dispatch(backlog(filteredIssueArr));
+    } else if (issue.status === issueStatus.selected) {
+      dispatch(selected(filteredIssueArr));
+    } else if (issue.status === issueStatus.inprogress) {
+      dispatch(inprogress(filteredIssueArr));
+    } else {
+      dispatch(completed(filteredIssueArr));
+    }
+
     const payload = {
       userIds: [...assignedUsersId],
       users: [...assignedUsers],

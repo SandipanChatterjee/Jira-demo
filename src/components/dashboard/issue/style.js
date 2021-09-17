@@ -26,6 +26,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   girdDisplaySubElements: {},
   cardDisplay: {
+    position: "relative",
     width: "auto",
     backgroundColor: cardBackGroundColor,
     margin: ".2rem 0",
@@ -35,6 +36,20 @@ export const useStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
     height: "6.5rem",
+  },
+  cardIconContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  cardIcon: {
+    position: "absolute",
+    bottom: 5,
+  },
+  cardIconAvatar: {
+    position: "absolute",
+    bottom: 5,
+    right: 10,
   },
   paperBackGroundColor: {
     backgroundColor: paperBackGroundColor,
