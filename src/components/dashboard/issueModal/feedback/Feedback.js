@@ -29,7 +29,8 @@ const Feedback = () => {
   return (
     <div>
       <Button size="small" onClick={showFeedbackModalHandler}>
-        <FeedbackIcon color="disabled" fontSize="medium" /> Give feedback
+        <FeedbackIcon color="disabled" fontSize="medium" />
+        <span style={{ fontSize: "12px" }}>Give feedback</span>
       </Button>
       <Modal
         open={showFeedbackModal}

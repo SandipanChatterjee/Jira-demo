@@ -1,4 +1,11 @@
 import React from "react";
+import {
+  ArrowUpward,
+  ArrowDownward,
+  CheckCircleRounded,
+  ErrorRounded,
+  AssignmentReturnedRounded,
+} from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 
 export const issueStatus = {
@@ -90,4 +97,63 @@ export const useOutsideAlerter = (ref, setActive) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref]);
+};
+
+//status-priority
+
+export const priorityObj = {
+  1: "Highest",
+  2: "High",
+  3: "Medium",
+  4: "Low",
+  5: "Lowest",
+};
+
+export const priorityIcon = {
+  1: (
+    <ArrowUpward
+      className="priority"
+      style={{ color: "#8B0000", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+  2: (
+    <ArrowUpward
+      className="priority"
+      style={{ color: "#FF7F7F", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+  3: (
+    <ArrowUpward
+      className="priority"
+      style={{ color: "#FFA500", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+  4: (
+    <ArrowDownward
+      className="priority"
+      style={{ color: "#90EE90", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+  5: (
+    <ArrowDownward
+      className="priority"
+      style={{ color: "#006400", fontSize: "1rem", marginTop: "5px" }}
+    />
+  ),
+};
+
+//status - type
+
+export const type = {
+  0: "task",
+  1: "story",
+  2: "bug",
+};
+
+export const typeIconObj = {
+  0: <CheckCircleRounded style={{ color: "#4FADE6", fontSize: "1rem" }} />,
+  1: (
+    <AssignmentReturnedRounded style={{ color: "#65BA43", fontSize: "1rem" }} />
+  ),
+  2: <ErrorRounded style={{ color: "#E44D42", fontSize: "1rem" }} />,
 };

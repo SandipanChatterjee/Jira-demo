@@ -1,62 +1,42 @@
 import React, { useEffect, Fragment } from "react";
 import { TextField, Avatar, Button } from "@material-ui/core";
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
-import { ArrowUpward, ArrowDownward } from "@material-ui/icons";
 import {
   setPriority,
   setShowPriorityList,
   updateIssueListHandler,
 } from "../../../../actions/issueModal/priority";
+import {
+  priorityObj,
+  priorityIcon,
+  issueStatus,
+} from "../../../../utils/utils";
 
 import { useDispatch, useSelector } from "react-redux";
 import "./priority.css";
+import { useSelectorIssues } from "../../../../utils/useSelectorIssues";
+import {
+  backlog,
+  selected,
+  inprogress,
+  completed,
+} from "../../../../actions/issues";
 
-const priorityObj = {
-  1: "Highest",
-  2: "High",
-  3: "Medium",
-  4: "Low",
-  5: "Lowest",
-};
-
-const proirtyIcon = {
-  1: (
-    <ArrowUpward
-      className="priority"
-      style={{ color: "#8B0000", fontSize: "1rem", marginTop: "5px" }}
-    />
-  ),
-  2: (
-    <ArrowUpward
-      className="priority"
-      style={{ color: "#FF7F7F", fontSize: "1rem", marginTop: "5px" }}
-    />
-  ),
-  3: (
-    <ArrowUpward
-      className="priority"
-      style={{ color: "#FFA500", fontSize: "1rem", marginTop: "5px" }}
-    />
-  ),
-  4: (
-    <ArrowDownward
-      className="priority"
-      style={{ color: "#90EE90", fontSize: "1rem", marginTop: "5px" }}
-    />
-  ),
-  5: (
-    <ArrowDownward
-      className="priority"
-      style={{ color: "#006400", fontSize: "1rem", marginTop: "5px" }}
-    />
-  ),
-};
 const Priority = ({ issue }) => {
   const dispatch = useDispatch();
   const priority = useSelector((state) => state.priortyReducer.priority);
   const showPriorityList = useSelector(
     (state) => state.priortyReducer.showPriorityList
   );
+  const selector = useSelectorIssues();
+
+  const issueTypes = {
+    backlog: selector.backlogIssues,
+    selected: selector.selectedIssues,
+    inprogress: selector.inprogressIssues,
+    done: selector.completedIssues,
+  };
+
   const showPriorityListHandler = () => {
     dispatch(setShowPriorityList(true));
   };
@@ -64,6 +44,25 @@ const Priority = ({ issue }) => {
     dispatch(setShowPriorityList(false));
   };
   const changePriorityHandler = (event, newValue) => {
+    const filteredIssueArr = JSON.parse(
+      JSON.stringify(issueTypes[issue.status])
+    );
+    const filteredIssue = filteredIssueArr.find((el) => el.id === issue.id);
+    filteredIssue.priority = newValue;
+    filteredIssueArr.splice(
+      filteredIssueArr.indexOf(filteredIssue),
+      1,
+      filteredIssue
+    );
+    if (issue.status === issueStatus.backlog) {
+      dispatch(backlog(filteredIssueArr));
+    } else if (issue.status === issueStatus.selected) {
+      dispatch(selected(filteredIssueArr));
+    } else if (issue.status === issueStatus.inprogress) {
+      dispatch(inprogress(filteredIssueArr));
+    } else {
+      dispatch(completed(filteredIssueArr));
+    }
     dispatch(setPriority(newValue));
     dispatch(updateIssueListHandler({ priority: newValue }, issue.id));
     dispatch(setShowPriorityList(false));
@@ -90,7 +89,7 @@ const Priority = ({ issue }) => {
           justifyContent: "flex-start",
         }}
       >
-        <span style={{ textAlign: "left" }}>{proirtyIcon[priority]}</span>
+        <span style={{ textAlign: "left" }}>{priorityIcon[priority]}</span>
         <span>{priorityObj[priority]}</span>
       </Button>
       {showPriorityList ? (
@@ -104,7 +103,7 @@ const Priority = ({ issue }) => {
             renderOption={(option) => {
               return (
                 <Fragment>
-                  <span>{proirtyIcon[option]}</span>
+                  <span>{priorityIcon[option]}</span>
                   <span>{priorityObj[option]}</span>
                 </Fragment>
               );

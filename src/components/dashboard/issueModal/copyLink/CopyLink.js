@@ -17,7 +17,7 @@ const CopyLink = () => {
     <div>
       <Button size="small" onClick={copyTextHandler}>
         <FileCopyOutlinedIcon color="disabled" fontSize="medium" />
-        <span>{text}</span>
+        <span style={{ fontSize: "12px" }}>{text}</span>
       </Button>
     </div>
   );

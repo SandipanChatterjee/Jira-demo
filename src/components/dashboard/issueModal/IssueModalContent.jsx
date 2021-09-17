@@ -27,6 +27,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import { Button } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import Status from "./status/Status";
 import Assignees from "./assigness/Assignees";
@@ -37,6 +38,7 @@ import TimeTracker from "./timeTracker/TimeTracker";
 import Feedback from "./feedback/Feedback";
 import CopyLink from "./copyLink/CopyLink";
 import DeleteIssue from "./delete/DeleteIssue";
+import PropTypes from "prop-types";
 const modules = {
   toolbar: [
     [{ header: [1, 2, false] }],
@@ -69,7 +71,7 @@ const formats = [
 let modifiedIssues = [];
 let prevDescriptionValue = "";
 
-const IssueModalContent = ({ issue }) => {
+const IssueModalContent = ({ issue, modalCloseHandler }) => {
   console.log("issue####", issue);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -276,6 +278,9 @@ const IssueModalContent = ({ issue }) => {
           <Feedback />
           <CopyLink />
           <DeleteIssue issue={issue} />
+          <Button size="small" onClick={modalCloseHandler}>
+            <CloseIcon color="disabled" />
+          </Button>
         </div>
         <br />
         <Status issue={issue} />
@@ -294,8 +299,9 @@ const IssueModalContent = ({ issue }) => {
   );
 };
 
-IssueModalContent.defaultProps = {
-  issue: {},
+IssueModalContent.propTypes = {
+  issue: PropTypes.object,
+  modalCloseHandler: PropTypes.func,
 };
 
 export default IssueModalContent;

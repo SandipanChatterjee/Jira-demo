@@ -30,6 +30,11 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: cardBackGroundColor,
     margin: ".2rem 0",
     padding: "1rem",
+    "&:hover": {
+      backgroundColor: paperBackGroundColor,
+      cursor: "pointer",
+    },
+    height: "6.5rem",
   },
   paperBackGroundColor: {
     backgroundColor: paperBackGroundColor,

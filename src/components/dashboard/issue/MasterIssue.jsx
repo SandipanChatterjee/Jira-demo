@@ -1,8 +1,6 @@
-import { Card, Grid, Paper } from "@material-ui/core";
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Card, Grid, Paper } from "@material-ui/core";
 import {
   backlog,
   completed,
@@ -19,8 +17,14 @@ import {
   issueStatus,
   move,
   reorder,
+  type as issueType,
+  typeIconObj,
+  priorityObj,
+  priorityIcon,
 } from "../../../utils/utils";
 import { useStyles } from "./style";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const MasterIssue = () => {
   const classes = useStyles();
@@ -137,6 +141,8 @@ const MasterIssue = () => {
     dispatch(currentIssueFunction({}));
     // setModalActive(false);
   };
+  const typeValues = Object.values(issueType);
+  const priorityKeys = Object.keys(priorityObj);
 
   searchedData.length > 0
     ? searchedData.length > 0
@@ -171,7 +177,6 @@ const MasterIssue = () => {
                                   ].toUpperCase()}
                                 </span>
                                 {issueType.map((issue, index) => {
-                                  // console.log("issue#", issue);
                                   const id = issue.id.toString();
                                   return (
                                     <Draggable
@@ -193,6 +198,23 @@ const MasterIssue = () => {
                                             <p className={classes.titleText}>
                                               {issue.title}
                                             </p>
+
+                                            <span>
+                                              {
+                                                typeIconObj[
+                                                  typeValues.indexOf(issue.type)
+                                                ]
+                                              }
+                                            </span>
+                                            <span>
+                                              {
+                                                priorityIcon[
+                                                  priorityKeys.indexOf(
+                                                    issue.priority
+                                                  ) + 1
+                                                ]
+                                              }
+                                            </span>
                                           </Card>
                                         );
                                       }}
