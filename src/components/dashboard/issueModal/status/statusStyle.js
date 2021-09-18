@@ -18,19 +18,12 @@ export const useStyles = makeStyles((theme) => ({
     },
     button: {
       marginBottom: ".5rem",
-      width: "100px",
+      width: "auto",
       maxWidth: "200px",
       justifyContent: "flex-start",
     },
     btnText: {
       fontSize: ".6rem",
-    },
-    btnIcon: {
-      size: "20px",
-    },
-    autocomplete: {
-      width: "200px",
-      maxWidth: "300px",
     },
   },
 }));

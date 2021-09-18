@@ -60,4 +60,17 @@ export const useStyles = makeStyles((theme) => ({
   time: {
     width: "48%",
   },
+  "@media (max-width:278px)": {
+    timerContianer: {
+      display: "flex",
+      justifyContent: "space-between",
+      width: "100px",
+      maxWidth: "200px",
+      padding: ".8rem 0",
+      "&:hover ": {
+        cursor: "pointer",
+        backgroundColor: paperBackGroundColor,
+      },
+    },
+  },
 }));

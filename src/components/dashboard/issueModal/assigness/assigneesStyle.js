@@ -3,6 +3,7 @@ import {
   primaryButtonColor,
   primaryButtonWidth,
   avatarSize,
+  avatarSizeMobile,
 } from "../../../../utils/globalStyles";
 export const useStyles = makeStyles((theme) => ({
   parentContainer: {
@@ -36,5 +37,20 @@ export const useStyles = makeStyles((theme) => ({
   icon: {
     marginTop: "auto",
     marginBottom: "auto",
+  },
+
+  "@media (max-width:768px)": {
+    root: {
+      "& br": {
+        display: "none",
+      },
+    },
+    btnText: {
+      fontSize: ".6rem",
+    },
+    avatarSize: {
+      width: avatarSizeMobile.width,
+      height: avatarSizeMobile.height,
+    },
   },
 }));

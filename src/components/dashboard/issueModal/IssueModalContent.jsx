@@ -214,8 +214,15 @@ const IssueModalContent = ({ issue, modalCloseHandler }) => {
   return (
     <div style={modalStyle} className={classes.paper}>
       <div style={{ flex: 2 }}>
-        <div>
+        <div className={classes.modalHeader}>
           <Issuetype issue={issue} />
+          <Button
+            size="small"
+            onClick={modalCloseHandler}
+            className={classes.mobileCloseBtn}
+          >
+            <CloseIcon color="disabled" />
+          </Button>
         </div>
         {showTitleEditor ? (
           <div

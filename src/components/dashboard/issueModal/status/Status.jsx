@@ -192,7 +192,6 @@ const Status = ({ issue }) => {
       <br />
       {showIssueStatusDropdown ? (
         <Autocomplete
-          className={classes.autocomplete}
           value={selectedIssueStatus}
           onChange={(event, newValue) =>
             changeIssueStatusHandler(event, newValue)

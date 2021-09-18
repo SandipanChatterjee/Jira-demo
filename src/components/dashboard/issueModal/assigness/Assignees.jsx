@@ -111,10 +111,14 @@ const Assignees = ({ issue }) => {
   const usersOption = users.filter((el) => !assignedUsersId.includes(el.id));
   return (
     // issue.userIds.length == 0 && !showUsersList
-    <div>
+    <div className={classes.root}>
       <p>ASSIGNEES</p>
       {assignedUsers.length == 0 ? (
-        <Button variant="contained" onClick={showUsersListHandler}>
+        <Button
+          variant="contained"
+          onClick={showUsersListHandler}
+          className={classes.button}
+        >
           <p>Unassigned</p>
         </Button>
       ) : (
@@ -147,6 +151,7 @@ const Assignees = ({ issue }) => {
       {showUsersList ? (
         <div onBlur={closeUsersListHandler}>
           <Autocomplete
+            className="autocomplete"
             freeSolo
             onChange={(event, newValue) => changeUsersHandler(event, newValue)}
             options={usersOption}

@@ -94,6 +94,9 @@ export const useStyles = makeStyles((theme) => ({
   left: {
     display: "flex",
   },
+  mobileCloseBtn: {
+    display: "none",
+  },
 
   "@media (max-width:768px)": {
     paper: {
@@ -152,6 +155,13 @@ export const useStyles = makeStyles((theme) => ({
     },
     left: {
       display: "none",
+    },
+    mobileCloseBtn: {
+      display: "inline-block",
+    },
+    modalHeader: {
+      display: "flex",
+      justifyContent: "space-between",
     },
   },
 }));

@@ -38,6 +38,7 @@ const Estimate = ({ issue }) => {
     <div>
       <p>ORIGINAL ESTIMATE (HOURS)</p>
       <TextField
+        className="textfield"
         id="input-container"
         size="small"
         type="number"
