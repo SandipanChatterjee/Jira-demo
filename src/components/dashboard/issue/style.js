@@ -57,4 +57,13 @@ export const useStyles = makeStyles((theme) => ({
   titleText: {
     wordWrap: "break-word",
   },
+
+  "@media (max-width:768px)": {
+    girdDisplay: {
+      display: "block",
+    },
+    grid: {
+      margin: "1rem 0",
+    },
+  },
 }));

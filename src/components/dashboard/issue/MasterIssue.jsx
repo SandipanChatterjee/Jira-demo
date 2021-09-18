@@ -171,6 +171,7 @@ const MasterIssue = () => {
                               alignItems="stretch"
                               ref={provided.innerRef}
                               {...provided.droppableProps}
+                              className={classes.grid}
                             >
                               <Paper className={classes.paper}>
                                 <span>
