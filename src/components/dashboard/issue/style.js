@@ -65,5 +65,16 @@ export const useStyles = makeStyles((theme) => ({
     grid: {
       margin: "1rem 0",
     },
+    paper: {
+      backgroundColor: paperBackGroundColor,
+      height: "auto",
+      width: "1500px",
+      padding: "5px",
+      minWidth: "200px",
+      marginRight: "1rem",
+    },
+    cardDisplay: {
+      width: "auto",
+    },
   },
 }));

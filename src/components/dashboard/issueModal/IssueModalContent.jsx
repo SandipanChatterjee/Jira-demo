@@ -278,7 +278,7 @@ const IssueModalContent = ({ issue, modalCloseHandler }) => {
         <CommentListSection issue={issue} />
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ display: "flex" }}>
+        <div className={classes.left}>
           <Feedback />
           <CopyLink />
           <DeleteIssue issue={issue} />

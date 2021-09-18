@@ -91,4 +91,67 @@ export const useStyles = makeStyles((theme) => ({
       backgroundColor: paperBackGroundColor,
     },
   },
+  left: {
+    display: "flex",
+  },
+
+  "@media (max-width:768px)": {
+    paper: {
+      display: "block",
+      position: "absolute",
+      width: "350px",
+      minWidth: "200px",
+      backgroundColor: "#fff",
+      minHeight: "100%",
+      maxHeight: "calc(100vh - 210px)",
+    },
+    modalStyle: {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      display: "block",
+    },
+    titleContainer: {
+      width: "250px",
+      minWidth: "200px",
+      maxWidth: "350px",
+      wordWrap: "break-word",
+      "&:hover ": {
+        cursor: "pointer",
+        backgroundColor: paperBackGroundColor,
+      },
+    },
+    descriptionContainer: {
+      width: "250px",
+      minWidth: "200px",
+      overflow: "auto",
+      "&:hover ": {
+        cursor: "pointer",
+        backgroundColor: paperBackGroundColor,
+      },
+    },
+    newComment: {
+      display: "flex",
+      width: "200px",
+      maxWidth: "300px",
+    },
+    inputContainer: {
+      width: "200px",
+    },
+    input: {
+      width: "200px",
+      maxWidth: "350px",
+    },
+    commentsContainer: {
+      width: "300px",
+    },
+    commentBody: {
+      width: "300px",
+      maxWidth: "200px",
+      wordWrap: "break-word",
+    },
+    left: {
+      display: "none",
+    },
+  },
 }));

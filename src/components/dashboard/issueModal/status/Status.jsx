@@ -175,7 +175,7 @@ const Status = ({ issue }) => {
   }, []);
 
   return (
-    <div>
+    <div className={classes.root}>
       <p>STATUS</p>
       <Button
         color="primary"
@@ -184,7 +184,7 @@ const Status = ({ issue }) => {
         className={classes.button}
       >
         <span>{selectedIssueStatus}</span>{" "}
-        <span>
+        <span className={classes.btnIcon}>
           <ArrowDropDown />
         </span>
       </Button>
@@ -192,6 +192,7 @@ const Status = ({ issue }) => {
       <br />
       {showIssueStatusDropdown ? (
         <Autocomplete
+          className={classes.autocomplete}
           value={selectedIssueStatus}
           onChange={(event, newValue) =>
             changeIssueStatusHandler(event, newValue)

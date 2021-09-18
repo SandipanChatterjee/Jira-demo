@@ -42,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
       cursor: "not-allowed",
     },
   },
+
+  "@media (max-width:768px)": {
+    root: {
+      display: "none",
+    },
+  },
 }));
 
 const routes = [

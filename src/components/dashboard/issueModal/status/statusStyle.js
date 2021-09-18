@@ -10,4 +10,27 @@ export const useStyles = makeStyles((theme) => ({
     width: "auto",
     justifyContent: "flex-start",
   },
+  "@media (max-width:768px)": {
+    root: {
+      "& br": {
+        display: "none",
+      },
+    },
+    button: {
+      marginBottom: ".5rem",
+      width: "100px",
+      maxWidth: "200px",
+      justifyContent: "flex-start",
+    },
+    btnText: {
+      fontSize: ".6rem",
+    },
+    btnIcon: {
+      size: "20px",
+    },
+    autocomplete: {
+      width: "200px",
+      maxWidth: "300px",
+    },
+  },
 }));

@@ -101,7 +101,7 @@ const Users = () => {
 
   return (
     <div className={classes.root}>
-      <AvatarGroup>
+      <AvatarGroup className={classes.avatarGroup}>
         {project.users.map((user, index) => {
           let userFound = currentUsers.find((currentUser) => {
             if (currentUser.id === user.id) {
@@ -122,8 +122,10 @@ const Users = () => {
           );
         })}
       </AvatarGroup>
+      <br />
       <Button
         variant={currentUserActive ? "contained" : null}
+        className={classes.btn}
         onClick={
           currentUserActive
             ? () => handleRemoveForCurrentUser(currentUser.id)

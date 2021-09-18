@@ -14,3 +14,13 @@ body {
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
+@media (max-width: 768px) {
+  p,
+  span {
+    font-size: 0.8rem;
+  }
+  .issueLeftHeaderText {
+    font-size: 0.8rem;
+  }
+}

@@ -9,4 +9,10 @@ export const useStyles = makeStyles((theme) => ({
     left: "50%",
     transform: "translate(-50%, -50%)",
   },
+  "@media (max-width:768px)": {
+    container: {
+      display: "block",
+      left: "0",
+    },
+  },
 }));
