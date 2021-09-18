@@ -99,7 +99,11 @@ const DeleteIssue = ({ issue }) => {
           >
             Delete issue
           </Button>{" "}
-          <Button variant="contained" size="small">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={closeDeleteModalHandler}
+          >
             Cancel
           </Button>
         </div>

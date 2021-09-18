@@ -24,4 +24,15 @@ export const useStyles = makeStyles((theme) => ({
     left: "50%",
     transform: "translate(-50%, -50%)",
   },
+
+  "@media (max-width:768px)": {
+    paper: {
+      position: "absolute",
+      maxWidth: "300px",
+      height: "auto",
+      backgroundColor: "#ffffff",
+      padding: theme.spacing(4, 4, 4),
+      zIndex: 2,
+    },
+  },
 }));
