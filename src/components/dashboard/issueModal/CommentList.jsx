@@ -13,7 +13,7 @@ import {
   setCurrentCommentIndex,
   editCommentTextHandler,
   saveEditCommentHandler,
-  deleteModal,
+  deleteCommentModal,
   deleteCommentHandler,
 } from "../../../actions/issueModal/comments";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,10 +21,13 @@ import { useSelector, useDispatch } from "react-redux";
 let currentDeleteElementId = 0;
 let currentCommentIndex = null;
 
-const CommentList = ({ issue }) => {
+const CommentList = () => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const dispatch = useDispatch();
+
+  const issue = useSelector((state) => state.issueReducer.currentIssue);
+
   const acitveEditComment = useSelector(
     (state) => state.commentsReducer.acitveEditComment
   );
@@ -37,8 +40,8 @@ const CommentList = ({ issue }) => {
   const editCommentData = useSelector(
     (state) => state.commentsReducer.editCommentData
   );
-  const showDeleteModal = useSelector(
-    (state) => state.commentsReducer.showDeleteModal
+  const showDeleteCommentModal = useSelector(
+    (state) => state.commentsReducer.showDeleteCommentModal
   );
   const deleteCommentData = useSelector(
     (state) => state.commentsReducer.deleteCommentData
@@ -72,13 +75,14 @@ const CommentList = ({ issue }) => {
     dispatch(saveEditCommentHandler(id, payload));
   };
 
-  const deleteModalHandler = (id) => {
+  const deleteCommentModalHandler = (id) => {
     console.log("deleteModalHandler#", id);
     currentDeleteElementId = id;
-    dispatch(deleteModal(true));
+    // deleteCommentHandler
+    dispatch(deleteCommentModal(true));
   };
-  const deleteModalCloseHandler = () => {
-    dispatch(deleteModal(false));
+  const deleteCommentModalCloseHandler = () => {
+    dispatch(deleteCommentModal(false));
   };
 
   useEffect(() => {
@@ -86,7 +90,7 @@ const CommentList = ({ issue }) => {
       editCommentInActiveHandler();
     }
     if (Object.keys(deleteCommentData).length > 0 && !deleteCommentLoading) {
-      deleteModalCloseHandler();
+      deleteCommentModalCloseHandler();
     }
   }, [editCommentData, deleteCommentData]);
 
@@ -94,8 +98,8 @@ const CommentList = ({ issue }) => {
     console.log("id##", id);
     return (
       <Modal
-        open={showDeleteModal}
-        onClose={deleteModalCloseHandler}
+        open={showDeleteCommentModal}
+        onClose={deleteCommentModalCloseHandler}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -116,7 +120,7 @@ const CommentList = ({ issue }) => {
           <Button
             variant="contained"
             size="small"
-            onClick={() => deleteModalCloseHandler()}
+            onClick={() => deleteCommentModalCloseHandler()}
           >
             Cancel
           </Button>
@@ -205,7 +209,7 @@ const CommentList = ({ issue }) => {
                     </Link>{" "}
                     <Link
                       component="button"
-                      onClick={() => deleteModalHandler(comment.id)}
+                      onClick={() => deleteCommentModalHandler(comment.id)}
                     >
                       Delete
                     </Link>
@@ -213,7 +217,7 @@ const CommentList = ({ issue }) => {
                 )}
               </div>
               <div>
-                {showDeleteModal && currentDeleteElementId === comment.id
+                {showDeleteCommentModal && currentDeleteElementId === comment.id
                   ? renderModal(comment.id)
                   : null}
               </div>

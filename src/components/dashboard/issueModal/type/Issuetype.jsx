@@ -5,8 +5,8 @@ import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import {
   setShowIssueTypeList,
   setIssueType,
-  updateIssueListHandler,
 } from "../../../../actions/issueModal/type";
+import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import { useSelector, useDispatch } from "react-redux";
 import { useSelectorIssues } from "../../../../utils/useSelectorIssues";
 import {

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { TextField, Input } from "@material-ui/core";
-import {
-  setEstimationHandler,
-  updateIssueListHandler,
-} from "../../../../actions/issueModal/estimate";
+import { setEstimationHandler } from "../../../../actions/issueModal/estimate";
+import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import { useSelector, useDispatch } from "react-redux";
 import "./estimate.css";
-const Estimate = ({ issue }) => {
+const Estimate = () => {
   const dispatch = useDispatch();
+
+  const issue = useSelector((state) => state.issueReducer.currentIssue);
   const estimate =
     useSelector((state) => state.estimateReducer.estimate) || issue.estimate;
 

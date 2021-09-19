@@ -3,6 +3,7 @@ import { actionTypes } from "../actions/updateIssueList";
 const initState = {
   success: "",
   errorMsg: "",
+  updatedIssue: {},
 };
 
 const reducer = (state = initState, action) => {
@@ -11,6 +12,7 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         success: action.success,
+        updatedIssue: action.updatedIssue,
       };
     case actionTypes.fail_update_issue_list:
       return {

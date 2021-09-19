@@ -72,15 +72,16 @@ const formats = [
 let modifiedIssues = [];
 let prevDescriptionValue = "";
 
-const IssueModalContent = ({ issue, modalCloseHandler }) => {
-  console.log("issue####", issue);
+const IssueModalContent = ({ modalCloseHandler }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const selectorIssue = useSelectorIssues();
+
   const showTitleEditor = useSelector(
     (state) => state.editorReducer.showTitleEditor
   );
   const titleText = useSelector((state) => state.editorReducer.titleText);
+  const issue = useSelector((state) => state.issueReducer.currentIssue);
 
   const showDescriptionEditor = useSelector(
     (state) => state.editorReducer.showDescriptionEditor
@@ -90,7 +91,7 @@ const IssueModalContent = ({ issue, modalCloseHandler }) => {
   );
 
   const updatedIssue = useSelector(
-    (state) => state.issueStatusReducer.updatedIssue
+    (state) => state.updateIssueListReducer.updatedIssue
   );
 
   const [modalStyle] = React.useState(getModalStyle);
@@ -101,6 +102,8 @@ const IssueModalContent = ({ issue, modalCloseHandler }) => {
 
   const issueStatus =
     Object.keys(updatedIssue).length == 0 ? issue.status : updatedIssue.status;
+
+  const firstTimeRef = useRef(true);
 
   const modifyIssueHandler = (issueEl, titleText) => {
     console.log(
@@ -281,31 +284,34 @@ const IssueModalContent = ({ issue, modalCloseHandler }) => {
         <br />
         <p>Comments</p>
         <br />
-        <NewCommentSection issue={issue} />
-        <CommentListSection issue={issue} />
+        <NewCommentSection />
+        <CommentListSection />
       </div>
-      <div style={{ flex: 1 }}>
-        <div className={classes.left}>
-          <Feedback />
-          <CopyLink />
-          <DeleteIssue issue={issue} />
-          <Button size="small" onClick={modalCloseHandler}>
-            <CloseIcon color="disabled" />
-          </Button>
+      {
+        <div style={{ flex: 1 }}>
+          <div className={classes.left}>
+            <Feedback />
+            <CopyLink />
+            <DeleteIssue issue={issue} />
+            <Button size="small" onClick={modalCloseHandler}>
+              <CloseIcon color="disabled" />
+            </Button>
+          </div>
+          <br />
+          {
+            // <Status />
+          }
+          <Assignees />
+          <br />
+          <Reporter />
+          <br />
+          <Priority />
+          <br />
+          <Estimate />
+          <br />
+          <TimeTracker />
         </div>
-        <br />
-        <Status issue={issue} />
-        <br />
-        <Assignees issue={issue} />
-        <br />
-        <Reporter issue={issue} />
-        <br />
-        <Priority issue={issue} />
-        <br />
-        <Estimate issue={issue} />
-        <br />
-        <TimeTracker issue={issue} />
-      </div>
+      }
     </div>
   );
 };

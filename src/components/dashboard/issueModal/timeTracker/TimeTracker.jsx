@@ -5,11 +5,13 @@ import { LinearProgress, Modal } from "@material-ui/core";
 import { setShowTimeTrackerModal } from "../../../../actions/issueModal/timeTracker";
 import TimeTrackerModalContent from "./TimeTrackerModalContent";
 import { useSelector, useDispatch } from "react-redux";
-const TimeTracker = ({ issue }) => {
+const TimeTracker = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const issue = useSelector((state) => state.issueReducer.currentIssue);
   const estimate =
     useSelector((state) => state.estimateReducer.estimate) || issue.estimate;
+
   const showTimeTrackerModal = useSelector(
     (state) => state.timeTrackerReducer.showTimeTrackerModal
   );

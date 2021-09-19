@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
       backgroundColor: paperBackGroundColor,
       cursor: "pointer",
     },
-    height: "6.5rem",
+    height: "auto",
   },
   cardIconContainer: {
     display: "flex",
@@ -56,6 +56,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   titleText: {
     wordWrap: "break-word",
+    marginBottom: "1rem",
   },
 
   "@media (max-width:768px)": {

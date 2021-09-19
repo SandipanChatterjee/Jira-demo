@@ -9,11 +9,14 @@ import {
 import { useStyles, getModalStyle } from "./style";
 import { useSelector, useDispatch } from "react-redux";
 
-const NewComment = ({ issue }) => {
+const NewComment = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const issue = useSelector((state) => state.issueReducer.currentIssue);
+
   const currentUser = useSelector((state) => state.usersReducer.currentUser);
+
   const newCommentText = useSelector(
     (state) => state.commentsReducer.newCommentText
   );

@@ -3,7 +3,6 @@ import { actionTypes } from "../../actions/issueModal/issueStatus";
 const initState = {
   showIssueStatusDropdown: false,
   selectedIssueStatus: "",
-  updatedIssue: {},
 };
 
 const reducer = (state = initState, action) => {
@@ -17,11 +16,6 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         selectedIssueStatus: action.selectedIssueStatus,
-      };
-    case actionTypes.update_issue:
-      return {
-        ...state,
-        updatedIssue: action.updatedIssue,
       };
     default:
       return state;

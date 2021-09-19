@@ -2,16 +2,19 @@ import React, { useEffect, Fragment } from "react";
 import {
   setSelectedReporter,
   setShowReporterList,
-  updateIssueListHandler,
 } from "../../../../actions/issueModal/reporter";
+import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import { TextField, Avatar, Button } from "@material-ui/core";
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { useStyles } from "./reporterStyle";
 import { useDispatch, useSelector } from "react-redux";
 
-const Reporter = ({ issue }) => {
+const Reporter = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const issue = useSelector((state) => state.issueReducer.currentIssue);
+
   const users = useSelector((state) => state.projectReducer.project.users);
   const reportedId = useSelector((state) => state.reporterReducer.reporterId);
   const reporterData = useSelector(
@@ -21,6 +24,7 @@ const Reporter = ({ issue }) => {
   const showReporterList = useSelector(
     (state) => state.reporterReducer.showReporterList
   );
+
   const showReporterListHandler = () => {
     dispatch(setShowReporterList(true));
   };

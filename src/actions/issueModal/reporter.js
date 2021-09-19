@@ -20,14 +20,3 @@ export const setSelectedReporter = (id, users) => {
     reporterData: reporterData,
   };
 };
-
-export const updateIssueListHandler = (payload, id) => {
-  return async (dispatch) => {
-    try {
-      const response = await updateIssueList(payload, id);
-      await response;
-    } catch (e) {
-      console.log(e);
-    }
-  };
-};

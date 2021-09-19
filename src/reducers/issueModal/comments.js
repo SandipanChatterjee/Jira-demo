@@ -10,7 +10,7 @@ const initState = {
   editCommentData: {},
   editCommentLoading: false,
   editCommentFaliedData: null,
-  showDeleteModal: false,
+  showDeleteCommentModal: false,
   deleteCommentData: {},
   deleteCommentLoading: false,
   deleteCommentFaliedData: null,
@@ -75,7 +75,7 @@ const reducer = (state = initState, action) => {
     case actionTypes.show_delete_modal:
       return {
         ...state,
-        showDeleteModal: action.showDeleteModal,
+        showDeleteCommentModal: action.showDeleteCommentModal,
       };
     case actionTypes.delete_comment_loading:
       return {

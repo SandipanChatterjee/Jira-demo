@@ -4,8 +4,8 @@ import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import {
   setPriority,
   setShowPriorityList,
-  updateIssueListHandler,
 } from "../../../../actions/issueModal/priority";
+import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import {
   priorityObj,
   priorityIcon,
@@ -22,8 +22,10 @@ import {
   completed,
 } from "../../../../actions/issues";
 
-const Priority = ({ issue }) => {
+const Priority = () => {
   const dispatch = useDispatch();
+  const issue = useSelector((state) => state.issueReducer.currentIssue);
+
   const priority = useSelector((state) => state.priortyReducer.priority);
   const showPriorityList = useSelector(
     (state) => state.priortyReducer.showPriorityList

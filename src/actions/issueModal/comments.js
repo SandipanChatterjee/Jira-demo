@@ -118,10 +118,10 @@ export const saveEditCommentHandler = (id, payload) => {
   };
 };
 
-export const deleteModal = (flag) => {
+export const deleteCommentModal = (flag) => {
   return {
     type: actionTypes.show_delete_modal,
-    showDeleteModal: flag,
+    showDeleteCommentModal: flag,
   };
 };
 

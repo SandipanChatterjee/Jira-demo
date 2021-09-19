@@ -1,29 +1,29 @@
-import React, { useEffect, useRef, Fragment } from "react";
-import { TextField, Avatar, Button } from "@material-ui/core";
-import { Autocomplete, createFilterOptions } from "@material-ui/lab";
+import React, { Fragment, useEffect, useRef } from "react";
+import { Avatar, Button, TextField } from "@material-ui/core";
 import { Add, Clear } from "@material-ui/icons";
+import { Autocomplete } from "@material-ui/lab";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  setShowUsersList,
+  resetUsers,
   setAssignedUsers,
   setDeleteUsers,
-  resetUsers,
+  setShowUsersList,
 } from "../../../../actions/issueModal/assignees";
 import {
   backlog,
-  selected,
-  inprogress,
   completed,
+  inprogress,
+  selected,
 } from "../../../../actions/issues";
-import { useStyles } from "./assigneesStyle";
-
-import { useSelector, useDispatch } from "react-redux";
-import { updateIssueList } from "../../../../services/updateIssueList";
+import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import { useSelectorIssues } from "../../../../utils/useSelectorIssues";
 import { issueStatus } from "../../../../utils/utils";
+import { useStyles } from "./assigneesStyle";
 
-const Assignees = ({ issue }) => {
+const Assignees = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const issue = useSelector((state) => state.issueReducer.currentIssue);
   const users = useSelector((state) => state.projectReducer.project.users);
   const showUsersList = useSelector(
     (state) => state.assigneesReducer.showUsersList
@@ -33,6 +33,9 @@ const Assignees = ({ issue }) => {
   );
   const assignedUsers = useSelector(
     (state) => state.assigneesReducer.assignedUsers
+  );
+  const updatedIssue = useSelector(
+    (state) => state.updateIssueListReducer.updatedIssue
   );
   const selector = useSelectorIssues();
   const usersRef = useRef(true);
@@ -55,9 +58,18 @@ const Assignees = ({ issue }) => {
     console.log("changeUsersHandler##");
     dispatch(setAssignedUsers(val));
     dispatch(setShowUsersList(false));
+    const payload = {
+      userIds: [...assignedUsersId, val.id],
+      users: [...assignedUsers, { ...val }],
+    };
+    dispatch(updateIssueListHandler(payload, issue.id));
   };
   const deleteUserHandler = (userId) => {
-    console.log("userId", userId);
+    const payload = {
+      userIds: assignedUsersId.filter((id) => id !== userId),
+      users: assignedUsers.filter((user) => user.id !== userId),
+    };
+    dispatch(updateIssueListHandler(payload, issue.id));
     dispatch(setDeleteUsers(userId));
     dispatch(setShowUsersList(true));
   };
@@ -76,6 +88,8 @@ const Assignees = ({ issue }) => {
       JSON.stringify(issueTypes[issue.status])
     );
     const filteredIssue = filteredIssueArr.find((el) => el.id === issue.id);
+    console.log("filteredIssue#", filteredIssue);
+    if (!filteredIssue) return;
     filteredIssue.userIds = [...assignedUsersId];
     filteredIssueArr.splice(
       filteredIssueArr.indexOf(filteredIssue),
@@ -91,13 +105,9 @@ const Assignees = ({ issue }) => {
     } else {
       dispatch(completed(filteredIssueArr));
     }
-
-    const payload = {
-      userIds: [...assignedUsersId],
-      users: [...assignedUsers],
-    };
-    updateIssueList(payload, issue.id);
   }, [assignedUsersId]);
+
+  // useEffect(() => {}, [updatedIssue.userIds]);
 
   useEffect(() => {
     if (issue.userIds.length > 0) {

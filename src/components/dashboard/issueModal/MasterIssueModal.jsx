@@ -86,7 +86,7 @@ const MasterIssueModal = () => {
         ) : (
           <div style={loaderProject ? { pointerEvents: "none" } : null}>
             <IssueModalContent
-              issue={currentIssue}
+              // issue={currentIssue}
               modalCloseHandler={modalCloseHandler}
             />
           </div>
