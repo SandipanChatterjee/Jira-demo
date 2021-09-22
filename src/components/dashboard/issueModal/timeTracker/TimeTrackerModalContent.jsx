@@ -1,6 +1,4 @@
 import React from "react";
-import { Close, Timer } from "@material-ui/icons";
-import { LinearProgress, TextField, Button } from "@material-ui/core";
 import { useStyles } from "./timeTrackerStyle";
 import {
   setTimeSpent,
@@ -8,6 +6,12 @@ import {
 } from "../../../../actions/issueModal/timeTracker";
 import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import { useSelector, useDispatch } from "react-redux";
+
+import Close from "@material-ui/icons/Close";
+import Timer from "@material-ui/icons/Timer";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const TimeTrackerModalContent = ({ issue, closeTimeTrackerModalHandler }) => {
   const classes = useStyles();

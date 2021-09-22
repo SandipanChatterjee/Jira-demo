@@ -4,10 +4,14 @@ import {
   setShowReporterList,
 } from "../../../../actions/issueModal/reporter";
 import { updateIssueListHandler } from "../../../../actions/updateIssueList";
-import { TextField, Avatar, Button } from "@material-ui/core";
-import { Autocomplete, createFilterOptions } from "@material-ui/lab";
+import { createFilterOptions } from "@material-ui/lab";
 import { useStyles } from "./reporterStyle";
 import { useDispatch, useSelector } from "react-redux";
+
+import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const Reporter = () => {
   const classes = useStyles();

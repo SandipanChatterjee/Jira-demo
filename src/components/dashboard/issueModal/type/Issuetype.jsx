@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Button, TextField } from "@material-ui/core";
 import { type, typeIconObj, issueStatus } from "../../../../utils/utils";
-import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import {
   setShowIssueTypeList,
   setIssueType,
@@ -15,7 +13,14 @@ import {
   inprogress,
   completed,
 } from "../../../../actions/issues";
+import { useStyles } from "./issueTypeStyle";
+
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
 const Issuetype = ({ issue }) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const issueType = useSelector((state) => state.typeReducer.type);
   const showIssueTypeList = useSelector(
@@ -71,39 +76,17 @@ const Issuetype = ({ issue }) => {
 
   return (
     <div>
-      <Button
-        onClick={showIssueTypeListHandler}
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
-        }}
-      >
-        <span
-          style={{
-            marginTop: "auto",
-            marginBottom: "auto",
-            marginTop: "4px",
-          }}
-        >
+      <Button onClick={showIssueTypeListHandler} className={classes.btn}>
+        <span className={classes.icon}>
           {typeIconObj[typeValuesArr.indexOf(issueType)]}
         </span>
-        <span
-          style={{
-            marginLeft: "5px",
-            fontSize: "12px",
-            marginTop: "auto",
-            marginBottom: "auto",
-          }}
-        >
-          {issueType + "-" + issue.id}
-        </span>
+        <span className={classes.btnText}>{issueType + "-" + issue.id}</span>
       </Button>
       {showIssueTypeList ? (
         <div onBlur={closeIssueTypeListHandler}>
           <Autocomplete
             freeSolo
-            style={{ width: "50%" }}
+            className={classes.autoCompleteContainer}
             onChange={(event, newValue) =>
               changeIssueTypeHandler(event, newValue)
             }

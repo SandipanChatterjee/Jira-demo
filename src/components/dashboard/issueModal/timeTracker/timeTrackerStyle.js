@@ -26,6 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     padding: ".8rem 0",
+    width: "auto",
     "&:hover ": {
       cursor: "pointer",
       backgroundColor: paperBackGroundColor,

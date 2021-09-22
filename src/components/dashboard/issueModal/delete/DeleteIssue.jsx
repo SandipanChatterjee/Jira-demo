@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from "react";
-import { Button, Modal } from "@material-ui/core";
 import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
 import {
   setShowDeleteModal,
@@ -13,6 +12,9 @@ import { useStyles, getModalStyle } from "./deleteStyle";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Loader } from "../../../shared/loader/Loader";
+
+import Button from "@material-ui/core/Button";
+import Modal from "@material-ui/core/Modal";
 
 const DeleteIssue = ({ issue }) => {
   const classes = useStyles();

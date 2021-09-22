@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Button, Modal } from "@material-ui/core";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import { setShowFeedbackModal } from "../../../../actions/issueModal/feedback";
 import { useStyles, getModalStyle } from "./feedbackStyle";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
+import Button from "@material-ui/core/Button";
+import Modal from "@material-ui/core/Modal";
 
 const Feedback = () => {
   const classes = useStyles();

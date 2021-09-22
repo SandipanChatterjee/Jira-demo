@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from "react";
-import { TextField, Avatar, Button } from "@material-ui/core";
-import { Autocomplete, createFilterOptions } from "@material-ui/lab";
+
+import { createFilterOptions } from "@material-ui/lab";
 import {
   setPriority,
   setShowPriorityList,
@@ -21,6 +21,10 @@ import {
   inprogress,
   completed,
 } from "../../../../actions/issues";
+
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const Priority = () => {
   const dispatch = useDispatch();

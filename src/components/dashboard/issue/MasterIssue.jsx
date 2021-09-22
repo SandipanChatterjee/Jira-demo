@@ -1,6 +1,5 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { Card, Grid, Paper, Avatar } from "@material-ui/core";
 import {
   backlog,
   completed,
@@ -23,9 +22,14 @@ import {
   priorityIcon,
 } from "../../../utils/utils";
 import { useStyles } from "./style";
-import { AvatarGroup } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Avatar from "@material-ui/core/Avatar";
+import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 const MasterIssue = () => {
   const classes = useStyles();

@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from "react";
-import { Timer } from "@material-ui/icons";
 import { useStyles, getModalStyle } from "./timeTrackerStyle";
-import { LinearProgress, Modal } from "@material-ui/core";
 import { setShowTimeTrackerModal } from "../../../../actions/issueModal/timeTracker";
-import TimeTrackerModalContent from "./TimeTrackerModalContent";
 import { useSelector, useDispatch } from "react-redux";
+
+import Timer from "@material-ui/icons/Timer";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Modal from "@material-ui/core/Modal";
+import TimeTrackerModalContent from "./TimeTrackerModalContent";
+
 const TimeTracker = () => {
   const classes = useStyles();
   const dispatch = useDispatch();

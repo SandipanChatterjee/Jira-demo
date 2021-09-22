@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Modal } from "@material-ui/core";
 import { getCurrentIssue } from "../../../actions/issues";
 import { Loader } from "../../shared/loader/Loader";
-import IssueModalContent from "../issueModal/IssueModalContent";
 import { getModalStyle, useStyles } from "./style";
 import { setShowMasterIssue } from "../../../actions/masterIssue";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+import Dialog from "@mui/material/Dialog";
+import IssueModalContent from "../issueModal/IssueModalContent";
 
 const MasterIssueModal = () => {
   // const [modalActive, setModalActive] = useState(false);
@@ -68,30 +69,24 @@ const MasterIssueModal = () => {
   }
 
   return (
-    <div ref={modalRef}>
-      <Modal
+    <div>
+      <Dialog
         open={showMasterIssueModal}
         onClose={modalCloseHandler}
-        className={classes.modalStyle}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        fullWidth="true"
+        maxWidth="lg"
+        scroll="body"
       >
         {currentIssueLoading ? (
-          <div
-            style={modalStyle}
-            className={`${classes.paper} ${classes.loaderContainer}`}
-          >
+          <div className={classes.loaderContainer}>
             <Loader />
           </div>
         ) : (
           <div style={loaderProject ? { pointerEvents: "none" } : null}>
-            <IssueModalContent
-              // issue={currentIssue}
-              modalCloseHandler={modalCloseHandler}
-            />
+            <IssueModalContent modalCloseHandler={modalCloseHandler} />
           </div>
         )}
-      </Modal>
+      </Dialog>
     </div>
   );
 };

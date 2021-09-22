@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect, useRef } from "react";
-import { Avatar, Button, TextField } from "@material-ui/core";
 import { Add, Clear } from "@material-ui/icons";
-import { Autocomplete } from "@material-ui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import {
   resetUsers,
@@ -19,6 +17,11 @@ import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import { useSelectorIssues } from "../../../../utils/useSelectorIssues";
 import { issueStatus } from "../../../../utils/utils";
 import { useStyles } from "./assigneesStyle";
+
+import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const Assignees = () => {
   const classes = useStyles();

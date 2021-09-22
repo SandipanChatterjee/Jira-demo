@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
-import { TextField, Input } from "@material-ui/core";
 import { setEstimationHandler } from "../../../../actions/issueModal/estimate";
 import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import { useSelector, useDispatch } from "react-redux";
+
+import TextField from "@material-ui/core/TextField";
+
 import "./estimate.css";
 const Estimate = () => {
   const dispatch = useDispatch();

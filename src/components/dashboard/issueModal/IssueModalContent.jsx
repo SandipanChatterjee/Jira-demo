@@ -4,8 +4,8 @@ import { useStyles, getModalStyle } from "./style";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import NewCommentSection from "./NewComment";
-import CommentListSection from "./CommentList";
+import NewCommentSection from "./comments/NewComment";
+import CommentListSection from "./comments/CommentList";
 
 import { updateIssueList } from "../../../services/updateIssueList";
 import {
@@ -215,7 +215,7 @@ const IssueModalContent = ({ modalCloseHandler }) => {
   }
 
   return (
-    <div style={modalStyle} className={classes.paper}>
+    <div className={classes.paper}>
       <div style={{ flex: 2 }}>
         <div className={classes.modalHeader}>
           <Issuetype issue={issue} />

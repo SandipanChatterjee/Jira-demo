@@ -7,7 +7,7 @@ import {
   CircularProgress,
   Modal,
 } from "@material-ui/core";
-import { useStyles, getModalStyle } from "./style";
+import { useStyles, getModalStyle } from "./commentStyle";
 import {
   setEditActive,
   setCurrentCommentIndex,
@@ -15,7 +15,7 @@ import {
   saveEditCommentHandler,
   deleteCommentModal,
   deleteCommentHandler,
-} from "../../../actions/issueModal/comments";
+} from "../../../../actions/issueModal/comments";
 import { useSelector, useDispatch } from "react-redux";
 
 let currentDeleteElementId = 0;
@@ -103,7 +103,7 @@ const CommentList = () => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div style={modalStyle} className={classes.modalContainer}>
+        <div style={modalStyle} className={classes.commentsModalContainer}>
           <h2>Are you sure you want to delete this comment?</h2>
           <span>Once you delete, it's gone for good.</span>
           <br />
