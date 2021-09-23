@@ -30,29 +30,36 @@ const Search = () => {
 
   const handleChange = (e) => {
     const val = e.target.value;
+    if (val === "") {
+      dispatch(setIssueTypes(arr));
+      dispatch(searchedDataHandler([]));
+    } else {
+      let issues = arr.filter((el) => {
+        let title = el.title.toUpperCase();
+        let value = val.toUpperCase();
+        return title.includes(value);
+      });
+      if (issues.length > 0) {
+        let searchedDataArr = convertToArrayOfObjects(issues);
+        dispatch(searchedDataHandler(searchedDataArr));
+      } else {
+        dispatch(searchedDataHandler([]));
+      }
+    }
     dispatch(search(val));
   };
 
-  useEffect(() => {
-    if (ref.current) {
-      ref.current = false;
-      return;
-    }
-    if (searchValue !== "") {
-      console.log(arr);
-      let issues = arr.filter((el) => {
-        let title = el.title.toUpperCase();
-        let value = searchValue.toUpperCase();
-        return title.includes(value);
-      });
-      let searchedDataArr = convertToArrayOfObjects(issues);
-      let data = searchedDataArr || issueTypes;
-      console.log("searchedDataArr#", searchedDataArr);
-      dispatch(searchedDataHandler(data));
-    } else {
-      dispatch(setIssueTypes(arr));
-    }
-  }, [searchValue]);
+  const handleChangeDebounce = (fn) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        fn(...args);
+      }, 500);
+    };
+  };
+
+  const handleChangeDebounceHandler = handleChangeDebounce(handleChange);
 
   useEffect(() => {
     return () => {
@@ -75,8 +82,7 @@ const Search = () => {
             </InputAdornment>
           ),
         }}
-        value={searchValue}
-        onChange={handleChange}
+        onChange={handleChangeDebounceHandler}
       />
     </div>
   );

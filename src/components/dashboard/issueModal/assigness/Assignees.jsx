@@ -17,10 +17,7 @@ import { updateIssueListHandler } from "../../../../actions/updateIssueList";
 import { useSelectorIssues } from "../../../../utils/useSelectorIssues";
 import { issueStatus } from "../../../../utils/utils";
 import { useStyles } from "./assigneesStyle";
-
-import TextField from "@material-ui/core/TextField";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
+import { Avatar, TextField, Button } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const Assignees = () => {
