@@ -100,7 +100,7 @@ export const getCurrentIssue = (id) => {
   return async (dispatch) => {
     dispatch(currentIssueLoading(true));
     try {
-      const memoize = (fn) => {
+      /*const memoize = (fn) => {
         return async (...args) => {
           if (cache[args]) {
             console.log("Fetchinging from cache");
@@ -119,7 +119,11 @@ export const getCurrentIssue = (id) => {
         };
       };
       const getIssueHandler = memoize(getIssue);
-      getIssueHandler(id);
+      getIssueHandler(id);*/
+      let response = await getIssue(id);
+      const data = await response;
+      dispatch(currentIssueFunction(data.issue));
+      dispatch(currentIssueLoading(false));
     } catch (e) {
       // dispatch(fail(e));
       dispatch(currentIssueLoading(false));
