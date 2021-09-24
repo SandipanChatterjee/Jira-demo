@@ -1,5 +1,6 @@
 import { actionTypes } from "../../actions/issueModal/comments";
 const initState = {
+  commentsList: [],
   activeNewComment: false,
   newCommentText: "",
   newCommentLoading: false,
@@ -17,6 +18,11 @@ const initState = {
 };
 const reducer = (state = initState, action) => {
   switch (action.type) {
+    case actionTypes.comments_list:
+      return {
+        ...state,
+        commentsList: [...action.commentsList],
+      };
     case actionTypes.active_new_comment:
       return {
         ...state,
@@ -36,6 +42,7 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         newCommentData: action.newCommentData,
+        commentsList: [...state.commentsList, action.newCommentData],
         newCommentLoading: false,
       };
     case actionTypes.save_fail_new_comment:
@@ -64,6 +71,12 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         editCommentData: action.editCommentData,
+        commentsList: [
+          ...state.commentsList.filter(
+            (el) => el.id !== action.editCommentData.id
+          ),
+          action.editCommentData,
+        ],
         editCommentLoading: false,
       };
     case actionTypes.save_fail_edit_comment:
@@ -86,6 +99,10 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         deleteCommentData: action.deleteCommentData,
+        commentsList: state.commentsList.filter(
+          (el) => el.id !== action.deleteCommentData.id
+        ),
+
         deleteCommentLoading: false,
       };
     case actionTypes.delete_comment_fail:

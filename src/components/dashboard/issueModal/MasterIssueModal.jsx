@@ -44,21 +44,7 @@ const MasterIssueModal = () => {
   };
 
   useEffect(() => {
-    if (
-      Object.keys(newCommentData).length > 0 ||
-      Object.keys(editCommentData).length > 0 ||
-      Object.keys(deleteCommentData).length > 0
-    ) {
-      if (Object.keys(currentIssue).length > 0) {
-        console.log("currentIssue", currentIssue);
-        dispatch(getCurrentIssue(currentIssue.id));
-      }
-    }
-  }, [newCommentData, editCommentData, deleteCommentData]);
-
-  useEffect(() => {
     console.log("ref##", modalRef.current);
-
     dispatch(setShowMasterIssue(true));
   }, []);
 

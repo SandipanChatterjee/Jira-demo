@@ -100,26 +100,6 @@ export const getCurrentIssue = (id) => {
   return async (dispatch) => {
     dispatch(currentIssueLoading(true));
     try {
-      /*const memoize = (fn) => {
-        return async (...args) => {
-          if (cache[args]) {
-            console.log("Fetchinging from cache");
-            dispatch(currentIssueFunction(cache[args]));
-            dispatch(currentIssueLoading(false));
-            return cache[args];
-          } else {
-            console.log("Executing and fetching results...");
-            let response = await fn(...args);
-            const data = await response;
-            cache[args] = data.issue;
-            dispatch(currentIssueFunction(data.issue));
-            dispatch(currentIssueLoading(false));
-            return cache[args];
-          }
-        };
-      };
-      const getIssueHandler = memoize(getIssue);
-      getIssueHandler(id);*/
       let response = await getIssue(id);
       const data = await response;
       dispatch(currentIssueFunction(data.issue));

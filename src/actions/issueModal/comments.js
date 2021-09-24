@@ -1,6 +1,7 @@
 import { saveComment, saveEditedComment } from "../../services/saveComment";
 import { deleteCommentApi } from "../../services/deleteComment";
 export const actionTypes = {
+  comments_list: "comment_list",
   active_new_comment: "active_new_comment",
   new_comment_text: "new_comment",
   save_new_comment_loading: "save_new_comment_loading",
@@ -15,6 +16,13 @@ export const actionTypes = {
   delete_comment_loading: "delete_comment_loading",
   delete_comment_fail: "delete_comment_fail",
   delete_comment_success: "delete_comment_success",
+};
+
+export const setCommentList = (data) => {
+  return {
+    type: actionTypes.comments_list,
+    commentsList: data,
+  };
 };
 
 export const setActive = (flag) => {
@@ -53,14 +61,16 @@ export const saveNewCommentLoading = (flag) => {
   };
 };
 
-export const saveNewCommentHandler = (payload) => {
+export const saveNewCommentHandler = (payload, currentUser) => {
   return async (dispatch) => {
     dispatch(saveNewCommentLoading(true));
     try {
       let response = await saveComment(payload);
       const data = await response;
       dispatch(saveNewCommentLoading(false));
-      dispatch(saveNewCommentSuccess(data.comment));
+      const comment = { ...data.comment, user: currentUser };
+      console.log("comment##", comment, currentUser);
+      dispatch(saveNewCommentSuccess(comment));
     } catch (e) {
       dispatch(saveNewCommentLoading(false));
       dispatch(saveNewCommentFail(e));
@@ -103,13 +113,14 @@ export const saveEditCommentLoading = (flag) => {
   };
 };
 
-export const saveEditCommentHandler = (id, payload) => {
+export const saveEditCommentHandler = (id, payload, currentUser) => {
   return async (dispatch) => {
     dispatch(saveEditCommentLoading(true));
     try {
       let response = await saveEditedComment(id, payload);
       const data = await response;
-      dispatch(saveEditCommentSuccess(data.comment));
+      const comment = { ...data.comment, user: currentUser };
+      dispatch(saveEditCommentSuccess(comment));
       dispatch(saveEditCommentLoading(false));
     } catch (e) {
       dispatch(saveEditCommentFail(e));
@@ -146,13 +157,14 @@ export const deleteCommentLoading = (flag) => {
   };
 };
 
-export const deleteCommentHandler = (id) => {
+export const deleteCommentHandler = (id, currentUser) => {
   return async (dispatch) => {
     dispatch(deleteCommentLoading(true));
     try {
       let response = await deleteCommentApi(id);
       const data = await response;
-      dispatch(deleteCommentSuccess(data.comment));
+      const comment = { id: id, ...data.comment, user: currentUser };
+      dispatch(deleteCommentSuccess(comment));
       dispatch(deleteCommentLoading(false));
     } catch (e) {
       dispatch(deleteCommentFail(e));

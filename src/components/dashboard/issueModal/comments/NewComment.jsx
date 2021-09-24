@@ -56,7 +56,7 @@ const NewComment = () => {
       issueId: issue.id,
       userId: currentUser.id,
     };
-    dispatch(saveNewCommentHandler(payload));
+    dispatch(saveNewCommentHandler(payload, currentUser));
   };
 
   useEffect(() => {

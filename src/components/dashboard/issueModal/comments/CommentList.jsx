@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { useStyles, getModalStyle } from "./commentStyle";
 import {
+  setCommentList,
   setEditActive,
   setCurrentCommentIndex,
   editCommentTextHandler,
@@ -27,7 +28,10 @@ const CommentList = () => {
   const dispatch = useDispatch();
 
   const issue = useSelector((state) => state.issueReducer.currentIssue);
-
+  let currentUser = useSelector((state) => state.usersReducer.currentUser);
+  const commentsList = useSelector(
+    (state) => state.commentsReducer.commentsList
+  );
   const acitveEditComment = useSelector(
     (state) => state.commentsReducer.acitveEditComment
   );
@@ -50,9 +54,11 @@ const CommentList = () => {
     (state) => state.commentsReducer.deleteCommentLoading
   );
 
-  const editCommentActiveHandler = (index) => {
+  const editCommentActiveHandler = (index, commentText) => {
+    console.log("commentText#", commentText);
     dispatch(setEditActive(true));
     currentCommentIndex = index;
+    dispatch(editCommentTextHandler(commentText));
     // dispatch(setCurrentCommentIndex(index));
   };
 
@@ -72,7 +78,8 @@ const CommentList = () => {
     const payload = {
       body: editCommentText,
     };
-    dispatch(saveEditCommentHandler(id, payload));
+
+    dispatch(saveEditCommentHandler(id, payload, currentUser));
   };
 
   const deleteCommentModalHandler = (id) => {
@@ -113,7 +120,7 @@ const CommentList = () => {
             variant="contained"
             size="small"
             style={{ marginRight: "15px" }}
-            onClick={() => dispatch(deleteCommentHandler(id))}
+            onClick={() => dispatch(deleteCommentHandler(id, currentUser))}
           >
             Delete Comment
           </Button>
@@ -129,7 +136,7 @@ const CommentList = () => {
     );
   };
   useEffect(() => {
-    issue.comments.map((comment, index) => {
+    commentsList.map((comment, index) => {
       if (currentCommentIndex == index) {
         dispatch(editCommentTextHandler(comment.body));
       }
@@ -137,14 +144,20 @@ const CommentList = () => {
   }, [acitveEditComment]);
 
   useEffect(() => {
+    dispatch(setCommentList(issue.comments));
     return () => {
       currentDeleteElementId = 0;
     };
   }, []);
+
+  if (commentsList.length === 0) {
+    return null;
+  }
+
   return (
     <Fragment>
       <div>
-        {issue.comments.map((comment, index) => {
+        {commentsList.map((comment, index) => {
           console.log("issue#comments");
           return (
             <div className={classes.commentsContainer} key={index}>
@@ -203,7 +216,9 @@ const CommentList = () => {
                     <p>{comment.body}</p>
                     <Link
                       component="button"
-                      onClick={() => editCommentActiveHandler(index)}
+                      onClick={() =>
+                        editCommentActiveHandler(index, comment.body)
+                      }
                     >
                       Edit
                     </Link>{" "}

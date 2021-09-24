@@ -93,12 +93,6 @@ export const useStyles = makeStyles((theme) => ({
   "@media (max-width:768px)": {
     paper: {
       display: "block",
-      /*position: "absolute",
-      width: "350px",
-      minWidth: "200px",
-      backgroundColor: "#fff",
-      minHeight: "100%",
-      maxHeight: "calc(100vh - 210px)",*/
     },
     modalStyle: {
       position: "absolute",
