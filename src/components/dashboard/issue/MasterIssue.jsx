@@ -154,6 +154,8 @@ const MasterIssue = () => {
     ? searchedData.length > 0
       ? list.push(...searchedData)
       : list.push(...issueTypes)
+    : searchValue !== ""
+    ? list.push(...[[], [], [], []])
     : list.push(...issueTypes);
 
   return (
