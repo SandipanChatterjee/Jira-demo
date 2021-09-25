@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { withRouter, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Drawer,
@@ -57,12 +57,17 @@ const routes = [
 
 const Navbar = (props) => {
   const classes = useStyles();
+  const location = useLocation();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const routeHandler = (el, index) => {
     setSelectedIndex(index);
     props.history.push(el.route);
   };
+  useEffect(() => {
+    const index = routes.findIndex((el) => el.route === location.pathname);
+    setSelectedIndex(index);
+  }, [location.pathname]);
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -76,21 +81,15 @@ const Navbar = (props) => {
       >
         <List>
           {routes.map((el, index) => (
-            <Tooltip title={index === 1 ? "NOT IMPLEMENTED" : ""} arrow>
-              <ListItem
-                button
-                key={index}
-                selected={selectedIndex === index}
-                onClick={index === 1 ? null : () => routeHandler(el, index)}
-                className={
-                  index === 1
-                    ? classes.listItemProjectSettings
-                    : classes.listItem
-                }
-              >
-                <ListItemText primary={el.title} />
-              </ListItem>
-            </Tooltip>
+            <ListItem
+              button
+              key={index}
+              selected={selectedIndex === index}
+              onClick={() => routeHandler(el, index)}
+              className={classes.listItem}
+            >
+              <ListItemText primary={el.title} />
+            </ListItem>
           ))}
         </List>
       </Drawer>

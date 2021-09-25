@@ -1,14 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import { RootRoutes } from "./routes/Index";
 import { authenticate } from "./actions/guestAccount";
 import { useSelector, useDispatch } from "react-redux";
 import { Loader } from "./components/shared/loader/Loader";
+import { getProjectData } from "./actions/project";
+import { setIssueTypes } from "./actions/issues";
+
 function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.authenticateReducer.token);
+  const project = useSelector((state) => state.projectReducer.project);
   const previouslyStoredToken = localStorage.getItem("token");
+  const ref = useRef(true);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current = false;
+      return;
+    }
+    if (Object.keys(project).length > 0) {
+      console.log("APP", project);
+      dispatch(setIssueTypes(project.issues));
+    }
+  }, [project]);
 
   useEffect(() => {
     if (process.env.NODE_ENV == "production") {
@@ -19,6 +35,7 @@ function App() {
     if (!previouslyStoredToken) {
       dispatch(authenticate());
     }
+    dispatch(getProjectData());
   }, []);
 
   const renderRootRoutes = () => {

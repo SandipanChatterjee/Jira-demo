@@ -12,31 +12,31 @@ import { useStyles } from "./style";
 import { CircularProgress } from "@material-ui/core";
 import { Loader } from "../shared/loader/Loader";
 import { dashboardBackGroundColor } from "../../utils/globalStyles";
+import { useSelectorIssues } from "../../utils/useSelectorIssues";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.projectReducer.project);
   const loader = useSelector((state) => state.projectReducer.loading);
   const error = useSelector((state) => state.projectReducer.error);
-  const ref = useRef(true);
+  const currentUser = useSelector((state) => state.usersReducer.currentUser);
   const classes = useStyles();
   console.log("loader#", loader, project);
+  const selector = useSelectorIssues();
+  const arr = [
+    selector.backlogIssues,
+    selector.selectedIssues,
+    selector.inprogressIssues,
+    selector.completedIssues,
+  ].flat(Infinity);
 
   useEffect(async () => {
-    if (Object.keys(project).length == 0) {
-      dispatch(getProjectData());
+    if (Object.keys(project).length !== 0) {
+      dispatch(setIssueTypes(arr));
+    }
+    if (Object.keys(currentUser).length === 0) {
       dispatch(getCurrentUserData());
     }
   }, []);
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current = false;
-      return;
-    }
-    if (Object.keys(project).length > 0) {
-      dispatch(setIssueTypes(project.issues));
-    }
-  }, [project]);
 
   if (loader) {
     return (

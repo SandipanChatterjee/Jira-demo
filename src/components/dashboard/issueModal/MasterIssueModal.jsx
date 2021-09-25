@@ -6,7 +6,8 @@ import { setShowMasterIssue } from "../../../actions/masterIssue";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import Dialog from "@mui/material/Dialog";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
 import IssueModalContent from "../issueModal/IssueModalContent";
 
 const MasterIssueModal = () => {
@@ -38,6 +39,8 @@ const MasterIssueModal = () => {
 
   const modalRef = useRef();
 
+  const mouseDownTarget = React.useRef();
+
   const modalCloseHandler = () => {
     dispatch(setShowMasterIssue(false));
     history.goBack();
@@ -63,15 +66,17 @@ const MasterIssueModal = () => {
         maxWidth="lg"
         scroll="body"
       >
-        {currentIssueLoading ? (
-          <div className={classes.loaderContainer}>
-            <Loader />
-          </div>
-        ) : (
-          <div style={loaderProject ? { pointerEvents: "none" } : null}>
-            <IssueModalContent modalCloseHandler={modalCloseHandler} />
-          </div>
-        )}
+        <DialogContent>
+          {currentIssueLoading ? (
+            <div className={classes.loaderContainer}>
+              <Loader />
+            </div>
+          ) : (
+            <div style={loaderProject ? { pointerEvents: "none" } : null}>
+              <IssueModalContent modalCloseHandler={modalCloseHandler} />
+            </div>
+          )}
+        </DialogContent>
       </Dialog>
     </div>
   );
