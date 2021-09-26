@@ -54,7 +54,7 @@ const Dashboard = () => {
     <div>
       <Header
         name={"Kanban board"}
-        title={"Projects / singularity 1.0 vv2 / Kanban Board"}
+        title={`Projects / ${project.name} / Kanban Board`}
       />
       <br />
       <div className={classes.container}>

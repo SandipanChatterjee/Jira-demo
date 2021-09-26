@@ -1,8 +1,28 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Badge from "@material-ui/core/Badge";
 import {
   cardBackGroundColor,
   paperBackGroundColor,
 } from "../../../utils/globalStyles";
+
+export const StyledBadge = withStyles((theme) => ({
+  badge: {
+    backgroundColor: "green",
+    color: "green",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    "&::after": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      border: "1px solid currentColor",
+      content: '""',
+    },
+  },
+}))(Badge);
+
 export const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

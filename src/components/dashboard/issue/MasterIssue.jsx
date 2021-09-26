@@ -22,6 +22,7 @@ import {
   priorityIcon,
 } from "../../../utils/utils";
 import { useStyles } from "./style";
+import { StyledBadge } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -233,8 +234,10 @@ const MasterIssue = () => {
                                               >
                                                 <AvatarGroup>
                                                   {filteredUsers.map((el) => {
+                                                    console.log("el###", el);
                                                     return (
                                                       <Avatar
+                                                        alt={`${el.name}`}
                                                         src={el.avatarUrl}
                                                         style={{
                                                           height: "25px",

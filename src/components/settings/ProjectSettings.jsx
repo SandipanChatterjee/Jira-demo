@@ -1,25 +1,21 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { TextField, InputLabel, Input, Button } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import { getProjectData } from "../../actions/project";
-import { setUpdateProjectHandler } from "../../actions/settings";
-import { modules, formats, projectCategory } from "../../utils/utils";
-import {
-  setProjectName,
-  setProjectUrl,
-  setProjectCategory,
-  setProjectDescription,
-} from "../../actions/settings";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
+import React, { Fragment, useEffect } from "react";
+import { Button, InputLabel, TextField, Snackbar } from "@material-ui/core";
+import { Autocomplete, Alert } from "@material-ui/lab";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { setIssueTypes } from "../../actions/issues";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setProjectCategory,
+  setProjectDescription,
+  setProjectName,
+  setProjectUrl,
+  setUpdateProjectHandler,
+} from "../../actions/settings";
+import { formats, modules, projectCategory } from "../../utils/utils";
 import { Loader } from "../shared/loader/Loader";
-
+import { useStyles } from "./style";
 const ProjectSettings = () => {
-  const history = useHistory();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const project = useSelector((state) => state.projectReducer.project);
   const loader = useSelector((state) => state.projectReducer.loading);
@@ -68,29 +64,35 @@ const ProjectSettings = () => {
 
   if (loader) {
     return (
-      <div>
+      <div className={classes.loaderContainer}>
         <Loader />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <p>Projects / {project.name} / Project Details</p>
       <h3>Project Details</h3>
-      <div>
+      <br />
+      <div className={classes.inputElements}>
         <InputLabel htmlFor="name">Name</InputLabel>
         <TextField
           required
+          error={projectName === ""}
           id="name"
           value={projectName}
           onChange={changeNameHandler}
           variant="outlined"
           size="small"
+          className={classes.textField}
         />
+        {projectName === "" ? (
+          <span className={classes.errorText}>This field is required</span>
+        ) : null}
       </div>
-      <div>
-        <InputLabel htmlFor="url">Url</InputLabel>
+      <div className={classes.inputElements}>
+        <InputLabel htmlFor="url">URL</InputLabel>
         <TextField
           required
           id="url"
@@ -98,9 +100,10 @@ const ProjectSettings = () => {
           onChange={changeUrlHandler}
           variant="outlined"
           size="small"
+          className={classes.textField}
         />
       </div>
-      <div>
+      <div className={classes.inputElements}>
         <InputLabel htmlFor="description">Description</InputLabel>
         <ReactQuill
           id="description"
@@ -110,9 +113,11 @@ const ProjectSettings = () => {
           onChange={changeProjectDescription}
           value={projectDescription}
         />
-        <span>Describe the project in as much detail as you like.</span>
+        <span className={classes.descTxt}>
+          Describe the project in as much detail as you like.
+        </span>
       </div>
-      <div>
+      <div className={classes.inputElements}>
         <InputLabel htmlFor="description">Project Category</InputLabel>
         <Autocomplete
           value={selectedCategory}
@@ -143,6 +148,7 @@ const ProjectSettings = () => {
           variant="contained"
           color="primary"
           size="small"
+          disabled={projectName === ""}
           onClick={updateProjectHandler}
         >
           Save changes
