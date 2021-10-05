@@ -6,8 +6,8 @@ import { setShowMasterIssue } from "../../../actions/masterIssue";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import IssueModalContent from "../issueModal/IssueModalContent";
 
 const MasterIssueModal = () => {

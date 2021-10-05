@@ -73,7 +73,7 @@ const Search = () => {
       <TextField
         id="search"
         size="small"
-        className={classes.textField}
+        variant="outlined"
         InputProps={{
           className: classes.input,
           startAdornment: (
