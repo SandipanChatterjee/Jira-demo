@@ -27,6 +27,12 @@ function App() {
   }, [project]);
 
   useEffect(() => {
+    if (previouslyStoredToken) {
+      dispatch(getProjectData());
+    }
+  }, [previouslyStoredToken]);
+
+  useEffect(() => {
     if (process.env.NODE_ENV == "production") {
       console.log = function () {};
       console.warn = function () {};
@@ -35,7 +41,6 @@ function App() {
     if (!previouslyStoredToken) {
       dispatch(authenticate());
     }
-    dispatch(getProjectData());
   }, []);
 
   const renderRootRoutes = () => {
