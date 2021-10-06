@@ -19,6 +19,7 @@ import { issueStatus } from "../../../../utils/utils";
 import { useStyles } from "./assigneesStyle";
 import { Avatar, TextField, Button } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import ErrorBoundary from "../../../../utils/ErrorBoundary";
 
 const Assignees = () => {
   const classes = useStyles();
@@ -113,12 +114,25 @@ const Assignees = () => {
     if (issue.userIds.length > 0) {
       issue.users.map((user) => dispatch(setAssignedUsers(user)));
     }
-
     return () => {
       dispatch(resetUsers());
     };
   }, []);
   const usersOption = users.filter((el) => !assignedUsersId.includes(el.id));
+
+  const AssignedUserBtnContent = ({ user }) => {
+    return (
+      <Button
+        className={classes.parentContainer}
+        variant="contained"
+        onClick={() => deleteUserHandler(user.id)}
+      >
+        <Avatar src={user.avatarUrl} className={classes.avatarSize} />
+        <span className={classes.text}>{user.name.toString()}</span>
+        <Clear fontSize="small" />
+      </Button>
+    );
+  };
   return (
     // issue.userIds.length == 0 && !showUsersList
     <div className={classes.root}>
@@ -133,17 +147,11 @@ const Assignees = () => {
         </Button>
       ) : (
         <div>
-          {assignedUsers.map((user) => {
+          {assignedUsers.map((user, index) => {
             return (
-              <Button
-                className={classes.parentContainer}
-                variant="contained"
-                onClick={() => deleteUserHandler(user.id)}
-              >
-                <Avatar src={user.avatarUrl} className={classes.avatarSize} />
-                <span className={classes.text}>{user.name}</span>
-                <Clear fontSize="small" />
-              </Button>
+              <ErrorBoundary error={"Not Found"}>
+                <AssignedUserBtnContent user={user} />
+              </ErrorBoundary>
             );
           })}
           <Button

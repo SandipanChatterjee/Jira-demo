@@ -16,8 +16,13 @@ import {
   saveEditCommentHandler,
   deleteCommentModal,
   deleteCommentHandler,
-} from "../../../../actions/issueModal/comments";
+} from "../../../../../actions/issueModal/comments";
+import {
+  CommentUserNameContent,
+  CommentBodyContent,
+} from "../CommentListErrorBoundary";
 import { useSelector, useDispatch } from "react-redux";
+import ErrorBoundary from "../../../../../utils/ErrorBoundary";
 
 let currentDeleteElementId = 0;
 let currentCommentIndex = null;
@@ -165,7 +170,9 @@ const CommentList = () => {
                 <Avatar src={comment.user.avatarUrl} />
               </div>
               <div>
-                <b>{comment.user.name}</b>
+                <ErrorBoundary error={"User name not found"}>
+                  <CommentUserNameContent name={comment.user.name} />
+                </ErrorBoundary>
                 <br />
 
                 {acitveEditComment && currentCommentIndex == index ? (
@@ -213,7 +220,9 @@ const CommentList = () => {
                   </div>
                 ) : (
                   <div className={classes.commentBody}>
-                    <p>{comment.body}</p>
+                    <ErrorBoundary error={"Comment body not found"}>
+                      <CommentBodyContent commentBody={comment.body} />
+                    </ErrorBoundary>
                     <Link
                       component="button"
                       onClick={() =>

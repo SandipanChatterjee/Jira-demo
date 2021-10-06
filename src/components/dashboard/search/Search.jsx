@@ -7,6 +7,7 @@ import { useStyles } from "./style";
 import { convertToArrayOfObjects } from "../../../utils/utils";
 import { useSelectorIssues } from "../../../utils/useSelectorIssues";
 import { useSelector, useDispatch } from "react-redux";
+import ErrorBoundary from "../../../utils/ErrorBoundary";
 const Search = () => {
   const dispatch = useDispatch();
   const searchValue = useSelector((state) => state.searchReducer.searchValue);
@@ -70,20 +71,22 @@ const Search = () => {
 
   return (
     <div className={classes.root}>
-      <TextField
-        id="search"
-        size="small"
-        variant="outlined"
-        InputProps={{
-          className: classes.input,
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchRounded />
-            </InputAdornment>
-          ),
-        }}
-        onChange={handleChangeDebounceHandler}
-      />
+      <ErrorBoundary>
+        <TextField
+          id="search"
+          size="small"
+          variant="outlined"
+          InputProps={{
+            className: classes.input,
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRounded />
+              </InputAdornment>
+            ),
+          }}
+          onChange={handleChangeDebounceHandler}
+        />
+      </ErrorBoundary>
     </div>
   );
 };

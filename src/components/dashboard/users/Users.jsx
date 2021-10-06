@@ -7,6 +7,7 @@ import { convertToArrayOfObjects } from "../../../utils/utils";
 import { searchedDataHandler } from "../../../actions/search";
 import { setUsers, setCurrentUserActive } from "../../../actions/users";
 import { useSelector, useDispatch } from "react-redux";
+import ErrorBoundary from "../../../utils/ErrorBoundary";
 
 const Users = () => {
   const project = useSelector((state) => state.projectReducer.project);
@@ -101,7 +102,7 @@ const Users = () => {
 
   return (
     <div className={classes.root}>
-      <AvatarGroup className={classes.avatarGroup}>
+      <AvatarGroup className={classes.avatarGroup} spacing="medium" max={3}>
         {project.users.map((user, index) => {
           let userFound = currentUsers.find((currentUser) => {
             if (currentUser.id === user.id) {

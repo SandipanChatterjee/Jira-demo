@@ -31,6 +31,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import ErrorBoundary from "../../../utils/ErrorBoundary";
 
 const MasterIssue = () => {
   const classes = useStyles();
@@ -113,9 +114,8 @@ const MasterIssue = () => {
           });
         });
         issues.forEach((el) => {
-          el.status = Object.keys(issueStatus)[
-            parseInt(destination.droppableId)
-          ];
+          el.status =
+            Object.keys(issueStatus)[parseInt(destination.droppableId)];
         });
         issues = issues.filter((el) => el.id === itemId);
         issues = [
@@ -206,50 +206,56 @@ const MasterIssue = () => {
                                     >
                                       {(provided, snapshot) => {
                                         return (
-                                          <Card
-                                            className={classes.cardDisplay}
-                                            ref={provided.innerRef}
-                                            onClick={() =>
-                                              modalOpenHanlder(issue.id)
-                                            }
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
-                                          >
-                                            <p className={classes.titleText}>
-                                              {issue.title}
-                                            </p>
-                                            <div
-                                              className={
-                                                classes.cardIconContainer
+                                          <ErrorBoundary>
+                                            <Card
+                                              className={classes.cardDisplay}
+                                              ref={provided.innerRef}
+                                              onClick={() =>
+                                                modalOpenHanlder(issue.id)
                                               }
+                                              {...provided.draggableProps}
+                                              {...provided.dragHandleProps}
                                             >
-                                              <div className={classes.cardIcon}>
-                                                <span>{issueTypeIcon}</span>
-                                                <span>{issuePriorityIcon}</span>
-                                              </div>
+                                              <p className={classes.titleText}>
+                                                {issue.title}
+                                              </p>
                                               <div
                                                 className={
-                                                  classes.cardIconAvatar
+                                                  classes.cardIconContainer
                                                 }
                                               >
-                                                <AvatarGroup>
-                                                  {filteredUsers.map((el) => {
-                                                    console.log("el###", el);
-                                                    return (
-                                                      <Avatar
-                                                        alt={`${el.name}`}
-                                                        src={el.avatarUrl}
-                                                        style={{
-                                                          height: "25px",
-                                                          width: "25px",
-                                                        }}
-                                                      />
-                                                    );
-                                                  })}
-                                                </AvatarGroup>
+                                                <div
+                                                  className={classes.cardIcon}
+                                                >
+                                                  <span>{issueTypeIcon}</span>
+                                                  <span>
+                                                    {issuePriorityIcon}
+                                                  </span>
+                                                </div>
+                                                <div
+                                                  className={
+                                                    classes.cardIconAvatar
+                                                  }
+                                                >
+                                                  <AvatarGroup>
+                                                    {filteredUsers.map((el) => {
+                                                      console.log("el###", el);
+                                                      return (
+                                                        <Avatar
+                                                          alt={`${el.name}`}
+                                                          src={el.avatarUrl}
+                                                          style={{
+                                                            height: "25px",
+                                                            width: "25px",
+                                                          }}
+                                                        />
+                                                      );
+                                                    })}
+                                                  </AvatarGroup>
+                                                </div>
                                               </div>
-                                            </div>
-                                          </Card>
+                                            </Card>
+                                          </ErrorBoundary>
                                         );
                                       }}
                                     </Draggable>

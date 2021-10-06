@@ -4,8 +4,8 @@ import { useStyles, getModalStyle } from "./style";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import NewCommentSection from "./comments/NewComment";
-import CommentListSection from "./comments/CommentList";
+import NewCommentSection from "./comments/comments/NewComment";
+import CommentListSection from "./comments/comments/CommentList";
 
 import { updateIssueList } from "../../../services/updateIssueList";
 import {
@@ -40,6 +40,7 @@ import CopyLink from "./copyLink/CopyLink";
 import DeleteIssue from "./delete/DeleteIssue";
 import PropTypes from "prop-types";
 import Issuetype from "./type/Issuetype";
+import ErrorBoundary from "../../../utils/ErrorBoundary";
 const modules = {
   toolbar: [
     [{ header: [1, 2, false] }],
@@ -213,7 +214,9 @@ const IssueModalContent = ({ modalCloseHandler }) => {
   if (Object.keys(issue).length == 0) {
     return null;
   }
-
+  const TitleTextContent = ({ titleText }) => {
+    return <span>{titleText.toString()}</span>;
+  };
   return (
     <div className={classes.paper}>
       <div style={{ flex: 2 }}>
@@ -244,7 +247,9 @@ const IssueModalContent = ({ modalCloseHandler }) => {
             className={(classes.titleText, classes.titleContainer)}
             onClick={() => dispatch(setTitleEditor(true))}
           >
-            {titleText}
+            <ErrorBoundary error={"Title not found"}>
+              <TitleTextContent titleText={titleText} />
+            </ErrorBoundary>
           </h2>
         )}
 

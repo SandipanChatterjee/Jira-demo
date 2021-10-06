@@ -1,6 +1,4 @@
 import React, { useEffect, Fragment } from "react";
-
-import { createFilterOptions } from "@material-ui/lab";
 import {
   setPriority,
   setShowPriorityList,
@@ -25,6 +23,7 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import ErrorBoundary from "../../../../utils/ErrorBoundary";
 
 const Priority = () => {
   const dispatch = useDispatch();
@@ -80,6 +79,10 @@ const Priority = () => {
   useEffect(() => {
     dispatch(setPriority(issue.priority));
   }, []);
+  const PriortyContent = ({ name }) => {
+    console.log("name#", name);
+    return <span>{name.toString()}</span>;
+  };
   return (
     <div>
       <p>PRIORITY</p>
@@ -110,7 +113,9 @@ const Priority = () => {
               return (
                 <Fragment>
                   <span>{priorityIcon[option]}</span>
-                  <span>{priorityObj[option]}</span>
+                  <ErrorBoundary error={"Data not found"}>
+                    <PriortyContent name={priorityObj && priorityObj[option]} />
+                  </ErrorBoundary>
                 </Fragment>
               );
             }}
