@@ -12,6 +12,8 @@ import Timer from "@material-ui/icons/Timer";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import PropTypes from "prop-types";
+import ErrorBoundary from "../../../../utils/ErrorBoundary";
 
 const TimeTrackerModalContent = ({ issue, closeTimeTrackerModalHandler }) => {
   const classes = useStyles();
@@ -106,6 +108,11 @@ const TimeTrackerModalContent = ({ issue, closeTimeTrackerModalHandler }) => {
       </div>
     </div>
   );
+};
+
+TimeTrackerModalContent.propTypes = {
+  issue: PropTypes.object,
+  closeTimeTrackerModalHandler: PropTypes.func,
 };
 
 export default TimeTrackerModalContent;

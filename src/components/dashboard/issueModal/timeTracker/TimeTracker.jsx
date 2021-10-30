@@ -7,6 +7,7 @@ import Timer from "@material-ui/icons/Timer";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Modal from "@material-ui/core/Modal";
 import TimeTrackerModalContent from "./TimeTrackerModalContent";
+import ErrorBoundary from "../../../../utils/ErrorBoundary";
 
 const TimeTracker = () => {
   const classes = useStyles();
@@ -40,6 +41,7 @@ const TimeTracker = () => {
     timeRemaining === null
       ? 100 - Math.abs(timeSpent - estimate) * 10
       : 100 - Math.abs(timeSpent - timeRemaining) * 10;
+
   return (
     <Fragment>
       <div>

@@ -18,6 +18,7 @@ import { useStyles } from "./issueTypeStyle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import PropTypes from "prop-types";
 
 const Issuetype = ({ issue }) => {
   const classes = useStyles();
@@ -118,6 +119,10 @@ const Issuetype = ({ issue }) => {
       ) : null}
     </div>
   );
+};
+
+Issuetype.ropTypes = {
+  issue: PropTypes.object,
 };
 
 export default Issuetype;
