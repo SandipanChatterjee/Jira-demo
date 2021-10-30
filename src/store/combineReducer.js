@@ -17,6 +17,7 @@ import feedbackReducer from "../reducers/issueModal/feedback";
 import deleteModalReducer from "../reducers/issueModal/delete";
 import typeReducer from "../reducers/issueModal/type";
 import settingsReducer from "../reducers/settings";
+import createIssueReducer from "../reducers/createIssue";
 import { combineReducers } from "redux";
 
 export const rootReducer = combineReducers({
@@ -39,4 +40,5 @@ export const rootReducer = combineReducers({
   deleteModalReducer,
   typeReducer,
   settingsReducer,
+  createIssueReducer,
 });

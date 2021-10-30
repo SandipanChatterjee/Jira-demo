@@ -1,9 +1,10 @@
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { primaryButtonColor } from "../../utils/globalStyles";
 const drawerWidth = 240;
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    marginRight: '1rem'
+    marginRight: "1rem",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -30,6 +31,8 @@ export const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
+    backgroundColor: primaryButtonColor,
+    color: "#fff",
   },
   drawerOpen: {
     width: drawerWidth,
@@ -37,6 +40,8 @@ export const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundColor: primaryButtonColor,
+    color: "#fff",
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
@@ -48,6 +53,8 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       width: theme.spacing(9) + 1,
     },
+    backgroundColor: primaryButtonColor,
+    color: "#fff",
   },
   toolbar: {
     display: "flex",

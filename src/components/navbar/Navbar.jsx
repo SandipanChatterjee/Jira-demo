@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: paperBackGroundColor,
     padding: "1rem",
     marginLeft: "4rem",
-
   },
   listItem: {
     marginBottom: "1rem",

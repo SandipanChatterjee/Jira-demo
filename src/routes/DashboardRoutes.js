@@ -11,6 +11,7 @@ const fallbackComponent = () => {
 };
 
 const Dashboard = lazy(() => import("../components/dashboard/Dashboard"));
+const CreateIssue = lazy(() => import("../components/createIssue/CreateIssue"));
 const MasterIssueModal = lazy(() =>
   import("../components/dashboard/issueModal/MasterIssueModal")
 );
@@ -19,6 +20,11 @@ export const DashboardRoutes = () => {
     <Suspense fallback={fallbackComponent}>
       <Switch>
         <Route exact path="/project/board" component={Dashboard} />
+        <Route
+          exact
+          path="/project/board/createissue"
+          component={CreateIssue}
+        />
         <Route
           exact
           path="/project/board/:issueId"
