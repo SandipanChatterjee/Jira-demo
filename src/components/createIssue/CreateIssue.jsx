@@ -4,6 +4,7 @@ const CreateIssue = () => {
   return (
     <div>
       <p>Create Issue</p>
+      <p></p>
     </div>
   );
 };
