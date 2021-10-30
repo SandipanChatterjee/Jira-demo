@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Loader } from "./components/shared/loader/Loader";
 import { getProjectData } from "./actions/project";
 import { setIssueTypes } from "./actions/issues";
+import SwipableDrawer from "./components/navbar/SwipableDrawer";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,7 +64,10 @@ function App() {
 
   return (
     <div className="App">
-      <div className="navbar-container">
+      <div>
+        <SwipableDrawer />
+      </div>
+      <div>
         <Navbar />
       </div>
       {renderRootRoutes()}
