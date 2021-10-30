@@ -19,6 +19,14 @@
   max-height: 100%;
 }
 
+.swipable-drawer { 
+  z-index: 100;
+  position: fixed
+}
+.navbar {
+  z-index: 99;
+}
+
 @media (max-width: 768px) {
   .container {
     height: 200vh;

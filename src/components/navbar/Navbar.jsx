@@ -11,12 +11,11 @@ import {
 } from "@material-ui/core";
 import { paperBackGroundColor } from "../../utils/globalStyles";
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    zIndex: -1,
     marginLeft: "1rem",
   },
   appBar: {
@@ -26,11 +25,14 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    marginRight: "2rem",
   },
   drawerPaper: {
     width: drawerWidth,
     backgroundColor: paperBackGroundColor,
     padding: "1rem",
+    marginLeft: "4rem",
+
   },
   listItem: {
     marginBottom: "1rem",
@@ -79,7 +81,6 @@ const Navbar = (props) => {
           paper: classes.drawerPaper,
         }}
         variant="permanent"
-        anchor="left"
       >
         <List>
           {routes.map((el, index) => (
