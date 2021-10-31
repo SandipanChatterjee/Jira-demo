@@ -12,10 +12,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import AddIcon from "@material-ui/icons/Add";
 import template from "../../assests/icon.png";
 import { openCreateIssue } from "../../actions/createIssue";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./SwipableDrawerStyle";
 import { primaryButtonColor } from "../../utils/globalStyles";
+import { closeCreateIssue } from "../../actions/createIssue";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import CreateIssue from "../createIssue/CreateIssue";
 
 const routes = [
   { id: 0, title: "Search Issue", icon: <SearchIcon /> },
@@ -31,7 +35,9 @@ const SwipableDrawer = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-
+  const openCreateIssueModal = useSelector(
+    (state) => state.createIssueReducer.openCreateIssue
+  );
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -40,6 +46,9 @@ const SwipableDrawer = () => {
   };
   const handleCreateIssue = () => {
     dispatch(openCreateIssue());
+  };
+  const modalCloseHandler = () => {
+    dispatch(closeCreateIssue());
   };
   return (
     <div className={classes.root}>
@@ -84,6 +93,17 @@ const SwipableDrawer = () => {
           ))}
         </List>
       </Drawer>
+      <Dialog
+        open={openCreateIssueModal}
+        onClose={modalCloseHandler}
+        fullWidth="true"
+        maxWidth="lg"
+        scroll="body"
+      >
+        <DialogContent>
+          <CreateIssue />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

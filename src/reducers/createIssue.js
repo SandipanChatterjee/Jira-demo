@@ -1,6 +1,8 @@
 import { actionTypes } from "../actions/createIssue";
 const initState = {
   openCreateIssue: false,
+  issueSummary: "",
+  newProjectDescription: "",
 };
 
 const reducer = (state = initState, action) => {
@@ -14,6 +16,16 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         openCreateIssue: false,
+      };
+    case actionTypes.SET_SUMMARY:
+      return {
+        ...state,
+        issueSummary: action.issueSummary,
+      };
+    case actionTypes.NEW_PROJECT_DESCRIPTION:
+      return {
+        ...state,
+        newProjectDescription: action.newProjectDescription,
       };
     default:
       return state;
