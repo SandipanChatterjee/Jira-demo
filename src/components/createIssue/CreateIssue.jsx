@@ -6,7 +6,9 @@ import {
   modules,
   priorityIcon,
   priorityObj,
+  issueStatus,
 } from "../../utils/utils";
+import { primaryButtonColor } from "../../utils/globalStyles";
 import {
   setShowIssueTypeList,
   setIssueType,
@@ -46,6 +48,7 @@ const CreateIssue = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.projectReducer.loading);
+  const projectId = useSelector((state) => state.projectReducer.project.id);
   //issueType
   const issueType = useSelector((state) => state.typeReducer.type);
   const showIssueTypeList = useSelector(
@@ -118,9 +121,8 @@ const CreateIssue = () => {
     };
   };
   const changeNewProjectDescription = (value) => {
-    const newProjectDescriptionText = value.replace(/(<([^>]+)>)/gi, "");
-    console.log("newProjectDescriptionText#", newProjectDescriptionText);
-    dispatch(setNewProjectDescription(newProjectDescriptionText));
+    // const newProjectDescriptionText = value.replace(/(<([^>]+)>)/gi, "");
+    dispatch(setNewProjectDescription(value));
   };
   const changeNewProjectDescriptionDebounceHandler = debounceHandler(
     changeNewProjectDescription
@@ -171,7 +173,23 @@ const CreateIssue = () => {
     dispatch(setPriority(newValue));
     dispatch(setShowPriorityList(false));
   };
-
+  const createIssueHandler = () => {
+    const payload = {
+      description: newProjectDescription,
+      priority: priority,
+      projectId: projectId,
+      status: issueStatus.backlog,
+      title: issueSummary,
+      type: issueType,
+      usersIds: [...assignedUsersId],
+      users: assignedUsers.map((el) => {
+        const newObj = {};
+        newObj["id"] = el.id;
+        return newObj;
+      }),
+    };
+    console.log("payload##", payload);
+  };
   useEffect(() => {
     if (!loader) {
       dispatch(setIssueType("story"));
@@ -186,6 +204,8 @@ const CreateIssue = () => {
       dispatch(setSelectedReporter(null, []));
       dispatch(setShowReporterList(false));
       dispatch(resetUsers());
+      dispatch(setPriority(""));
+      dispatch(setShowPriorityList(false));
     };
   }, [loader]);
 
@@ -460,6 +480,24 @@ const CreateIssue = () => {
           />
         </div>
       ) : null}
+      <br />
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          size="small"
+          variant="contained"
+          style={{
+            backgroundColor: primaryButtonColor,
+            color: "#fff",
+            marginRight: "10px",
+          }}
+          onClick={createIssueHandler}
+        >
+          Create Issue
+        </Button>
+        <Button size="small" variant="contained">
+          Cancel
+        </Button>
+      </div>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import {
 export const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
-    height: "100vh",
   },
   btn: {
     display: "flex",
