@@ -1,5 +1,12 @@
 import React, { useEffect, Fragment } from "react";
-import { type, typeIconObj, formats, modules } from "../../utils/utils";
+import {
+  type,
+  typeIconObj,
+  formats,
+  modules,
+  priorityIcon,
+  priorityObj,
+} from "../../utils/utils";
 import {
   setShowIssueTypeList,
   setIssueType,
@@ -9,9 +16,19 @@ import {
   setShowReporterList,
 } from "../../actions/issueModal/reporter";
 import {
+  resetUsers,
+  setAssignedUsers,
+  setDeleteUsers,
+  setShowUsersList,
+} from "../../actions/issueModal/assignees";
+import {
   setSummary,
   setNewProjectDescription,
 } from "../../actions/createIssue";
+import {
+  setPriority,
+  setShowPriorityList,
+} from "../../actions/issueModal/priority";
 import { useStyles } from "./CreateIssueStyle";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,6 +37,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import AddIcon from "@material-ui/icons/Add";
+import ClearIcon from "@material-ui/icons/Clear";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -50,10 +69,29 @@ const CreateIssue = () => {
   const showReporterList = useSelector(
     (state) => state.reporterReducer.showReporterList
   );
-
+  //assignees
+  const showUsersList = useSelector(
+    (state) => state.assigneesReducer.showUsersList
+  );
+  const assignedUsersId = useSelector(
+    (state) => state.assigneesReducer.assignedUsersId
+  );
+  const assignedUsers =
+    useSelector((state) => state.assigneesReducer.assignedUsers) || [];
+  //priorty
+  const priority = useSelector((state) => state.priortyReducer.priority);
+  const showPriorityList = useSelector(
+    (state) => state.priortyReducer.showPriorityList
+  );
   const typeValuesArr = Object.values(type);
   const issueTypesOption = typeValuesArr.filter((el) => el !== issueType);
-  const usersOption = users.filter((el) => el.id !== reportedId);
+  const usersOptionReporter = users.filter((el) => el.id !== reportedId);
+  const userOptionsAssignees = users.filter(
+    (el) => !assignedUsersId.includes(el.id)
+  );
+  const priorityOptions = Object.keys(priorityObj).filter(
+    (el) => el !== priority
+  );
 
   const changeIssueTypeHandler = (event, newType) => {
     dispatch(setIssueType(newType));
@@ -101,11 +139,54 @@ const CreateIssue = () => {
     dispatch(setShowReporterList(false));
   };
 
+  const deleteUserHandler = (userId) => {
+    dispatch(setDeleteUsers(userId));
+    dispatch(setShowUsersList(true));
+  };
+
+  const showUsersListHandler = () => {
+    dispatch(setShowUsersList(true));
+  };
+
+  const closeUsersListHandler = () => {
+    dispatch(setShowUsersList(false));
+  };
+
+  const changeUsersHandler = (e, val) => {
+    if (assignedUsersId.includes(val.id)) {
+      dispatch(setShowUsersList(false));
+      return;
+    }
+    dispatch(setAssignedUsers(val));
+    dispatch(setShowUsersList(false));
+  };
+
+  const showPriorityListHandler = () => {
+    dispatch(setShowPriorityList(true));
+  };
+  const closePriorityListHandler = () => {
+    dispatch(setShowPriorityList(false));
+  };
+  const changePriorityHandler = (event, newValue) => {
+    dispatch(setPriority(newValue));
+    dispatch(setShowPriorityList(false));
+  };
+
   useEffect(() => {
     if (!loader) {
       dispatch(setIssueType("story"));
       dispatch(setSelectedReporter(users[0].id, users));
+      dispatch(setPriority("3"));
     }
+    return () => {
+      dispatch(setIssueType(""));
+      dispatch(setShowIssueTypeList(false));
+      dispatch(setSummary(""));
+      dispatch(setNewProjectDescription(""));
+      dispatch(setSelectedReporter(null, []));
+      dispatch(setShowReporterList(false));
+      dispatch(resetUsers());
+    };
   }, [loader]);
 
   if (loader) {
@@ -239,7 +320,7 @@ const CreateIssue = () => {
             onChange={(event, newValue) =>
               changeReporterHandler(event, newValue)
             }
-            options={usersOption}
+            options={usersOptionReporter}
             getOptionLabel={(option) => option.name}
             renderOption={(option) => {
               return (
@@ -249,6 +330,119 @@ const CreateIssue = () => {
                     className={classes.avatarSize}
                   />
                   <span className={classes.text}>{option.name}</span>
+                </Fragment>
+              );
+            }}
+            clearOnBlur={true}
+            clearOnEscape={true}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                margin="normal"
+                variant="outlined"
+                autoFocus
+                size="small"
+              />
+            )}
+          />
+        </div>
+      ) : null}
+      <br />
+      <p>Assignees</p>
+      <Button
+        variant="outlined"
+        onClick={showUsersListHandler}
+        className={classes.btn}
+      >
+        <div className={classes.btnContent}>
+          {assignedUsers.map((user, index) => {
+            return (
+              <Button
+                style={index !== 0 ? { marginLeft: "10px" } : null}
+                variant="contained"
+                onClick={() => deleteUserHandler(user.id)}
+              >
+                <Avatar
+                  src={user.avatarUrl}
+                  className={classes.avatarSize}
+                  style={{ width: "30px", height: "30px" }}
+                />
+                <span className={classes.btnText}>{user.name.toString()}</span>
+                <ClearIcon fontSize="small" />
+              </Button>
+            );
+          })}
+          <Button color="primary" onClick={showUsersListHandler}>
+            <div className={classes.btnContent}>
+              <AddIcon fontSize="small" className={classes.avatarSize} />
+              <span className={classes.btnText}>Add more</span>
+            </div>
+          </Button>
+        </div>
+        <div className={classes.btnContent}>
+          <span className={classes.btnIcon}>
+            <ArrowDropDownIcon />
+          </span>
+        </div>
+      </Button>
+      {showUsersList ? (
+        <div onBlur={closeUsersListHandler}>
+          <Autocomplete
+            className="autocomplete"
+            freeSolo
+            onChange={(event, newValue) => changeUsersHandler(event, newValue)}
+            options={userOptionsAssignees}
+            getOptionLabel={(option) => option.name}
+            renderOption={(option) => {
+              return (
+                <Fragment>
+                  <Avatar
+                    src={option.avatarUrl}
+                    className={classes.avatarSize}
+                  />
+                  <span className={classes.text}>{option.name}</span>
+                </Fragment>
+              );
+            }}
+            clearOnBlur={true}
+            clearOnEscape={true}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                size="small"
+                margin="normal"
+                variant="outlined"
+                autoFocus
+              />
+            )}
+          />
+        </div>
+      ) : null}
+      <br />
+      <p>Priority</p>
+      <Button
+        variant="outlined"
+        onClick={showPriorityListHandler}
+        className={classes.btn}
+      >
+        <div className={classes.btnContent}>
+          <span className={classes.avatarSize}>{priorityIcon[priority]}</span>
+          <span className={classes.btnText}>{priorityObj[priority]}</span>
+        </div>
+      </Button>
+      {showPriorityList ? (
+        <div onBlur={closePriorityListHandler}>
+          <Autocomplete
+            freeSolo
+            onChange={(event, newValue) =>
+              changePriorityHandler(event, newValue)
+            }
+            options={priorityOptions}
+            renderOption={(option) => {
+              return (
+                <Fragment>
+                  <span>{priorityIcon[option]}</span>
+                  <span>{priorityObj && priorityObj[option].toString()}</span>
                 </Fragment>
               );
             }}
