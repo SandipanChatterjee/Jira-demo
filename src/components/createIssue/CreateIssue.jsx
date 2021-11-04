@@ -24,8 +24,12 @@ import {
   setShowUsersList,
 } from "../../actions/issueModal/assignees";
 import {
+  closeCreateIssue,
   setSummary,
   setNewProjectDescription,
+  setCreateNewIssue,
+  closeErrorModal,
+  resetCreateIssue,
 } from "../../actions/createIssue";
 import {
   setPriority,
@@ -41,9 +45,15 @@ import Avatar from "@material-ui/core/Avatar";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
+import Alert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/Alert";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { backlog } from "../../actions/issues";
+import { getProjectData } from "../../actions/project";
 const CreateIssue = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -65,7 +75,7 @@ const CreateIssue = () => {
   //reporter
   const users =
     useSelector((state) => state.projectReducer.project.users) || [];
-  const reportedId = useSelector((state) => state.reporterReducer.reporterId);
+  const reporterId = useSelector((state) => state.reporterReducer.reporterId);
   const reporterData = useSelector(
     (state) => state.reporterReducer.reporterData
   );
@@ -86,9 +96,21 @@ const CreateIssue = () => {
   const showPriorityList = useSelector(
     (state) => state.priortyReducer.showPriorityList
   );
+  //createNewIssue
+  const newIssueLoading = useSelector(
+    (state) => state.createIssueReducer.newIssueLoading
+  );
+  const newIssueError = useSelector(
+    (state) => state.createIssueReducer.newIssueError
+  );
+  const showErrorModal = useSelector(
+    (state) => state.createIssueReducer.showErrorModal
+  );
+  const newIssue = useSelector((state) => state.createIssueReducer.newIssue);
+
   const typeValuesArr = Object.values(type);
   const issueTypesOption = typeValuesArr.filter((el) => el !== issueType);
-  const usersOptionReporter = users.filter((el) => el.id !== reportedId);
+  const usersOptionReporter = users.filter((el) => el.id !== reporterId);
   const userOptionsAssignees = users.filter(
     (el) => !assignedUsersId.includes(el.id)
   );
@@ -173,11 +195,15 @@ const CreateIssue = () => {
     dispatch(setPriority(newValue));
     dispatch(setShowPriorityList(false));
   };
+  const errorModalCloseHandler = () => {
+    dispatch(closeErrorModal());
+  };
   const createIssueHandler = () => {
     const payload = {
       description: newProjectDescription,
       priority: priority,
       projectId: projectId,
+      reporterId: reporterId,
       status: issueStatus.backlog,
       title: issueSummary,
       type: issueType,
@@ -188,8 +214,12 @@ const CreateIssue = () => {
         return newObj;
       }),
     };
-    console.log("payload##", payload);
+    dispatch(setCreateNewIssue(payload));
   };
+  if (Object.keys(newIssue).length > 0) {
+    dispatch(closeCreateIssue());
+    dispatch(getProjectData());
+  }
   useEffect(() => {
     if (!loader) {
       dispatch(setIssueType("story"));
@@ -206,6 +236,7 @@ const CreateIssue = () => {
       dispatch(resetUsers());
       dispatch(setPriority(""));
       dispatch(setShowPriorityList(false));
+      dispatch(resetCreateIssue());
     };
   }, [loader]);
 
@@ -492,12 +523,19 @@ const CreateIssue = () => {
           }}
           onClick={createIssueHandler}
         >
-          Create Issue
+          {newIssueLoading ? "Create Issue Loading" : "Create Issue"}
         </Button>
         <Button size="small" variant="contained">
           Cancel
         </Button>
       </div>
+      <Dialog open={showErrorModal} onClose={errorModalCloseHandler}>
+        <DialogContent>
+          <Alert severity="error" onClose={errorModalCloseHandler}>
+            <strong>{newIssueError}</strong>
+          </Alert>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
