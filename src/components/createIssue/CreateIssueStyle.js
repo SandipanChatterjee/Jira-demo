@@ -1,8 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  primaryButtonColor,
-  primaryButtonWidth,
-} from "../../utils/globalStyles";
 export const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
@@ -29,6 +25,13 @@ export const useStyles = makeStyles((theme) => ({
   textField: {
     width: "100%",
   },
+  descriptionText: {
+    fontSize: "12px",
+  },
+  avatarSize: {
+    width: "30px",
+    height: "30px",
+  },
   errorText: {
     color: "#E53C3C",
     fontSize: "12px",
@@ -38,18 +41,24 @@ export const useStyles = makeStyles((theme) => ({
   },
   "@media (max-width:768px)": {
     root: {
-      "& br": {
-        display: "none",
-      },
+      position: "relative",
     },
-    button: {
-      marginBottom: ".5rem",
-      width: "auto",
-      maxWidth: "200px",
-      justifyContent: "flex-start",
+    btn: {
+      display: "flex",
+      width: "100%",
+      justifyContent: "space-between",
     },
     btnText: {
-      fontSize: ".6rem",
+      marginLeft: "5px",
+      fontSize: "12px",
+      marginTop: "auto",
+      marginBottom: "auto",
+    },
+    descriptionText: {
+      display: "none",
+    },
+    reporterHeading: {
+      marginTop: "5rem",
     },
   },
 }));

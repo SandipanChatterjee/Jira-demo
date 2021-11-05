@@ -22,7 +22,7 @@ import DialogContent from "@mui/material/DialogContent";
 import CreateIssue from "../createIssue/CreateIssue";
 
 const routes = [
-  { id: 0, title: "Search Issue", icon: <SearchIcon /> },
+  // { id: 0, title: "Search Issue", icon: <SearchIcon /> },
   {
     id: 1,
     title: "Create Issue",
@@ -97,7 +97,7 @@ const SwipableDrawer = () => {
         open={openCreateIssueModal}
         onClose={modalCloseHandler}
         fullWidth="true"
-        maxWidth="lg"
+        maxWidth="md"
         scroll="body"
       >
         <DialogContent>

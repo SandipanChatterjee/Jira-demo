@@ -1,4 +1,5 @@
 import { createIssue as createIssueService } from "../services/createIssue";
+import { getProjectData } from "./project";
 export const actionTypes = {
   OPEN_CREATE_ISSUE: "OPEN_CREATE_ISSUE",
   CLOSE_CREATE_ISSUE: "CLOSE_CREATE_ISSUE",
@@ -70,6 +71,8 @@ export const setCreateNewIssue = (payload) => {
       const data = await res;
       dispatch(createNewIssueHandler(data));
       dispatch(createIssueLoadingHandler(false));
+      dispatch(closeCreateIssue());
+      dispatch(getProjectData());
     } catch (e) {
       console.log("error#", e);
       dispatch(createIssueLoadingHandler(false));

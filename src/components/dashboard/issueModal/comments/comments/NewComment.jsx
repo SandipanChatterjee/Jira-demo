@@ -104,19 +104,22 @@ const NewComment = () => {
                   variant="contained"
                   color="primary"
                   onClick={saveHandler}
+                  size="small"
                 >
                   <span>
                     {newCommentLoading ? (
                       <CircularProgress
-                        size={20}
+                        size={15}
                         thickness={4}
-                        color="secondary"
+                        style={{ color: "#fff", marginRight: "5px" }}
                       />
                     ) : null}{" "}
                     Save
                   </span>
                 </Button>{" "}
-                <Button onClick={inActiveHandler}>Cancel</Button>
+                <Button onClick={inActiveHandler} size="small">
+                  Cancel
+                </Button>
               </div>
               <br />
             </Fragment>

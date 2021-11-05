@@ -197,14 +197,15 @@ const CommentList = () => {
                         color="primary"
                         onClick={(e) => editHandler(e, comment.id)}
                         disabled={editCommentText === "" ? true : false}
+                        size="small"
                       >
                         {" "}
                         <div className={classes.buttonContainer}>
                           {editCommentLoading ? (
                             <CircularProgress
-                              size={18}
+                              size={15}
                               thickness={4}
-                              color="secondary"
+                              style={{ color: "#fff", marginRight: "5px" }}
                             />
                           ) : null}
 
@@ -212,7 +213,7 @@ const CommentList = () => {
                         </div>
                       </Button>
                       {"   "}
-                      <Button onClick={editCommentInActiveHandler}>
+                      <Button onClick={editCommentInActiveHandler} size="small">
                         Cancel
                       </Button>
                     </div>

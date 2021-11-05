@@ -49,11 +49,11 @@ import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/Alert";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { backlog } from "../../actions/issues";
-import { getProjectData } from "../../actions/project";
+
 const CreateIssue = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -198,6 +198,9 @@ const CreateIssue = () => {
   const errorModalCloseHandler = () => {
     dispatch(closeErrorModal());
   };
+  const cancelHandler = () => {
+    dispatch(closeCreateIssue());
+  };
   const createIssueHandler = () => {
     const payload = {
       description: newProjectDescription,
@@ -216,10 +219,6 @@ const CreateIssue = () => {
     };
     dispatch(setCreateNewIssue(payload));
   };
-  if (Object.keys(newIssue).length > 0) {
-    dispatch(closeCreateIssue());
-    dispatch(getProjectData());
-  }
   useEffect(() => {
     if (!loader) {
       dispatch(setIssueType("story"));
@@ -339,23 +338,19 @@ const CreateIssue = () => {
       <br />
       <br />
       <div>
-        <span style={{ fontSize: "12px" }}>
+        <span className={classes.descriptionText}>
           Describe the issue in as much detail as you'd like.
         </span>
       </div>
       <br />
-      <p>Reporter</p>
+      <p className={classes.reporterHeading}>Reporter</p>
       <Button
         variant="outlined"
         onClick={showReporterListHandler}
         className={classes.btn}
       >
         <div className={classes.btnContent}>
-          <Avatar
-            src={reporterData.avatarUrl}
-            className={classes.avatarSize}
-            style={{ width: "30px", height: "30px" }}
-          />
+          <Avatar src={reporterData.avatarUrl} className={classes.avatarSize} />
           <span className={classes.btnText}>{reporterData.name}</span>
         </div>
         <div className={classes.btnContent}>
@@ -409,21 +404,18 @@ const CreateIssue = () => {
           {assignedUsers.map((user, index) => {
             return (
               <Button
+                size="small"
                 style={index !== 0 ? { marginLeft: "10px" } : null}
                 variant="contained"
                 onClick={() => deleteUserHandler(user.id)}
               >
-                <Avatar
-                  src={user.avatarUrl}
-                  className={classes.avatarSize}
-                  style={{ width: "30px", height: "30px" }}
-                />
+                <Avatar src={user.avatarUrl} className={classes.avatarSize} />
                 <span className={classes.btnText}>{user.name.toString()}</span>
                 <ClearIcon fontSize="small" />
               </Button>
             );
           })}
-          <Button color="primary" onClick={showUsersListHandler}>
+          <Button color="primary" onClick={showUsersListHandler} size="small">
             <div className={classes.btnContent}>
               <AddIcon fontSize="small" className={classes.avatarSize} />
               <span className={classes.btnText}>Add more</span>
@@ -480,6 +472,11 @@ const CreateIssue = () => {
           <span className={classes.avatarSize}>{priorityIcon[priority]}</span>
           <span className={classes.btnText}>{priorityObj[priority]}</span>
         </div>
+        <div className={classes.btnContent}>
+          <span className={classes.btnIcon}>
+            <ArrowDropDownIcon />
+          </span>
+        </div>
       </Button>
       {showPriorityList ? (
         <div onBlur={closePriorityListHandler}>
@@ -517,15 +514,24 @@ const CreateIssue = () => {
           size="small"
           variant="contained"
           style={{
-            backgroundColor: primaryButtonColor,
+            backgroundColor: issueSummary !== "" ? primaryButtonColor : null,
             color: "#fff",
             marginRight: "10px",
           }}
+          disabled={issueSummary === ""}
           onClick={createIssueHandler}
         >
-          {newIssueLoading ? "Create Issue Loading" : "Create Issue"}
+          {newIssueLoading ? (
+            <CircularProgress
+              size={15}
+              thickness={4}
+              style={{ color: "#fff", marginRight: "5px" }}
+            />
+          ) : null}
+
+          <span>Create Issue</span>
         </Button>
-        <Button size="small" variant="contained">
+        <Button size="small" variant="contained" onClick={cancelHandler}>
           Cancel
         </Button>
       </div>
