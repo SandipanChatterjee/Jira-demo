@@ -67,7 +67,7 @@ const Status = () => {
     let filteredIssueArr = JSON.parse(
       JSON.stringify(issueTypes[selectedIssueStatus])
     );
-    console.log("f1#", filteredIssueArr);
+    console.log("f1#", JSON.stringify(filteredIssueArr));
     const filteredIssue = filteredIssueArr.find((el) => el.id === issue.id);
     filteredIssue.status = currentIssueStatus;
     filteredIssueArr.splice(filteredIssueArr.indexOf(filteredIssue), 1);
@@ -78,11 +78,14 @@ const Status = () => {
     } else if (issue.status === issueStatus.selected) {
       dispatch(selected(filteredIssueArr));
     } else if (issue.status === issueStatus.inprogress) {
+      console.log("del##inprogress##");
       dispatch(inprogress(filteredIssueArr));
     } else {
+      console.log("del##done##");
       dispatch(completed(filteredIssueArr));
     }
     console.log("filteredIssue##", filteredIssue);
+    dispatch(currentIssueFunction(filteredIssue));
     // add to list
     if (currentIssueStatus === issueStatus.backlog) {
       const newIssueArr = JSON.parse(
@@ -97,12 +100,14 @@ const Status = () => {
       newIssueArr.push(filteredIssue);
       dispatch(selected(newIssueArr));
     } else if (currentIssueStatus === issueStatus.inprogress) {
+      console.log("add##inprogress##");
       const newIssueArr = JSON.parse(
         JSON.stringify(selectorIssue.inprogressIssues)
       );
       newIssueArr.push(filteredIssue);
       dispatch(inprogress(newIssueArr));
     } else {
+      console.log("add##done##");
       const newIssueArr = JSON.parse(
         JSON.stringify(selectorIssue.completedIssues)
       );
@@ -151,7 +156,6 @@ const Status = () => {
         <div onBlur={closeIssueStatusHandler}>
           <Autocomplete
             freeSolo
-            value={selectedIssueStatus}
             onChange={(event, newValue) =>
               changeIssueStatusHandler(event, newValue)
             }

@@ -303,9 +303,8 @@ const IssueModalContent = ({ modalCloseHandler }) => {
             </Button>
           </div>
           <br />
-          {
-            // <Status />
-          }
+          <Status />
+          <br />
           <Assignees />
           <br />
           <Reporter />
