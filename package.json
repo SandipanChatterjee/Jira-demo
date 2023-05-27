@@ -18,6 +18,7 @@
     "dompurify": "^2.3.1",
     "i": "^0.3.6",
     "npm": "^7.21.0",
+    "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
@@ -27,6 +28,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.1",
     "redux": "^4.1.1",
+    "stream": "^0.0.2",
     "web-vitals": "^1.1.2",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
@@ -46,6 +48,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "serve": "webpack serve --mode development",
     "buildWebpack": "webpack --mode production"
   },
   "eslintConfig": {
@@ -71,7 +74,9 @@
     "@babel/preset-env": "^7.22.2",
     "@babel/preset-react": "^7.22.0",
     "babel-loader": "^9.1.2",
+    "babel-plugin-macros": "^3.1.0",
     "css-loader": "^6.7.4",
+    "file-loader": "^6.2.0",
     "style-loader": "^3.3.3",
     "webpack": "^5.84.1",
     "webpack-cli": "^5.1.1",
