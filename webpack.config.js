@@ -1,4 +1,7 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+const mode = "development" || "production" || "test";
 
 module.exports = {
   entry: {
@@ -6,6 +9,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "./dist"),
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -38,4 +42,18 @@ module.exports = {
   resolve: {
     extensions: [".jsx", ".js"],
   },
+  devServer: {
+    historyApiFallback: true,
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: mode,
+      DEBUG: false,
+      REACT_APP_API_URL: "https://jira-api.ivorreic.com/",
+    }),
+  ],
 };
