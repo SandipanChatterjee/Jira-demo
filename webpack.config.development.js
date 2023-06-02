@@ -1,15 +1,15 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-const mode = "development" || "production" || "test";
 
 module.exports = {
+  mode: "development",
   entry: {
     main: path.resolve(__dirname, "./src/index.js"),
   },
   output: {
-    path: path.resolve(__dirname, "./dist"),
-    publicPath: "./", //change to ./ for prod and / for development
+    filename: "[name].[fullhash].js",
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -47,11 +47,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
+      template: "public/index.html",
+      favicon: "public/favicon.ico",
     }),
 
     new webpack.EnvironmentPlugin({
-      NODE_ENV: "production", //TODO: change based on env.
+      NODE_ENV: "development",
       DEBUG: false,
       REACT_APP_API_URL: "https://jira-api.ivorreic.com/",
     }),
