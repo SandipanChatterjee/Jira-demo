@@ -9,7 +9,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "./dist"),
-    publicPath: "/",
+    publicPath: "./", //change to ./ for prod and / for development
   },
   module: {
     rules: [
@@ -51,9 +51,13 @@ module.exports = {
     }),
 
     new webpack.EnvironmentPlugin({
-      NODE_ENV: mode,
+      NODE_ENV: "production", //TODO: change based on env.
       DEBUG: false,
       REACT_APP_API_URL: "https://jira-api.ivorreic.com/",
+    }),
+
+    new webpack.ProvidePlugin({
+      process: "process/browser",
     }),
   ],
 };
