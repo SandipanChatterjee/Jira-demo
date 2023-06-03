@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -8,9 +10,8 @@ module.exports = {
     main: path.resolve(__dirname, "./src/index.js"),
   },
   output: {
-    filename: "[name].[contenthash].js",
+    filename: "static/[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/dist/",
   },
   devtool: "source-map",
   module: {
@@ -27,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.(css)$/,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
 
       {
@@ -42,12 +43,22 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".jsx", ".js"],
+    extensions: [".jsx", ".js", ".json"],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "public/index.html",
       favicon: "public/favicon.ico",
+      inject: true,
+      minify: {
+        collapseWhitespace: true,
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true,
+        removeAttributeQuotes: true,
+        removeComments: true,
+        useShortDoctype: true,
+      },
     }),
 
     new webpack.EnvironmentPlugin({
@@ -59,5 +70,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser",
     }),
+
+    new MiniCssExtractPlugin({ filename: "styles/[name].[contenthash].css" }),
+
+    new CleanWebpackPlugin(),
   ],
 };
