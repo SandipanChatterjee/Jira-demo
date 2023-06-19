@@ -6,9 +6,11 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "production",
+  //entry point for your react application
   entry: {
     main: path.resolve(__dirname, "./src/index.js"),
   },
+  //output path -> dist/static
   output: {
     filename: "static/[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
@@ -17,9 +19,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: [/node_modules/],
+        test: /\.(js|jsx)$/, //matches .js .jsx file
+        exclude: [/node_modules/], // exclude node_modules from processing
         use: {
+          /**
+           * Babel loader converts Modern JS (ES6), JSX to OLD JS
+           * loader: "babel-loader" -> uses babel loader for the specified file type
+           * preset: a set of plugins used to support particular language features
+           */
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env", "@babel/preset-react"],
@@ -42,10 +49,19 @@ module.exports = {
       },
     ],
   },
+  /**
+   * Resolve helps to locate imported modules.
+   * Look into - https://webpack.js.org/configuration/resolve/#resolveextensions
+   */
   resolve: {
     extensions: [".jsx", ".js", ".json"],
   },
+  // plugins are like 3rd party application to boost your react application
   plugins: [
+    /**
+     * HtmlWebpackPlugin - Generate HTML5 index.html file in dist / index.html
+     * Includes all webpack bundles in <script> tag.
+     */
     new HtmlWebpackPlugin({
       template: "public/index.html",
       favicon: "public/favicon.ico",
@@ -70,6 +86,11 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser",
     }),
+
+    /**
+     * MiniCssExtractPlugin - extract css into separate files.
+     * dist\styles
+     */
 
     new MiniCssExtractPlugin({ filename: "styles/[name].[contenthash].css" }),
 
